@@ -23,9 +23,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${mono.variable}`}>
       <body className="min-h-dvh antialiased">
         <ThemeProvider>
-          <div className="mx-auto flex min-h-dvh max-w-[1400px] md:grid md:grid-cols-[232px_1fr]">
+          <div className="flex min-h-dvh flex-col md:grid md:grid-cols-[232px_minmax(0,1fr)]">
             <Sidebar />
-            <main className="min-w-0 flex-1">{children}</main>
+            <main className="min-w-0">{children}</main>
           </div>
           <Toaster position="bottom-right" />
         </ThemeProvider>

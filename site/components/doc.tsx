@@ -7,7 +7,7 @@ export async function Doc({ slug }: { slug: string }) {
   const html = await renderMarkdown(doc.markdown);
 
   return (
-    <article className="prose mx-auto w-full max-w-3xl px-6 py-11 md:px-10 lg:max-w-4xl">
+    <article className="prose w-full max-w-4xl px-6 py-10 md:px-10 md:py-12 xl:max-w-5xl">
       <div dangerouslySetInnerHTML={{ __html: html }} />
       <CopyButtons />
     </article>
