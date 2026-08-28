@@ -130,8 +130,12 @@ function buildExperience(index, profile) {
     }
   }
 
-  // Positions arrive unsorted, and can overlap within a company.
-  return entries.sort((a, b) => dateSortKey(b.startDate) - dateSortKey(a.startDate));
+  // Positions arrive unsorted. Present LinkedIn-style: current roles first, then
+  // newest start date first.
+  return entries.sort(
+    (a, b) =>
+      Number(b.current) - Number(a.current) || dateSortKey(b.startDate) - dateSortKey(a.startDate),
+  );
 }
 
 function buildEducation(index, profile) {

@@ -53,9 +53,46 @@ test('flattens position groups into individual roles', () => {
   }
 });
 
-test('sorts experience newest first', () => {
+test('sorts experience: current roles first, then newest start date', () => {
+  // This fixture has no current roles, so ordering reduces to newest-start-first.
+  // The current-first tie-break is exercised by the synthetic case below.
   const keys = profile.experience.map((r) => Number(r.startDate?.slice(0, 4) ?? 0));
   assert.deepEqual(keys, [...keys].sort((a, b) => b - a));
+});
+
+test('a current role outranks an ended role with a later start date', () => {
+  // Minimal normalized+json payload: one profile, two single-position groups.
+  const mk = (payload) => normalizeProfile(payload).profile.experience;
+  const experience = mk({
+    data: { '*elements': ['urn:li:fsd_profile:X'] },
+    included: [
+      {
+        entityUrn: 'urn:li:fsd_profile:X',
+        firstName: 'A',
+        lastName: 'B',
+        '*profilePositionGroups': 'urn:li:collectionResponse:G',
+      },
+      { entityUrn: 'urn:li:collectionResponse:G', '*elements': ['urn:li:g:1', 'urn:li:g:2'] },
+      { entityUrn: 'urn:li:g:1', '*profilePositionInPositionGroup': 'urn:li:collectionResponse:P1' },
+      { entityUrn: 'urn:li:g:2', '*profilePositionInPositionGroup': 'urn:li:collectionResponse:P2' },
+      { entityUrn: 'urn:li:collectionResponse:P1', '*elements': ['urn:li:p:1'] },
+      { entityUrn: 'urn:li:collectionResponse:P2', '*elements': ['urn:li:p:2'] },
+      {
+        entityUrn: 'urn:li:p:1',
+        title: 'Ended later',
+        companyName: 'X',
+        dateRange: { start: { year: 2021 }, end: { year: 2023 } },
+      },
+      {
+        entityUrn: 'urn:li:p:2',
+        title: 'Still here',
+        companyName: 'Y',
+        dateRange: { start: { year: 2014 } },
+      },
+    ],
+  });
+  assert.equal(experience[0].title, 'Still here');
+  assert.equal(experience[0].current, true);
 });
 
 test('resolves company metadata, tolerating a missing logo', () => {
