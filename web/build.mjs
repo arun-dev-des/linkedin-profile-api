@@ -9,7 +9,8 @@
  *   - docs/*.md             rendered verbatim (also live in the repo)
  *   - sections of README.md extracted by heading, so there's one source of truth
  */
-import { readFileSync, writeFileSync, mkdirSync, copyFileSync, rmSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, rmSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { marked } from 'marked';
 import { createHighlighter } from 'shiki';
@@ -118,7 +119,12 @@ marked.use({
 });
 
 const dist = root + 'dist';
-const layout = read('/web/layout.html');
+
+// Content-hash the stylesheet so a deploy always busts the CDN/browser cache.
+const cssSource = read('/web/site.css');
+const cssName = `site.${createHash('sha256').update(cssSource).digest('hex').slice(0, 10)}.css`;
+
+const layout = read('/web/layout.html').replaceAll('/site.css', `/${cssName}`);
 const navSlugs = [
   'index',
   'overview',
@@ -255,8 +261,8 @@ page({
   md: back + read('/docs/endpoint-map.md'),
 });
 
-copyFileSync(root + 'web/site.css', `${dist}/site.css`);
-console.log('  site.css');
+writeFileSync(`${dist}/${cssName}`, cssSource);
+console.log(`  ${cssName}`);
 
 writeFileSync(`${dist}/robots.txt`, 'User-agent: *\nAllow: /\n');
 
