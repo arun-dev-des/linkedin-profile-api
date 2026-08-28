@@ -175,8 +175,9 @@ language depending on whose profile it is. Keeps output consistent.
 LinkedIn's "normalized" style spreads the data into one big flat list of items
 linked by ID, which you then have to reassemble ("this person -> these jobs ->
 this company"). It is awkward, but it is what LinkedIn's own app uses, so asking
-for the same thing keeps us compatible. Turning that flat list into a clean
-response schema is the next chunk of work on this project.
+for the same thing keeps us compatible. Reassembling that flat list into the
+clean response schema is what [`src/linkedin/normalize.js`](../src/linkedin/normalize.js)
+does.
 
 ---
 
