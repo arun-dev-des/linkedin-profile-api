@@ -13,6 +13,7 @@
   --jkey: #8250df;
   --jstr: #0a7d33;
   --jnum: #b26b00;
+  --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
   --radius: 12px;
   --maxw: 760px;
   --side-w: 232px;
@@ -44,7 +45,15 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font: 16px/1.65 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font:
+    15.5px/1.65 'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
   -webkit-font-smoothing: antialiased;
   display: grid;
   grid-template-columns: var(--side-w) 1fr;
@@ -237,27 +246,92 @@ main img {
 }
 
 code {
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 0.88em;
+  font-family: var(--mono);
+  font-size: 0.86em;
   background: var(--code-bg);
   border: 1px solid var(--border);
   border-radius: 5px;
   padding: 1px 5px;
 }
-pre {
-  background: var(--code-bg);
+
+/* ---- code blocks (Shiki, dual-theme) ---- */
+.code-wrap {
+  position: relative;
+  margin: 16px 0;
+}
+.shiki {
+  margin: 0;
+  padding: 14px 16px;
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 14px 16px;
   overflow-x: auto;
-  font-size: 13px;
-  line-height: 1.5;
+  font-family: var(--mono);
+  font-size: 12.75px;
+  line-height: 1.6;
+  background: var(--code-bg) !important;
 }
-pre code {
+.shiki code {
   background: none;
   border: 0;
   padding: 0;
-  font-size: inherit;
+  font: inherit;
+  display: block;
+}
+.shiki,
+.shiki span {
+  color: var(--shiki-light);
+}
+.shiki.plain,
+.shiki.plain span {
+  color: var(--text);
+}
+@media (prefers-color-scheme: dark) {
+  .shiki,
+  .shiki span {
+    color: var(--shiki-dark);
+  }
+}
+.copy-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 3px 9px;
+  font: 500 11px/1 'Inter', sans-serif;
+  color: var(--muted);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.12s;
+}
+.code-wrap:hover .copy-btn,
+.copy-btn:focus-visible {
+  opacity: 1;
+}
+.copy-btn:hover {
+  color: var(--text);
+}
+
+/* ---- heading anchors ---- */
+main :is(h2, h3) {
+  scroll-margin-top: 16px;
+}
+.hanchor {
+  margin-left: 7px;
+  color: var(--muted);
+  font-weight: 400;
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity 0.12s;
+}
+main :is(h2, h3):hover .hanchor,
+.hanchor:focus-visible {
+  opacity: 1;
+}
+.hanchor:hover {
+  color: var(--accent);
+  text-decoration: none;
 }
 
 .table-wrap {

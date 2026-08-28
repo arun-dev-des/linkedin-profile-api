@@ -12,9 +12,34 @@
 import { readFileSync, writeFileSync, mkdirSync, copyFileSync, rmSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { marked } from 'marked';
+import { createHighlighter } from 'shiki';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const read = (p) => readFileSync(root + p, 'utf8');
+
+const escHtml = (s) => s.replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' })[c]);
+
+/* Build-time syntax highlighting — VS Code themes, no runtime JS. */
+const shiki = await createHighlighter({
+  themes: ['github-light', 'github-dark-default'],
+  langs: ['js', 'ts', 'json', 'bash', 'shell', 'http', 'html', 'css', 'python', 'diff', 'md'],
+});
+const SHIKI_LANGS = new Set(shiki.getLoadedLanguages());
+
+/** Per-page heading-id deduper, reset before each marked.parse(). */
+let slugCounts = new Map();
+function slugify(text) {
+  const base =
+    String(text)
+      .toLowerCase()
+      .trim()
+      .replace(/[`*_~]/g, '')
+      .replace(/[^\w]+/g, '-')
+      .replace(/^-+|-+$/g, '') || 'section';
+  const n = (slugCounts.get(base) ?? 0) + 1;
+  slugCounts.set(base, n);
+  return n === 1 ? base : `${base}-${n}`;
+}
 
 const API_URL = 'https://linkedin-profile-api-production-3c84.up.railway.app';
 const REPO = 'https://github.com/arun-dev-des/linkedin-profile-api';
@@ -69,6 +94,26 @@ marked.use({
           : `<table><thead>${header}</thead><tbody>${body}</tbody></table>`;
       return `<div class="table-wrap">${t}</div>`;
     },
+    code({ text, lang }) {
+      const inner = SHIKI_LANGS.has(lang)
+        ? shiki.codeToHtml(text, {
+            lang,
+            themes: { light: 'github-light', dark: 'github-dark-default' },
+            defaultColor: false,
+          })
+        : `<pre class="shiki plain"><code>${escHtml(text)}</code></pre>`;
+      return `<div class="code-wrap">${inner}</div>`;
+    },
+    heading({ tokens, depth }) {
+      const html = this.parser.parseInline(tokens);
+      const plain = tokens.map((t) => t.text ?? '').join('');
+      const id = slugify(plain);
+      const anchor =
+        depth > 1 && depth < 4
+          ? ` <a class="hanchor" href="#${id}" aria-label="Link to “${escHtml(plain)}”">#</a>`
+          : '';
+      return `<h${depth} id="${id}">${html}${anchor}</h${depth}>\n`;
+    },
   },
 });
 
@@ -103,6 +148,7 @@ function renderLayout({ slug, title, description = '', contentHtml, headExtra = 
 function page({ slug, title, description = '', md, wide = false }) {
   const tHint = md.match(/<!--\s*title:\s*(.+?)\s*-->/);
   const dHint = md.match(/<!--\s*description:\s*(.+?)\s*-->/);
+  slugCounts = new Map();
   const contentHtml = fixLinks(marked.parse(md)).replace(/<!--[\s\S]*?-->/g, '');
   renderLayout({
     slug,

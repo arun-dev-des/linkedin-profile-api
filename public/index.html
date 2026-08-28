@@ -4,6 +4,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>LinkedIn Profile API</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    />
     <style>
       :root {
         --bg: #f4f4f5;
@@ -20,6 +26,7 @@
         --jkey: #8250df;
         --jstr: #0a7d33;
         --jnum: #b26b00;
+        --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
       }
       @media (prefers-color-scheme: dark) {
         :root {
@@ -44,7 +51,14 @@
         margin: 0;
         background: var(--bg);
         color: var(--text);
-        font: 15px/1.55 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial,
+        font:
+          15px/1.55 'Inter',
+          -apple-system,
+          BlinkMacSystemFont,
+          'Segoe UI',
+          Roboto,
+          Helvetica,
+          Arial,
           sans-serif;
         -webkit-font-smoothing: antialiased;
       }
@@ -193,12 +207,14 @@
       }
       .tabs {
         display: flex;
+        align-items: stretch;
         border-bottom: 1px solid var(--border);
         flex-shrink: 0;
       }
       .tabs button {
         flex: 0 0 auto;
         padding: 10px 14px;
+        font-family: inherit;
         font-size: 12.5px;
         font-weight: 500;
         color: var(--muted);
@@ -212,12 +228,25 @@
         color: var(--text);
         border-bottom-color: var(--accent);
       }
+      .tabs .copy-json {
+        margin-left: auto;
+        align-self: center;
+        margin-right: 8px;
+        padding: 4px 10px;
+        font-size: 11px;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+      }
+      .tabs .copy-json:hover {
+        color: var(--text);
+      }
       .tab-body {
         overflow: auto;
         flex: 1;
-        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-family: var(--mono);
         font-size: 12px;
-        line-height: 1.55;
+        line-height: 1.6;
       }
       .tab-body pre {
         margin: 0;
@@ -522,9 +551,22 @@
               <button data-jtab="tree"${jsonTab === 'tree' ? ' class="on"' : ''}>Tree</button>
               <button data-jtab="raw"${jsonTab === 'raw' ? ' class="on"' : ''}>Raw</button>
               <button data-jtab="full"${jsonTab === 'full' ? ' class="on"' : ''}>Full JSON · not normalised</button>
+              <button type="button" class="copy-json" data-copy-json>Copy</button>
             </div>
             <div class="tab-body" id="jbody"></div>
           </div>`;
+      }
+
+      async function copyCurrentJson(btn) {
+        const payload = jsonTab === 'full' ? lastRaw : lastData;
+        if (!payload) return;
+        try {
+          await navigator.clipboard.writeText(JSON.stringify(payload, null, 2));
+          btn.textContent = 'Copied';
+          setTimeout(() => (btn.textContent = 'Copy'), 1400);
+        } catch {
+          /* clipboard blocked */
+        }
       }
       function renderJsonTab() {
         const body = $('#jbody');
@@ -764,6 +806,12 @@
           e.preventDefault();
           urlInput.value = EXAMPLE;
           submitUrl(EXAMPLE);
+          return;
+        }
+
+        const copyBtn = e.target.closest('[data-copy-json]');
+        if (copyBtn) {
+          copyCurrentJson(copyBtn);
           return;
         }
 
