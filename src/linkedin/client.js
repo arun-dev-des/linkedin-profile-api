@@ -110,3 +110,26 @@ export function fetchProfileSkills(profileUrn) {
   url.searchParams.set('count', '100');
   return voyagerGet(url);
 }
+
+/**
+ * Fetches the *complete* list of individual roles for a profile.
+ *
+ * The FullProfileWithEntities decoration caps `profilePositionGroups` at 10
+ * groups regardless of how many the profile has (see docs/endpoint-map.md).
+ * Unlike that collection, `profilePositions` honors `count` — `count=100`
+ * returns every role, not just the capped groups' worth. It doesn't resolve
+ * `Company`/`EmploymentType` entities though; normalize.js's
+ * `extractFullExperience()` fills those back in from what the main call
+ * already resolved.
+ *
+ * @param {string} profileUrn  the subject's `urn:li:fsd_profile:…`
+ * @returns {Promise<object>} { data, included }
+ */
+export function fetchProfilePositions(profileUrn) {
+  const url = new URL(`${VOYAGER}/identity/dash/profilePositions`);
+  url.searchParams.set('q', 'viewee');
+  url.searchParams.set('profileUrn', profileUrn);
+  url.searchParams.set('start', '0');
+  url.searchParams.set('count', '100');
+  return voyagerGet(url);
+}

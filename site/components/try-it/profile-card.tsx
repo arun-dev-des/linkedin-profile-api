@@ -146,6 +146,13 @@ export function ProfileCard({ data }: { data: ProfileEnvelope }) {
               desc={e.description}
             />
           ))}
+          {m.partial?.experience && (
+            <p className="text-muted-foreground mt-2.5 text-[12.5px]">
+              Showing {m.partial.experience.returnedGroups} of{' '}
+              {m.partial.experience.totalGroups} companies — turn on “Complete skills &amp;
+              experience” above.
+            </p>
+          )}
         </Section>
       )}
 
@@ -180,7 +187,7 @@ export function ProfileCard({ data }: { data: ProfileEnvelope }) {
           {m.partial?.skills && (
             <p className="text-muted-foreground mt-2.5 text-[12.5px]">
               Showing {m.partial.skills.returned} of {m.partial.skills.total} — turn on “Complete
-              skills” above.
+              skills &amp; experience” above.
             </p>
           )}
         </Section>
@@ -233,6 +240,12 @@ export function ProfileCard({ data }: { data: ProfileEnvelope }) {
               </li>
             ))}
           </ul>
+          {m.partial?.featured && (
+            <p className="text-muted-foreground mt-2.5 text-[12.5px]">
+              Showing {m.partial.featured.returned} of {m.partial.featured.total} — LinkedIn caps
+              this section server-side, there&apos;s no complete-list request that helps.
+            </p>
+          )}
         </Section>
       )}
 

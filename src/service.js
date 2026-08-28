@@ -2,8 +2,8 @@ import { readFileSync } from 'node:fs';
 
 import { config } from './config.js';
 import { TtlCache } from './cache.js';
-import { fetchProfileRaw, fetchProfileSkills } from './linkedin/client.js';
-import { extractSkillNames, normalizeProfile } from './linkedin/normalize.js';
+import { fetchProfileRaw, fetchProfilePositions, fetchProfileSkills } from './linkedin/client.js';
+import { extractFullExperience, extractSkillNames, normalizeProfile } from './linkedin/normalize.js';
 
 const cache = new TtlCache(config.cacheTtlMs);
 
@@ -37,12 +37,36 @@ async function completeSkills(profile, partial, profileUrn) {
 }
 
 /**
+ * If the main call capped the experience list (10 position groups), spend one
+ * extra request on the `profilePositions` finder, which — unlike
+ * `profilePositionGroups` — honors `count` and returns every individual role.
+ * `companyLogo`/`companyUrl`/`employmentType` are filled back in for roles the
+ * main call already resolved (`enrichmentByUrn`); roles recovered only here
+ * get `null` for those three. Best-effort, same as completeSkills: a failure
+ * leaves the capped list and its `partial.experience` marker in place.
+ */
+async function completeExperience(profile, partial, profileUrn, enrichmentByUrn) {
+  if (!partial.experience || !profileUrn) return;
+  try {
+    const raw = await fetchProfilePositions(profileUrn);
+    const full = extractFullExperience(raw, enrichmentByUrn);
+    if (full.length >= profile.experience.length) {
+      profile.experience = full;
+      delete partial.experience;
+    }
+  } catch (err) {
+    console.warn(`experience completion failed for ${profileUrn}: ${err.code ?? err.message}`);
+  }
+}
+
+/**
  * Fetches and normalizes one profile, serving from cache when warm.
  *
  * @param {string} publicId
  * @param {object} [opts]
- * @param {boolean} [opts.full]  also fetch the complete skills list (one extra
- *   upstream request, only when the main call capped it at 20)
+ * @param {boolean} [opts.full]  also fetch complete skills and experience
+ *   lists — up to two extra upstream requests, each only when the main call
+ *   capped that section
  * @returns {Promise<object>} the API response envelope
  */
 export async function getProfile(publicId, { full = false } = {}) {
@@ -52,9 +76,14 @@ export async function getProfile(publicId, { full = false } = {}) {
 
   const raw = await fetchProfileRaw(publicId);
   cache.set(`raw|${publicId}`, raw);
-  const { profile, partial, profileUrn } = normalizeProfile(raw);
+  const { profile, partial, profileUrn, experienceEnrichment } = normalizeProfile(raw);
 
-  if (full) await completeSkills(profile, partial, profileUrn);
+  if (full) {
+    await Promise.all([
+      completeSkills(profile, partial, profileUrn),
+      completeExperience(profile, partial, profileUrn, experienceEnrichment),
+    ]);
+  }
 
   cache.set(key, { profile, partial });
   return envelope(profile, { partial });

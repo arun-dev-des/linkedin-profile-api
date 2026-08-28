@@ -465,8 +465,8 @@
         <p class="opts">
           <input type="checkbox" id="full" />
           <label for="full"
-            >Complete skills list &mdash; one extra request when LinkedIn caps it at 20
-            (<code>?full=1</code>)</label
+            >Complete skills &amp; experience &mdash; one extra request per section LinkedIn
+            capped (20 skills, 10 companies' worth of roles) (<code>?full=1</code>)</label
           >
         </p>
       </div>
@@ -642,19 +642,24 @@
           : `<div class="avatar"></div>`;
         const metaLine = [p.location, p.industry].filter(Boolean).map(esc).join(' · ');
 
-        const experience = (p.experience ?? [])
-          .map((e) =>
-            entry({
-              logo: e.companyLogo,
-              title: e.title,
-              sub: [e.company, e.employmentType].filter(Boolean).join(' · '),
-              dates: [dateSpan(e.startDate, e.endDate, e.current), e.location]
-                .filter(Boolean)
-                .join('  ·  '),
-              desc: e.description,
-            }),
-          )
-          .join('');
+        const experience = (p.experience ?? []).length
+          ? (p.experience ?? [])
+              .map((e) =>
+                entry({
+                  logo: e.companyLogo,
+                  title: e.title,
+                  sub: [e.company, e.employmentType].filter(Boolean).join(' · '),
+                  dates: [dateSpan(e.startDate, e.endDate, e.current), e.location]
+                    .filter(Boolean)
+                    .join('  ·  '),
+                  desc: e.description,
+                }),
+              )
+              .join('') +
+            (m.partial?.experience
+              ? `<p class="partial-note">Showing ${m.partial.experience.returnedGroups} of ${m.partial.experience.totalGroups} companies — tick "Complete skills &amp; experience" above.</p>`
+              : '')
+          : '';
 
         const education = (p.education ?? [])
           .map((e) => {
@@ -707,7 +712,10 @@
                     f.title || f.url,
                   )}</a>${f.provider ? ` <span class="dates">— ${esc(f.provider)}</span>` : ''}</li>`,
               )
-              .join('')}</ul>`
+              .join('')}</ul>` +
+            (m.partial?.featured
+              ? `<p class="partial-note">Showing ${m.partial.featured.returned} of ${m.partial.featured.total} — LinkedIn caps this section server-side, there's no complete-list request that helps.</p>`
+              : '')
           : '';
 
         return `

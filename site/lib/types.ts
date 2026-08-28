@@ -62,7 +62,11 @@ export interface ProfileEnvelope {
     fetchedAt: string;
     cached: boolean;
     source: string;
-    partial?: { skills?: { returned: number; total: number } };
+    partial?: {
+      skills?: { returned: number; total: number };
+      experience?: { returnedGroups: number; totalGroups: number };
+      featured?: { returned: number; total: number };
+    };
   };
 }
 

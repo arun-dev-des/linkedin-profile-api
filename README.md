@@ -48,7 +48,7 @@ cp .env.example .env
 # edit .env — see "Getting the credentials" below
 
 npm run dev          # http://localhost:3000
-npm test             # 18 tests, fully offline
+npm test             # 38 tests, fully offline
 ```
 
 ### Getting the credentials
@@ -79,7 +79,7 @@ Fetch and normalize a LinkedIn profile.
 | Query param | Required | Description |
 | --- | --- | --- |
 | `url` | yes | A LinkedIn profile URL. Accepts `https://www.linkedin.com/in/<id>/`, locale subdomains (`in.linkedin.com`), trailing paths, and query strings. |
-| `full` | no | `full=1` also fetches the **complete skills list**. The main call caps skills at 20; with `full=1` the service spends one extra upstream request (only when the cap was hit) to return all of them, and `meta.partial.skills` disappears. Off by default — see [Known limitations](#known-limitations) and [`docs/endpoint-map.md`](docs/endpoint-map.md). |
+| `full` | no | `full=1` also fetches the **complete skills and experience lists**. The main call caps skills at 20 and experience at 10 position groups; with `full=1` the service spends one extra upstream request *per capped section* (only when that section's cap was actually hit, run in parallel) and the matching `meta.partial` key disappears. Off by default — see [Known limitations](#known-limitations) and [`docs/endpoint-map.md`](docs/endpoint-map.md). |
 
 ```bash
 curl 'http://localhost:3000/profile?url=https://www.linkedin.com/in/iamarun4official/'
@@ -214,7 +214,11 @@ of ~100 cross-referenced entities; this is the flattened, cleaned view.
     "fetchedAt": "2026-08-28T12:00:00.000Z",
     "cached": false,
     "source": "linkedin-voyager",
-    "partial": { "skills": { "returned": 20, "total": 31 } }
+    "partial": {
+      "skills": { "returned": 20, "total": 31 },
+      "experience": { "returnedGroups": 10, "totalGroups": 32 },
+      "featured": { "returned": 3, "total": 10 }
+    }
   }
 }
 ```
@@ -225,9 +229,13 @@ Notes:
   Nothing throws on an absent section.
 - **Dates** are `"YYYY"` or `"YYYY-MM"` strings (LinkedIn rarely provides a day).
   A currently-held role has `endDate: null` and `current: true`.
-- **`meta.partial`** appears only when LinkedIn returned a capped list. Its
-  presence is honest signalling that the section is incomplete — see
-  [Known limitations](#known-limitations).
+- **`meta.partial`** appears only when LinkedIn returned a capped section, and
+  only the capped keys are present (a profile with 5 roles and 10 skills would
+  show `partial.skills` alone). Its presence is honest signalling that the
+  section is incomplete — see [Known limitations](#known-limitations).
+  `experience` reports `returnedGroups`/`totalGroups` rather than
+  `returned`/`total` because LinkedIn's cap is on position *groups* (the
+  "Company — 3 roles" block), not the flattened role entries in the response.
 
 ---
 
@@ -346,16 +354,18 @@ src/
   cache.js             in-memory TTL cache + per-IP rate limiter
   linkedin/
     url.js             LinkedIn URL → publicId
-    client.js          the authenticated Voyager GETs (profile, + skills for ?full=1)
+    client.js          the authenticated Voyager GETs (profile, + skills/positions for ?full=1)
     normalize.js       normalized+json graph → clean profile tree
 public/
   index.html           the browser UI — one self-contained file, no build step
 fixtures/
   raw-profile.json     a real captured payload — powers the tests and /profile/sample
-  raw-skills.json      a real profileSkills response — powers the ?full=1 tests
+  raw-skills.json      a real profileSkills response — powers the skills half of ?full=1 tests
+  raw-positions.json   a real profilePositions response — powers the experience half of ?full=1 tests
 test/
   normalize.test.js    offline tests, incl. every real-payload edge case
   skills.test.js       the complete-skills extraction (?full=1)
+  experience.test.js   the complete-experience extraction + enrichment merge (?full=1)
   errors.test.js       upstream-status classification
 fetch_profile.py       the original Python spike, kept as a reference
 docs/
@@ -366,10 +376,11 @@ docs/
 
 Design choices:
 
-- **One request per lookup.** The `FullProfileWithEntities` decoration returns
-  experience, education, skills, certifications, images and more in a single
-  response. `?full=1` adds exactly one more — the dedicated skills finder — and
-  only when the main call capped the list.
+- **One request per lookup, up to two more with `?full=1`.** The
+  `FullProfileWithEntities` decoration returns experience, education, skills,
+  certifications, images and more in a single response. `?full=1` adds one
+  request per capped section — the dedicated skills and/or positions finder,
+  fetched in parallel, and only for whichever section(s) were actually capped.
 - **Normalizer is a pure function** — no I/O, no throw on missing data — so it is
   fully tested offline against a committed real payload.
 - **In-memory cache + rate limit**, not Redis: a small hosted service backed by
@@ -416,17 +427,30 @@ and update the `DECORATION_ID` env var.
   [Deployment](#bumping-decoration_id).
 - **Session lifetime.** `li_at` is long-lived but revoked on password change and
   some security events. No refresh flow — cookies are re-extracted manually.
-- **Skills are capped at 20 by default.** The `FullProfileWithEntities`
-  decoration returns at most 20 skills regardless of how many the profile has;
-  `meta.partial.skills` reports the true total. Pass **`?full=1`** to have the
-  service fetch the complete list via a dedicated finder
-  (`profileSkills?q=viewee&count=100`) in one extra request — see
-  [`docs/endpoint-map.md`](docs/endpoint-map.md).
-- **"Featured" media is still capped.** The `profileTreasuryMedia` section (the
-  `featured` array) is truncated by the main call the same way skills are, and
-  `?full=1` does **not** currently complete it — that endpoint returns a
-  different entity shape and would need its own parser. Featured links beyond the
-  first few are not returned.
+- **Three sections are capped by LinkedIn's own projection**, regardless of how
+  much the profile actually has: **skills** (20 max), **experience** (10
+  position *groups* max — a group is the "Company — 3 roles" block, so a
+  group with several roles can still push the flattened list past 10 entries),
+  and **featured** / `profileTreasuryMedia` (3 max). All three are reported
+  honestly via `meta.partial` (`skills`, `experience`, `featured`) whenever
+  LinkedIn's own `paging.total` exceeds what was returned — see
+  [Response schema](#response-schema).
+- **Skills and experience get completed; featured doesn't.** Pass **`?full=1`**
+  to have the service spend one extra request per capped section:
+  `profileSkills?q=viewee&count=100` for the whole skills list, and
+  `profilePositions?q=viewee&count=100` for every individual role (LinkedIn
+  honors `count` on both finders — verified live: a rich profile capped at 10
+  position groups returns all 33 roles this way). See
+  [`docs/endpoint-map.md`](docs/endpoint-map.md). Completed experience entries
+  carry `companyLogo`/`companyUrl`/`employmentType` only for roles the main
+  call had already resolved — `profilePositions` returns bare company URNs,
+  not inlined `Company` entities, so roles recovered *only* by completion get
+  `null` for those three fields (title, company, dates, description, location
+  are unaffected). `featured` stays capped even with `?full=1`:
+  `profileTreasuryMedia` is capped at 3 of ~10 **even with `count=100`** —
+  verified live — so there's no bigger request that would help, and its
+  response is a different entity shape besides. `meta.partial.featured` at
+  least tells you when it's capped.
 - **Career breaks are not returned.** A "Career break" entry in the Experience
   section is not part of the Voyager `profilePositionGroups` collection or the
   `FullProfileWithEntities` decoration, and the LinkedIn Android app has no

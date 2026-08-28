@@ -30,6 +30,9 @@ function buildIndex(payload) {
 
 const resolve = (index, urn) => (typeof urn === 'string' ? (index.get(urn) ?? null) : null);
 
+/** Shallow-copies the named keys off an object. */
+const pick = (obj, keys) => Object.fromEntries(keys.map((k) => [k, obj[k]]));
+
 /**
  * Resolves a CollectionResponse reference into its member entities.
  * Empty collections carry `"elements": []` with no `*elements` key at all,
@@ -105,7 +108,8 @@ const geoName = (index, geoUrn) => resolve(index, geoUrn)?.defaultLocalizedName 
 /* ---------------------------------------------------------------- sections */
 
 function buildExperience(index, profile) {
-  const groups = resolveCollection(index, profile['*profilePositionGroups']);
+  const groupsUrn = profile['*profilePositionGroups'];
+  const groups = resolveCollection(index, groupsUrn);
   const entries = [];
 
   for (const group of groups) {
@@ -115,6 +119,10 @@ function buildExperience(index, profile) {
       const company = resolve(index, position['*company']) ?? groupCompany;
 
       entries.push({
+        // Internal only — used to carry companyUrl/companyLogo/employmentType
+        // over to a ?full=1 completion fetch, which can't resolve them itself
+        // (see extractFullExperience). Stripped before the entry is returned.
+        _urn: position.entityUrn ?? null,
         title: position.title ?? null,
         // The position's own companyName is what the profile page displays, and
         // can differ from the company's canonical current name.
@@ -132,10 +140,30 @@ function buildExperience(index, profile) {
 
   // Positions arrive unsorted. Present LinkedIn-style: current roles first, then
   // newest start date first.
-  return entries.sort(
+  entries.sort(
     (a, b) =>
       Number(b.current) - Number(a.current) || dateSortKey(b.startDate) - dateSortKey(a.startDate),
   );
+
+  // Keep company/employmentType enrichment for a possible ?full=1 completion
+  // pass, keyed by the position's own URN, before stripping it from the
+  // public shape.
+  const enrichmentByUrn = new Map(
+    entries.filter((e) => e._urn).map((e) => [e._urn, pick(e, ['companyUrl', 'companyLogo', 'employmentType'])]),
+  );
+  const publicEntries = entries.map(({ _urn, ...rest }) => rest);
+
+  // LinkedIn caps *profilePositionGroups itself (rich profiles: 10 of 32 seen
+  // in the wild) — the same way it caps skills. The cap is on groups, not
+  // flattened entries, so report it at that level rather than pretending
+  // entries.length is comparable to the group total.
+  const groupsPaging = pagingFor(index, groupsUrn);
+  const partial =
+    groupsPaging?.total > groups.length
+      ? { returnedGroups: groups.length, totalGroups: groupsPaging.total }
+      : null;
+
+  return { entries: publicEntries, partial, enrichmentByUrn };
 }
 
 function buildEducation(index, profile) {
@@ -173,13 +201,21 @@ const buildLanguages = (index, profile) =>
     proficiency: language.proficiency ?? null,
   }));
 
-/** "Featured" links shown on the profile. */
-const buildFeatured = (index, profile) =>
-  resolveCollection(index, profile['*profileTreasuryMediaProfile']).map((media) => ({
+/** "Featured" links shown on the profile. Also capped by LinkedIn — same
+ * treatment as skills: report the shortfall rather than hide it. */
+function buildFeatured(index, profile) {
+  const urn = profile['*profileTreasuryMediaProfile'];
+  const entries = resolveCollection(index, urn).map((media) => ({
     title: media.title ?? null,
     url: media.data?.Url ?? null,
     provider: media.providerName ?? null,
   }));
+
+  const paging = pagingFor(index, urn);
+  const partial = paging?.total > entries.length ? { returned: entries.length, total: paging.total } : null;
+
+  return { entries, partial };
+}
 
 /**
  * Skill names from a standalone `profileSkills?q=viewee` response, in the order
@@ -197,11 +233,56 @@ export function extractSkillNames(payload) {
     .filter((name) => typeof name === 'string' && name.trim() !== '');
 }
 
+/**
+ * Full experience list from a standalone `profilePositions?q=viewee` response
+ * — unlike `profilePositionGroups`, LinkedIn honors `count` here, so
+ * `count=100` returns every individual role rather than the 10-group cap the
+ * main call hits. Used to replace a capped `experience` list — see
+ * docs/endpoint-map.md.
+ *
+ * The trade-off: this finder returns bare `companyUrn`/`employmentTypeUrn`,
+ * not resolved `Company`/`EmploymentType` entities, so on its own it can't
+ * reproduce `companyLogo`, `companyUrl`, or `employmentType`. `enrichmentByUrn`
+ * (from `buildExperience`'s return value) fills those back in for roles the
+ * main call had already resolved; roles recovered only here get `null` for
+ * those three fields — the same tolerated gap as a company with no logo.
+ *
+ * @param {object} payload  raw Voyager response from fetchProfilePositions()
+ * @param {Map<string, object>} [enrichmentByUrn]  urn -> {companyUrl, companyLogo, employmentType}
+ * @returns {object[]}  same shape as profile.experience
+ */
+export function extractFullExperience(payload, enrichmentByUrn = new Map()) {
+  const index = buildIndex(payload);
+  const ordered = payload?.data?.['*elements'] ?? [];
+
+  const entries = ordered
+    .map((urn) => resolve(index, urn))
+    .filter(Boolean)
+    .map((position) => {
+      const enrichment = enrichmentByUrn.get(position.entityUrn) ?? {};
+      return {
+        title: position.title ?? null,
+        company: position.companyName ?? null,
+        companyUrl: enrichment.companyUrl ?? null,
+        companyLogo: enrichment.companyLogo ?? null,
+        employmentType: enrichment.employmentType ?? null,
+        location: position.locationName ?? position.geoLocationName ?? null,
+        ...readDateRange(position.dateRange),
+        description: position.description ?? null,
+      };
+    });
+
+  return entries.sort(
+    (a, b) =>
+      Number(b.current) - Number(a.current) || dateSortKey(b.startDate) - dateSortKey(a.startDate),
+  );
+}
+
 /* -------------------------------------------------------------------- main */
 
 /**
  * @param {object} payload  raw Voyager response: { data, included }
- * @returns {{profile: object, partial: object, profileUrn: string}}
+ * @returns {{profile: object, partial: object, profileUrn: string, experienceEnrichment: Map}}
  */
 export function normalizeProfile(payload) {
   const index = buildIndex(payload);
@@ -227,12 +308,21 @@ export function normalizeProfile(payload) {
     .map((skill) => skill.name)
     .filter(Boolean);
 
-  // LinkedIn caps skills inside this projection; surface the shortfall rather
-  // than silently returning a partial list.
+  const {
+    entries: experience,
+    partial: experiencePartial,
+    enrichmentByUrn: experienceEnrichment,
+  } = buildExperience(index, profile);
+  const { entries: featured, partial: featuredPartial } = buildFeatured(index, profile);
+
+  // LinkedIn caps several sections inside this projection; surface any
+  // shortfall rather than silently returning a partial list.
   const partial = {};
   if (skillsPaging?.total > skills.length) {
     partial.skills = { returned: skills.length, total: skillsPaging.total };
   }
+  if (experiencePartial) partial.experience = experiencePartial;
+  if (featuredPartial) partial.featured = featuredPartial;
 
   return {
     profile: {
@@ -251,14 +341,15 @@ export function normalizeProfile(payload) {
         profilePicture: pictureUrl(profile.profilePicture),
         backgroundImage: pictureUrl(profile.backgroundPicture),
       },
-      experience: buildExperience(index, profile),
+      experience,
       education: buildEducation(index, profile),
       skills,
       certifications: buildCertifications(index, profile),
       languages: buildLanguages(index, profile),
-      featured: buildFeatured(index, profile),
+      featured,
     },
     partial,
     profileUrn: rootUrn,
+    experienceEnrichment,
   };
 }

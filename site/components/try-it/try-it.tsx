@@ -145,7 +145,7 @@ export function TryIt() {
           <div className="ml-1 flex items-center gap-2">
             <Switch id="full" checked={full} onCheckedChange={toggleFull} />
             <Label htmlFor="full" className="text-muted-foreground text-xs font-normal">
-              Complete skills list <span className="font-mono">?full=1</span>
+              Complete skills &amp; experience <span className="font-mono">?full=1</span>
             </Label>
           </div>
         </div>

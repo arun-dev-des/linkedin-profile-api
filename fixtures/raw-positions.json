@@ -1,0 +1,448 @@
+{
+  "data": {
+    "entityUrn": "urn:li:collectionResponse:rXmHhxshNkyocsiXjJX9E1uOIcPxU2XNA+D23DBb35k=",
+    "paging": {
+      "count": 100,
+      "start": 0,
+      "total": 10,
+      "links": []
+    },
+    "*elements": [
+      "urn:li:fsd_profilePosition:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,2591921949)",
+      "urn:li:fsd_profilePosition:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,2214703044)",
+      "urn:li:fsd_profilePosition:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,1917708595)",
+      "urn:li:fsd_profilePosition:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,1538942031)",
+      "urn:li:fsd_profilePosition:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,1316863168)",
+      "urn:li:fsd_profilePosition:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,1042793885)",
+      "urn:li:fsd_profilePosition:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,1024815607)",
+      "urn:li:fsd_profilePosition:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,889255939)",
+      "urn:li:fsd_profilePosition:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,814904292)",
+      "urn:li:fsd_profilePosition:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,981808677)"
+    ],
+    "$type": "com.linkedin.restli.common.CollectionResponse"
+  },
+  "included": [
+    {
+      "shouldShowSourceOfHireBadge": false,
+      "locationName": "Bengaluru",
+      "multiLocaleTitle": {
+        "en_US": "Product Designer"
+      },
+      "dateRange": {
+        "start": {
+          "month": 8,
+          "year": 2024,
+          "$type": "com.linkedin.common.Date"
+        },
+        "end": {
+          "month": 8,
+          "year": 2025,
+          "$type": "com.linkedin.common.Date"
+        },
+        "$type": "com.linkedin.common.DateRange"
+      },
+      "multiLocaleCompanyName": {
+        "en_US": "Applix"
+      },
+      "geoUrn": "urn:li:fsd_geo:105214831",
+      "companyName": "Applix",
+      "description": "● Worked closely with CEO and stakeholders weekly to map workflow pain, turned it directly into designs ● Designed data-intensive dashboards for enterprise workflow automation, working directly with founders and engineers ● Crafted product demos for enterprise customer pitch",
+      "title": "Product Designer",
+      "companyUrn": "urn:li:fsd_company:91623374",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Position",
+      "regionUrn": null,
+      "employmentTypeUrn": "urn:li:fsd_employmentType:12",
+      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,2591921949)",
+      "geoLocationName": "Bengaluru",
+      "multiLocaleGeoLocationName": {
+        "en_US": "Bengaluru"
+      },
+      "hasSkillAssociations": false,
+      "multiLocaleDescription": {
+        "en_US": "● Worked closely with CEO and stakeholders weekly to map workflow pain, turned it directly into designs ● Designed data-intensive dashboards for enterprise workflow automation, working directly with founders and engineers ● Crafted product demos for enterprise customer pitch"
+      },
+      "multiLocaleLocationName": {
+        "en_US": "Bengaluru"
+      },
+      "sourceOfHireType": null
+    },
+    {
+      "shouldShowSourceOfHireBadge": false,
+      "locationName": null,
+      "multiLocaleTitle": {
+        "en_US": "UX Designer - Intern"
+      },
+      "dateRange": {
+        "start": {
+          "month": 11,
+          "year": 2016,
+          "$type": "com.linkedin.common.Date"
+        },
+        "end": {
+          "month": 1,
+          "year": 2017,
+          "$type": "com.linkedin.common.Date"
+        },
+        "$type": "com.linkedin.common.DateRange"
+      },
+      "multiLocaleCompanyName": {
+        "en_US": "FULL Creative"
+      },
+      "geoUrn": null,
+      "companyName": "FULL Creative",
+      "description": null,
+      "title": "UX Designer - Intern",
+      "companyUrn": "urn:li:fsd_company:2942058",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Position",
+      "regionUrn": null,
+      "employmentTypeUrn": null,
+      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,889255939)",
+      "geoLocationName": null,
+      "multiLocaleGeoLocationName": null,
+      "hasSkillAssociations": false,
+      "multiLocaleDescription": null,
+      "multiLocaleLocationName": null,
+      "sourceOfHireType": null
+    },
+    {
+      "shouldShowSourceOfHireBadge": false,
+      "locationName": "Chennai, India",
+      "multiLocaleTitle": {
+        "en_US": "Graphic Designer"
+      },
+      "dateRange": {
+        "start": {
+          "month": 10,
+          "year": 2015,
+          "$type": "com.linkedin.common.Date"
+        },
+        "end": {
+          "month": 10,
+          "year": 2016,
+          "$type": "com.linkedin.common.Date"
+        },
+        "$type": "com.linkedin.common.DateRange"
+      },
+      "multiLocaleCompanyName": {
+        "en_US": "Uptown Ideas"
+      },
+      "geoUrn": null,
+      "companyName": "Uptown Ideas",
+      "description": null,
+      "title": "Graphic Designer",
+      "companyUrn": "urn:li:fsd_company:3129783",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Position",
+      "regionUrn": null,
+      "employmentTypeUrn": null,
+      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,814904292)",
+      "geoLocationName": "Chennai, India",
+      "multiLocaleGeoLocationName": {
+        "en_US": "Chennai, India"
+      },
+      "hasSkillAssociations": false,
+      "multiLocaleLocationName": {
+        "en_US": "Chennai, India"
+      },
+      "multiLocaleDescription": null,
+      "sourceOfHireType": null
+    },
+    {
+      "shouldShowSourceOfHireBadge": false,
+      "locationName": "Bengaluru, Karnataka, India",
+      "multiLocaleTitle": {
+        "en_US": "Senior Product Designer"
+      },
+      "dateRange": {
+        "start": {
+          "month": 2,
+          "year": 2022,
+          "$type": "com.linkedin.common.Date"
+        },
+        "end": {
+          "month": 7,
+          "year": 2023,
+          "$type": "com.linkedin.common.Date"
+        },
+        "$type": "com.linkedin.common.DateRange"
+      },
+      "multiLocaleCompanyName": {
+        "en_US": "Tekion Corp"
+      },
+      "geoUrn": "urn:li:fsd_geo:105214831",
+      "companyName": "Tekion Corp",
+      "description": null,
+      "title": "Senior Product Designer",
+      "companyUrn": "urn:li:fsd_company:41315",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Position",
+      "regionUrn": null,
+      "employmentTypeUrn": "urn:li:fsd_employmentType:12",
+      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,1917708595)",
+      "geoLocationName": "Bengaluru, Karnataka, India",
+      "multiLocaleGeoLocationName": {
+        "en_US": "Bengaluru, Karnataka, India"
+      },
+      "hasSkillAssociations": false,
+      "multiLocaleLocationName": {
+        "en_US": "Bengaluru, Karnataka, India"
+      },
+      "multiLocaleDescription": null,
+      "sourceOfHireType": null
+    },
+    {
+      "shouldShowSourceOfHireBadge": false,
+      "locationName": "Bengaluru",
+      "multiLocaleTitle": {
+        "en_US": "UX Designer"
+      },
+      "dateRange": {
+        "start": {
+          "month": 5,
+          "year": 2018,
+          "$type": "com.linkedin.common.Date"
+        },
+        "end": {
+          "month": 4,
+          "year": 2019,
+          "$type": "com.linkedin.common.Date"
+        },
+        "$type": "com.linkedin.common.DateRange"
+      },
+      "multiLocaleCompanyName": {
+        "en_US": "Clip"
+      },
+      "geoUrn": "urn:li:fsd_geo:105307040",
+      "companyName": "Clip",
+      "description": "● Designed UX for a vernacular short video platform across 10 Indian languages - 40M installs, 3M DAU. ● Home feed redesign drove 30% uplift in time spent and 8% reduction in uninstalls. Related videos feature drove an additional 20% uplift.",
+      "title": "UX Designer",
+      "companyUrn": "urn:li:fsd_company:11193332",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Position",
+      "regionUrn": null,
+      "employmentTypeUrn": null,
+      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,1316863168)",
+      "geoLocationName": "Bengaluru",
+      "multiLocaleGeoLocationName": {
+        "en_US": "Bengaluru"
+      },
+      "hasSkillAssociations": false,
+      "multiLocaleDescription": {
+        "en_US": "● Designed UX for a vernacular short video platform across 10 Indian languages - 40M installs, 3M DAU. ● Home feed redesign drove 30% uplift in time spent and 8% reduction in uninstalls. Related videos feature drove an additional 20% uplift."
+      },
+      "multiLocaleLocationName": {
+        "en_US": "Bengaluru"
+      },
+      "sourceOfHireType": null
+    },
+    {
+      "shouldShowSourceOfHireBadge": false,
+      "locationName": "Bangalore Urban",
+      "multiLocaleTitle": {
+        "en_US": "Product Designer"
+      },
+      "dateRange": {
+        "start": {
+          "month": 8,
+          "year": 2022,
+          "$type": "com.linkedin.common.Date"
+        },
+        "end": {
+          "month": 8,
+          "year": 2024,
+          "$type": "com.linkedin.common.Date"
+        },
+        "$type": "com.linkedin.common.DateRange"
+      },
+      "multiLocaleCompanyName": {
+        "en_US": "Tekion Corp"
+      },
+      "geoUrn": "urn:li:fsd_geo:112376381",
+      "companyName": "Tekion Corp",
+      "description": "● Led UX for Tekion Open API for 3rd party developers to build apps and integrate with Tekion ecosystem ● Designed dashboards and user workflow for enterprise automotive platform at meaningful scale across dealerships",
+      "title": "Product Designer",
+      "companyUrn": "urn:li:fsd_company:41315",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Position",
+      "regionUrn": null,
+      "employmentTypeUrn": "urn:li:fsd_employmentType:12",
+      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,2214703044)",
+      "geoLocationName": "Bangalore Urban",
+      "multiLocaleGeoLocationName": {
+        "en_US": "Bangalore Urban"
+      },
+      "hasSkillAssociations": false,
+      "multiLocaleDescription": {
+        "en_US": "● Led UX for Tekion Open API for 3rd party developers to build apps and integrate with Tekion ecosystem ● Designed dashboards and user workflow for enterprise automotive platform at meaningful scale across dealerships"
+      },
+      "multiLocaleLocationName": {
+        "en_US": "Bangalore Urban"
+      },
+      "sourceOfHireType": null
+    },
+    {
+      "shouldShowSourceOfHireBadge": false,
+      "locationName": "Bengaluru Area, India",
+      "multiLocaleTitle": {
+        "en_US": "Senior UX Designer"
+      },
+      "dateRange": {
+        "start": {
+          "month": 4,
+          "year": 2019,
+          "$type": "com.linkedin.common.Date"
+        },
+        "end": {
+          "month": 9,
+          "year": 2020,
+          "$type": "com.linkedin.common.Date"
+        },
+        "$type": "com.linkedin.common.DateRange"
+      },
+      "multiLocaleCompanyName": {
+        "en_US": "Mech Mocha"
+      },
+      "geoUrn": "urn:li:fsd_geo:90009633",
+      "companyName": "Mech Mocha",
+      "description": null,
+      "title": "Senior UX Designer",
+      "companyUrn": "urn:li:fsd_company:2534181",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Position",
+      "regionUrn": null,
+      "employmentTypeUrn": "urn:li:fsd_employmentType:12",
+      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,1538942031)",
+      "geoLocationName": "Bengaluru Area, India",
+      "multiLocaleGeoLocationName": {
+        "en_US": "Bengaluru Area, India"
+      },
+      "hasSkillAssociations": false,
+      "multiLocaleLocationName": {
+        "en_US": "Bengaluru Area, India"
+      },
+      "multiLocaleDescription": null,
+      "sourceOfHireType": null
+    },
+    {
+      "shouldShowSourceOfHireBadge": false,
+      "locationName": "Bangalore",
+      "multiLocaleTitle": {
+        "en_US": "UX Designer - Intern"
+      },
+      "dateRange": {
+        "start": {
+          "month": 5,
+          "year": 2017,
+          "$type": "com.linkedin.common.Date"
+        },
+        "end": {
+          "month": 7,
+          "year": 2017,
+          "$type": "com.linkedin.common.Date"
+        },
+        "$type": "com.linkedin.common.DateRange"
+      },
+      "multiLocaleCompanyName": {
+        "en_US": "NetBramha Studios ( hiring now! )"
+      },
+      "geoUrn": null,
+      "companyName": "NetBramha Studios ( hiring now! )",
+      "description": null,
+      "title": "UX Designer - Intern",
+      "companyUrn": "urn:li:fsd_company:424566",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Position",
+      "regionUrn": null,
+      "employmentTypeUrn": null,
+      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,1024815607)",
+      "geoLocationName": "Bangalore",
+      "multiLocaleGeoLocationName": {
+        "en_US": "Bangalore"
+      },
+      "hasSkillAssociations": false,
+      "multiLocaleLocationName": {
+        "en_US": "Bangalore"
+      },
+      "multiLocaleDescription": null,
+      "sourceOfHireType": null
+    },
+    {
+      "shouldShowSourceOfHireBadge": false,
+      "locationName": "Bengaluru Area, India",
+      "multiLocaleTitle": {
+        "en_US": "Product Designer"
+      },
+      "dateRange": {
+        "start": {
+          "year": 2017,
+          "$type": "com.linkedin.common.Date"
+        },
+        "end": {
+          "year": 2018,
+          "$type": "com.linkedin.common.Date"
+        },
+        "$type": "com.linkedin.common.DateRange"
+      },
+      "multiLocaleCompanyName": {
+        "en_US": "Hike"
+      },
+      "geoUrn": "urn:li:fsd_geo:105307040",
+      "companyName": "Hike",
+      "description": "● Designed the Developer Console end-to-end, enabling third-party developers to build and push mini apps inside Hike's platform for 100M+ users.",
+      "title": "Product Designer",
+      "companyUrn": "urn:li:fsd_company:2790400",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Position",
+      "regionUrn": null,
+      "employmentTypeUrn": null,
+      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,1042793885)",
+      "geoLocationName": "Bengaluru Area, India",
+      "multiLocaleGeoLocationName": {
+        "en_US": "Bengaluru Area, India"
+      },
+      "hasSkillAssociations": false,
+      "multiLocaleDescription": {
+        "en_US": "● Designed the Developer Console end-to-end, enabling third-party developers to build and push mini apps inside Hike's platform for 100M+ users."
+      },
+      "multiLocaleLocationName": {
+        "en_US": "Bengaluru Area, India"
+      },
+      "sourceOfHireType": null
+    },
+    {
+      "shouldShowSourceOfHireBadge": false,
+      "locationName": "Chennai Area, India",
+      "multiLocaleTitle": {
+        "en_US": "Graphic Designer - Intern"
+      },
+      "dateRange": {
+        "start": {
+          "month": 7,
+          "year": 2015,
+          "$type": "com.linkedin.common.Date"
+        },
+        "end": {
+          "month": 9,
+          "year": 2015,
+          "$type": "com.linkedin.common.Date"
+        },
+        "$type": "com.linkedin.common.DateRange"
+      },
+      "multiLocaleCompanyName": {
+        "en_US": "Uptown Ideas"
+      },
+      "geoUrn": "urn:li:fsd_geo:90009647",
+      "companyName": "Uptown Ideas",
+      "description": null,
+      "title": "Graphic Designer - Intern",
+      "companyUrn": "urn:li:fsd_company:3129783",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Position",
+      "regionUrn": null,
+      "employmentTypeUrn": null,
+      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,981808677)",
+      "geoLocationName": "Chennai Area, India",
+      "multiLocaleGeoLocationName": {
+        "en_US": "Chennai Area, India"
+      },
+      "hasSkillAssociations": false,
+      "multiLocaleLocationName": {
+        "en_US": "Chennai Area, India"
+      },
+      "multiLocaleDescription": null,
+      "sourceOfHireType": null
+    }
+  ]
+}

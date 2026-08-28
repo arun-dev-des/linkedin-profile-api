@@ -95,6 +95,38 @@ test('a current role outranks an ended role with a later start date', () => {
   assert.equal(experience[0].current, true);
 });
 
+test('reports position-group truncation honestly, like skills', () => {
+  // Same shape as the "current role" synthetic fixture above, but the
+  // groups CollectionResponse claims a paging.total larger than what's
+  // actually attached — the shape LinkedIn sends for a profile with more
+  // roles than the projection returns (e.g. 32 groups, 10 returned).
+  const { partial } = normalizeProfile({
+    data: { '*elements': ['urn:li:fsd_profile:X'] },
+    included: [
+      {
+        entityUrn: 'urn:li:fsd_profile:X',
+        firstName: 'A',
+        lastName: 'B',
+        '*profilePositionGroups': 'urn:li:collectionResponse:G',
+      },
+      {
+        entityUrn: 'urn:li:collectionResponse:G',
+        '*elements': ['urn:li:g:1'],
+        paging: { total: 32 },
+      },
+      { entityUrn: 'urn:li:g:1', '*profilePositionInPositionGroup': 'urn:li:collectionResponse:P1' },
+      { entityUrn: 'urn:li:collectionResponse:P1', '*elements': ['urn:li:p:1'] },
+      { entityUrn: 'urn:li:p:1', title: 'One of many', companyName: 'X' },
+    ],
+  });
+  assert.deepEqual(partial.experience, { returnedGroups: 1, totalGroups: 32 });
+});
+
+test('does not flag experience as partial when paging.total matches what was returned', () => {
+  // The committed fixture's groups collection isn't capped (10 of 10).
+  assert.equal(partial.experience, undefined);
+});
+
 test('resolves company metadata, tolerating a missing logo', () => {
   const applix = profile.experience.find((r) => r.company === 'Applix');
   assert.equal(applix.companyUrl, 'https://www.linkedin.com/company/applix/');
@@ -179,6 +211,29 @@ test('returns an empty array for genuinely empty sections', () => {
 test('parses featured links', () => {
   assert.equal(profile.featured.length, 3);
   assert.ok(profile.featured.every((f) => f.url?.startsWith('http')));
+  // The committed fixture's treasury-media collection isn't capped (3 of 3).
+  assert.equal(partial.featured, undefined);
+});
+
+test('reports featured/treasury-media truncation honestly, like skills', () => {
+  const { partial } = normalizeProfile({
+    data: { '*elements': ['urn:li:fsd_profile:X'] },
+    included: [
+      {
+        entityUrn: 'urn:li:fsd_profile:X',
+        firstName: 'A',
+        lastName: 'B',
+        '*profileTreasuryMediaProfile': 'urn:li:collectionResponse:T',
+      },
+      {
+        entityUrn: 'urn:li:collectionResponse:T',
+        '*elements': ['urn:li:t:1'],
+        paging: { total: 10 },
+      },
+      { entityUrn: 'urn:li:t:1', title: 'Resume', data: { Url: 'https://example.com/r' } },
+    ],
+  });
+  assert.deepEqual(partial.featured, { returned: 1, total: 10 });
 });
 
 /* --------------------------------------------------------- URL parsing */
