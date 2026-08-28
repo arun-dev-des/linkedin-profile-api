@@ -2,13 +2,12 @@
 /**
  * Builds the static showcase site into dist/.
  *
- * Sources, in order of preference for single-sourcing:
- *   - web/pages/*.md            site-only content (the landing page)
- *   - docs/*.md                 rendered verbatim (also live in the repo)
- *   - sections of README.md     extracted by heading, so there's one source of truth
- *
- * The interactive app is public/index.html, copied in with an injected API base
- * so the same widget works both same-origin (on the API host) and here.
+ * The home page (/) is the live app — public/index.html's widget lifted into
+ * the shared sidebar layout, with an injected API base so it calls the hosted
+ * API. Everything else is a doc page:
+ *   - web/pages/*.md        site-only content (the Overview page)
+ *   - docs/*.md             rendered verbatim (also live in the repo)
+ *   - sections of README.md extracted by heading, so there's one source of truth
  */
 import { readFileSync, writeFileSync, mkdirSync, copyFileSync, rmSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -56,6 +55,7 @@ function fixLinks(html) {
         `href="${BLOB}/$1$2"`,
       )
       .replace(/href="(?:\.\.\/)*fixtures\/([^"]+)"/g, `href="${BLOB}/fixtures/$1"`)
+      .replace(/href="\/app"/g, 'href="/"')
       .replace(/href="(https:\/\/[^"]+)"/g, 'href="$1" target="_blank" rel="noopener"')
   );
 }
@@ -72,51 +72,114 @@ marked.use({
   },
 });
 
+const dist = root + 'dist';
 const layout = read('/web/layout.html');
-const navSlugs = ['app', 'approach', 'how-the-fetch-works', 'apk-provenance', 'endpoint-map', 'api'];
+const navSlugs = [
+  'index',
+  'overview',
+  'approach',
+  'how-the-fetch-works',
+  'apk-provenance',
+  'endpoint-map',
+  'api',
+];
 
-function page({ slug, title, description = '', md, wide = false }) {
-  let content = fixLinks(marked.parse(md));
-  // Pull an <!-- title --> / <!-- description --> hint out of the markdown if present.
-  const tHint = md.match(/<!--\s*title:\s*(.+?)\s*-->/);
-  const dHint = md.match(/<!--\s*description:\s*(.+?)\s*-->/);
-  content = content.replace(/<!--[\s\S]*?-->/g, '');
-
+/** Fill the shared layout and write dist/<slug>.html. */
+function renderLayout({ slug, title, description = '', contentHtml, headExtra = '', mainClass = '' }) {
   let outHtml = layout
-    .replaceAll('{{title}}', tHint?.[1] ?? title)
-    .replaceAll('{{description}}', dHint?.[1] ?? description)
-    .replace('{{content}}', content)
-    .replace('{{main-class}}', wide ? 'wide' : '');
-
+    .replaceAll('{{title}}', title)
+    .replaceAll('{{description}}', description)
+    .replace('{{head-extra}}', headExtra)
+    .replace('{{content}}', contentHtml)
+    .replace('{{main-class}}', mainClass);
   for (const s of navSlugs) {
     outHtml = outHtml.replace(`{{active-${s}}}`, s === slug ? ' aria-current="page"' : '');
   }
-  writeFileSync(`${dist}/${slug === 'index' ? 'index' : slug}.html`, outHtml);
+  writeFileSync(`${dist}/${slug}.html`, outHtml);
   console.log(`  ${slug}.html`);
 }
 
-const dist = root + 'dist';
+/** A markdown doc page. */
+function page({ slug, title, description = '', md, wide = false }) {
+  const tHint = md.match(/<!--\s*title:\s*(.+?)\s*-->/);
+  const dHint = md.match(/<!--\s*description:\s*(.+?)\s*-->/);
+  const contentHtml = fixLinks(marked.parse(md)).replace(/<!--[\s\S]*?-->/g, '');
+  renderLayout({
+    slug,
+    title: tHint?.[1] ?? title,
+    description: dHint?.[1] ?? description,
+    contentHtml,
+    mainClass: wide ? 'wide' : '',
+  });
+}
+
+/**
+ * The home page: lift the widget's <style> and <body> out of public/index.html
+ * into the shared layout. The page-level rules (:root tokens, `* box-sizing`,
+ * `body`) are dropped — site.css owns those — and the widget's own <header>
+ * (redundant with the sidebar brand) becomes a one-line intro.
+ */
+function appPage() {
+  const src = read('/public/index.html');
+
+  const style = src
+    .match(/<style>([\s\S]*?)<\/style>/)[1]
+    .replace(/:root\s*\{[^}]*\}/g, '')
+    .replace(/@media \(prefers-color-scheme: dark\)\s*\{\s*:root\s*\{[^}]*\}\s*\}/g, '')
+    .replace(/\*\s*\{\s*box-sizing:[^}]*\}/g, '')
+    .replace(/\bbody\s*\{[^}]*\}/g, '')
+    .trim();
+
+  const body = src
+    .match(/<body>([\s\S]*?)<\/body>/)[1]
+    .replace(
+      /<header>[\s\S]*?<\/header>/,
+      '<h1>Try it</h1>\n<p class="app-intro">Paste a LinkedIn profile URL to get it back as ' +
+        'structured JSON. <a href="/overview">How it works</a> · ' +
+        `<a href="${REPO}" target="_blank" rel="noopener">Source</a></p>`,
+    );
+
+  renderLayout({
+    slug: 'index',
+    title: 'Try it',
+    description:
+      'Paste a LinkedIn profile URL and get it back as structured JSON, from a ' +
+      "reverse-engineered call to LinkedIn's internal API.",
+    headExtra: `<style>\n${style}\n</style>`,
+    contentHtml: `<script>window.API_BASE=${JSON.stringify(API_URL)}</script>\n${body}`,
+    mainClass: 'app',
+  });
+}
+
 rmSync(dist, { recursive: true, force: true });
 mkdirSync(dist, { recursive: true });
 console.log('building site →');
 
 const readme = read('/README.md');
+const back = '[← Overview](/overview)\n\n';
 
-page({ slug: 'index', title: 'Overview', md: read('/web/pages/index.md') });
+appPage();
+
+page({
+  slug: 'overview',
+  title: 'Overview',
+  md: read('/web/pages/overview.md'),
+});
 
 page({
   slug: 'approach',
   title: 'Approach',
   description: 'How the LinkedIn Voyager endpoint was reverse-engineered and verified.',
-  md: `[← Overview](/)\n\n${section(readme, 'Approach — how the endpoint was reverse-engineered')}`,
+  md: back + section(readme, 'Approach — how the endpoint was reverse-engineered'),
 });
 
 page({
   slug: 'api',
   title: 'API Reference',
   description: 'Endpoints, response schema, error codes, and known limitations.',
+  wide: true,
   md:
-    `[← Overview](/)\n\n` +
+    back +
     [
       section(readme, 'API documentation'),
       section(readme, 'Response schema'),
@@ -128,30 +191,23 @@ page({
   slug: 'how-the-fetch-works',
   title: 'The request, line by line',
   description: 'A beginner-friendly walkthrough of the single authenticated request.',
-  md: `[← Overview](/)\n\n${read('/docs/how-the-fetch-works.md')}`,
+  md: back + read('/docs/how-the-fetch-works.md'),
 });
 
 page({
   slug: 'apk-provenance',
   title: 'APK Provenance',
   description: "Verifying the endpoint against the LinkedIn Android app's compiled code.",
-  md: `[← Overview](/)\n\n${read('/docs/apk-provenance.md')}`,
+  md: back + read('/docs/apk-provenance.md'),
 });
 
 page({
   slug: 'endpoint-map',
   title: 'Endpoint map',
   description: 'Every LinkedIn profile endpoint found, and why one call covers almost everything.',
-  md: `[← Overview](/)\n\n${read('/docs/endpoint-map.md')}`,
+  wide: true,
+  md: back + read('/docs/endpoint-map.md'),
 });
-
-// The interactive app: public/index.html with an injected absolute API base.
-const appHtml = read('/public/index.html').replace(
-  '<head>',
-  `<head>\n    <script>window.API_BASE=${JSON.stringify(API_URL)}</script>`,
-);
-writeFileSync(`${dist}/app.html`, appHtml);
-console.log('  app.html  (from public/index.html)');
 
 copyFileSync(root + 'web/site.css', `${dist}/site.css`);
 console.log('  site.css');

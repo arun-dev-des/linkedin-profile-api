@@ -11,7 +11,7 @@ images. One authenticated request to LinkedIn's own internal API. No browser
 automation, no HTML scraping.</p>
 
 <div class="cta">
-  <a class="btn primary" href="/app">Open the live app</a>
+  <a class="btn primary" href="/">Try it</a>
   <a class="btn ghost" href="https://linkedin-profile-api-production-3c84.up.railway.app/profile/sample" target="_blank" rel="noopener">See a sample response</a>
   <a class="btn ghost" href="https://github.com/arun-dev-des/linkedin-profile-api" target="_blank" rel="noopener">Source on GitHub</a>
 </div>
@@ -80,8 +80,9 @@ on the [Provenance page](/apk-provenance).
 
 ## Architecture
 
-- **`src/linkedin/client.js`** — the one authenticated Voyager `GET`, with upstream
-  `401/403/404/410/429/999` mapped onto clean API statuses.
+- **`src/linkedin/client.js`** — the authenticated Voyager `GET`s (profile, plus the
+  skills finder for `?full=1`), with upstream `401/403/404/410/429/999` mapped onto
+  clean API statuses.
 - **`src/linkedin/normalize.js`** — resolves LinkedIn's URN-linked entity graph into
   a clean tree. Pure function, no I/O, tested entirely offline against a real
   captured payload — including every edge case that payload contains (null
