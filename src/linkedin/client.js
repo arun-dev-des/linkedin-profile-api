@@ -1,5 +1,5 @@
 import { config, hasCredentials } from '../config.js';
-import { ApiError, fromUpstreamStatus } from '../errors.js';
+import { ApiError, classifyUpstreamBody, fromUpstreamStatus } from '../errors.js';
 
 const VOYAGER_PROFILES_URL = 'https://www.linkedin.com/voyager/api/identity/dash/profiles';
 const REQUEST_TIMEOUT_MS = 15_000;
@@ -60,13 +60,17 @@ export async function fetchProfileRaw(publicId, extraParams = {}) {
     );
   }
 
-  if (!response.ok) {
-    throw fromUpstreamStatus(response.status);
-  }
-
   // A bot challenge can arrive as 200 + HTML instead of an error status.
   const contentType = response.headers.get('content-type') ?? '';
-  if (!contentType.includes('json')) {
+  const body = contentType.includes('json') ? await response.json().catch(() => null) : null;
+
+  if (!response.ok) {
+    // 403 for a missing profile looks identical to 403 for bad auth except in
+    // the body — check that before assuming the credentials are broken.
+    throw classifyUpstreamBody(response.status, body) ?? fromUpstreamStatus(response.status);
+  }
+
+  if (body === null) {
     throw new ApiError(
       503,
       'upstream_blocked',
@@ -75,5 +79,13 @@ export async function fetchProfileRaw(publicId, extraParams = {}) {
     );
   }
 
-  return response.json();
+  // Some errors arrive as HTTP 200 wrapping an exception envelope.
+  if (body?.data?.exceptionClass || typeof body?.data?.status === 'number') {
+    throw (
+      classifyUpstreamBody(body.data.status ?? response.status, body) ??
+      fromUpstreamStatus(body.data.status ?? 502)
+    );
+  }
+
+  return body;
 }
