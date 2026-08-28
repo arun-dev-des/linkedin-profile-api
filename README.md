@@ -400,6 +400,13 @@ and update the `DECORATION_ID` env var.
   at most 20 skills even when the profile has more; `meta.partial.skills` reports
   the true total. Fetching the rest would require a second, separately
   reverse-engineered endpoint.
+- **Career breaks are not returned.** A "Career break" entry in the Experience
+  section is not part of the Voyager `profilePositionGroups` collection or the
+  `FullProfileWithEntities` decoration, and the LinkedIn Android app has no
+  career-break entity type either. It is rendered only by LinkedIn's web
+  server-driven UI. Surfacing it would mean scraping that HTML, which this
+  project deliberately does not do. `experience` therefore reflects only
+  position-backed roles.
 - **Coverage varies by relationship.** Private profiles, out-of-network members,
   and some fields depend on the credentialed account's relationship to the target.
   Sections a profile hasn't filled in (e.g. `languages`) come back as `[]`.
