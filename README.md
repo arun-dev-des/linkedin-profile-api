@@ -8,6 +8,10 @@ The data is retrieved by calling LinkedIn's own internal API directly with
 server-side session credentials. **No browser automation** (Selenium / Puppeteer
 / Playwright) and **no HTML scraping** are involved.
 
+The single API call is implemented in [`fetch_profile.py`](fetch_profile.py)
+(function `fetch_profile_view`). A line-by-line, beginner-friendly walkthrough of
+that request lives in [`docs/how-the-fetch-works.md`](docs/how-the-fetch-works.md).
+
 > **Status:** reverse-engineering and a working proof-of-concept are complete.
 > The public hosted service and its response schema are still being built; this
 > README documents the approach, the endpoint, and its limitations. API
@@ -29,6 +33,10 @@ Two independent first-party sources were checked (August 2026).
 
 The logged-in web app was inspected with Chrome DevTools while loading a profile
 and its full experience list.
+
+**Reproduce:** log into linkedin.com, open any profile, open DevTools → Network,
+filter by `voyager`, reload, then open `…/in/<id>/details/experience/` and watch
+the requests.
 
 Findings:
 
@@ -55,6 +63,17 @@ The official Android app (`com.linkedin.android`, version 4.1.1239) was
 statically analysed — the APK was unpacked and its compiled code searched for
 string constants.
 
+**Reproduce:** download the APK (e.g. from APKMirror), then:
+
+```bash
+unzip -o com.linkedin.android*.apk -d apk
+strings apk/classes*.dex | grep -E \
+  'FullProfileWithEntities|FullProfileByMemberIdentity|identityDashProfilesByMemberIdentity|deco\.identity\.profile'
+```
+
+Full step-by-step with expected output:
+[`docs/apk-provenance.md`](docs/apk-provenance.md).
+
 Present in the app, verbatim:
 
 | Constant | Meaning |
@@ -69,6 +88,19 @@ resource**, over both a REST/Rest.li binding with a `decorationId` and GraphQL
 persisted queries. Calling it via `q=memberIdentity` with a
 `FullProfileWithEntities` decoration is a genuine, current first-party LinkedIn
 client pattern.
+
+### Provenance → code
+
+Every non-obvious value in the request maps to something observed above:
+
+| Value in [`fetch_profile.py`](fetch_profile.py) | Line | Backed by |
+| --- | --- | --- |
+| `https://www.linkedin.com/voyager/api/identity/dash/profiles` | [L64](fetch_profile.py#L64) | `voyager/api/` + `identity/profiles` path fragments in the APK; `dash` resource generation |
+| `q=memberIdentity` | [L66](fetch_profile.py#L66) | APK constant `identityDashProfilesByMemberIdentity`; web GraphQL `variables=(memberIdentity:…)` |
+| `decorationId` (`DECORATION_ID`, default `…FullProfileWithEntities-107`) | [L33](fetch_profile.py#L33), [L68](fetch_profile.py#L68) | APK constant `com.linkedin.voyager.dash.deco.identity.profile.FullProfileWithEntities-107` |
+| `csrf-token: <JSESSIONID>` | [L73](fetch_profile.py#L73) | web capture: `csrf-token` header equals the `JSESSIONID` cookie value on every Voyager call |
+| `x-restli-protocol-version: 2.0.0` | [L74](fetch_profile.py#L74) | sent by every Voyager call in the web capture |
+| `Accept: application/vnd.linkedin.normalized+json+2.1` | [L76](fetch_profile.py#L76) | Accept header used by LinkedIn's own web client for this resource |
 
 ---
 

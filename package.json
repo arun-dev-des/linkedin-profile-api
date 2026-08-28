@@ -1,0 +1,20 @@
+{
+  "name": "linkedin-profile-api",
+  "version": "1.0.0",
+  "description": "Hosted API that turns a LinkedIn profile URL into structured JSON, via LinkedIn's internal Voyager API. No browser automation.",
+  "type": "module",
+  "main": "src/server.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "node --test \"test/*.test.js\""
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1"
+  },
+  "license": "MIT"
+}
