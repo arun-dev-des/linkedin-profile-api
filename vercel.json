@@ -6,5 +6,8 @@
   "outputDirectory": "site/out",
   "cleanUrls": true,
   "trailingSlash": false,
-  "redirects": [{ "source": "/app", "destination": "/", "permanent": true }]
+  "redirects": [
+    { "source": "/app", "destination": "/", "permanent": true },
+    { "source": "/overview", "destination": "/approach", "permanent": true }
+  ]
 }
