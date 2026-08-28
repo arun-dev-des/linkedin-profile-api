@@ -3,7 +3,12 @@ import { readFileSync } from 'node:fs';
 import { config } from './config.js';
 import { TtlCache } from './cache.js';
 import { fetchProfileRaw, fetchProfilePositions, fetchProfileSkills } from './linkedin/client.js';
-import { extractFullExperience, extractSkillNames, normalizeProfile } from './linkedin/normalize.js';
+import {
+  extractFullExperience,
+  extractSkillNames,
+  normalizeProfile,
+  sanitizeRawPayload,
+} from './linkedin/normalize.js';
 
 const cache = new TtlCache(config.cacheTtlMs);
 
@@ -93,15 +98,19 @@ export async function getProfile(publicId, { full = false } = {}) {
  * The unprocessed Voyager payload for a profile — `data` plus the flat
  * `included[]` entity array, before normalization. Backs the "not normalised"
  * view in the browser UI; a live lookup would populate the cache anyway.
+ *
+ * Sanitized before it leaves this function — see `sanitizeRawPayload()` — but
+ * the cache stores the true, unsanitized payload (shared with `getProfile()`,
+ * which needs the full graph) and is never mutated in place.
  */
 export async function getProfileRaw(publicId) {
   const key = `raw|${publicId}`;
   const hit = cache.get(key);
-  if (hit) return hit;
+  if (hit) return sanitizeRawPayload(hit);
 
   const raw = await fetchProfileRaw(publicId);
   cache.set(key, raw);
-  return raw;
+  return sanitizeRawPayload(raw);
 }
 
 /**
@@ -124,7 +133,7 @@ export function getSampleProfile() {
   return envelope(sample.profile, { partial: sample.partial, source: 'cached-fixture' });
 }
 
-/** The unprocessed payload behind /profile/sample. */
+/** The unprocessed payload behind /profile/sample, sanitized the same way as getProfileRaw(). */
 export function getSampleRaw() {
-  return readSampleRaw();
+  return sanitizeRawPayload(readSampleRaw());
 }

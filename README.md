@@ -49,7 +49,7 @@ cp .env.example .env
 # edit .env — see "Getting the credentials" below
 
 npm run dev          # http://localhost:3000
-npm test             # 43 tests, fully offline
+npm test             # 48 tests, fully offline
 ```
 
 ### Getting the credentials
@@ -97,6 +97,13 @@ the flat `included[]` array of URN-cross-referenced entities — before
 normalization. This is what `src/linkedin/normalize.js` consumes; the "Full JSON ·
 not normalised" tab in the browser UI renders it. Also `GET /profile/sample/raw`
 for the payload behind `/profile/sample`.
+
+LinkedIn's own response embeds a little of the *credentialed account's*
+identity in this payload (its connection-degree relationship to people
+referenced on the profile) — irrelevant to the person being looked up, and
+not something a public, unauthenticated endpoint should hand out. Both raw
+endpoints strip it via `sanitizeRawPayload()` before responding; see
+[`src/linkedin/normalize.js`](src/linkedin/normalize.js).
 
 ### `GET /profile/sample`
 
@@ -408,6 +415,7 @@ test/
   normalize.test.js    offline tests, incl. every real-payload edge case
   skills.test.js       the complete-skills extraction (?full=1)
   experience.test.js   the complete-experience extraction + enrichment merge (?full=1)
+  sanitize.test.js     the /profile/raw viewer-identity strip
   errors.test.js       upstream-status classification
 fetch_profile.py       the original Python spike, kept as a reference
 docs/
@@ -517,6 +525,16 @@ The Python spike ([`fetch_profile.py`](fetch_profile.py)) fails loudly if the
 environment is not set rather than falling back to a baked-in value. Raw API
 dumps (`raw_response.json`) and the unpacked APK are git-ignored. Cookie values
 are never written to logs or returned in responses.
+
+The `li_at`/`JSESSIONID` cookies belong to a real, personal LinkedIn account —
+every lookup runs as that account. LinkedIn's own response reflects that: it
+resolves that account's connection-degree relationship to people referenced on
+the profile being looked up, embedding the account's own Profile entity and
+URN in the payload. `/profile/raw` and `/profile/sample/raw` strip this out
+before responding (`sanitizeRawPayload()` in
+[`src/linkedin/normalize.js`](src/linkedin/normalize.js)) — otherwise anyone
+calling either endpoint, for any profile, would get a piece of the operator's
+own LinkedIn identity back on every request.
 
 The one committed data file is [`fixtures/raw-profile.json`](fixtures/raw-profile.json)
 — a real profile payload (public profile data, no tokens) that makes the test

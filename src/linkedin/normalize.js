@@ -357,6 +357,66 @@ export function extractFullExperience(payload, enrichmentByUrn = new Map()) {
   );
 }
 
+/**
+ * Strips viewer-identifying data out of a raw Voyager payload before it's
+ * returned over `/profile/raw` or `/profile/sample/raw`.
+ *
+ * Every member LinkedIn resolves on the profile — the subject, and anyone
+ * else referenced (a publication co-author, for instance) — carries its own
+ * `*memberRelationship` pointer. That resolves to a `MemberRelationship`
+ * entity describing how the *credentialed account* relates to that person,
+ * which embeds the credentialed account's own Profile entity and URN via
+ * `…noInvitation.{inviter, *inviterResolutionResult}`. That's the server's
+ * own LinkedIn identity, riding along on every single lookup regardless of
+ * who was asked about — not something a public, unauthenticated endpoint
+ * should hand out. `normalizeProfile()` never reads `*memberRelationship`
+ * (see docs/endpoint-map.md), so this costs nothing functionally.
+ *
+ * The fix: walk every `*`-pointer reachable from the root profile — the same
+ * graph `normalizeProfile()` itself walks — except through
+ * `*memberRelationship`, and drop any entity that isn't reachable that way.
+ * A co-author's Profile (reachable via `*profilePublications` ->
+ * `authors[].standardizedContributor["*profile"]`) survives; the
+ * credentialed account's own Profile (reachable *only* via
+ * `*memberRelationship`) doesn't.
+ *
+ * @param {object} payload  raw Voyager response: { data, included }
+ * @returns {object} a new { data, included } with unreachable entities dropped
+ */
+export function sanitizeRawPayload(payload) {
+  const index = buildIndex(payload);
+  const rootUrn = payload?.data?.['*elements']?.[0];
+  if (!rootUrn || !index.has(rootUrn)) return payload;
+
+  const reachable = new Set();
+  const queue = [rootUrn];
+
+  const visit = (value) => {
+    if (typeof value === 'string') {
+      if (index.has(value) && !reachable.has(value)) queue.push(value);
+    } else if (Array.isArray(value)) {
+      value.forEach(visit);
+    } else if (value && typeof value === 'object') {
+      for (const [key, v] of Object.entries(value)) {
+        if (key === '*memberRelationship') continue; // the one edge that leaks the viewer's identity
+        visit(v);
+      }
+    }
+  };
+
+  while (queue.length > 0) {
+    const urn = queue.pop();
+    if (reachable.has(urn)) continue;
+    reachable.add(urn);
+    visit(index.get(urn));
+  }
+
+  return {
+    ...payload,
+    included: (payload.included ?? []).filter((e) => e?.entityUrn && reachable.has(e.entityUrn)),
+  };
+}
+
 /* -------------------------------------------------------------------- main */
 
 /**

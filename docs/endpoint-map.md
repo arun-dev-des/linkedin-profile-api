@@ -25,7 +25,7 @@ Counts below are from a real rich profile (Reid Hoffman, 179 entities):
 
 | Entity | Count | What it is |
 | --- | --- | --- |
-| `Profile` | 1 (+ stubs) | the subject; extra `Profile` entities are referenced by `MemberRelationship` |
+| `Profile` | 1 (+ stubs) | the subject, plus anyone else resolved on the profile (e.g. a publication co-author — see `Publication` below) |
 | `Position` | 11 | individual roles |
 | `PositionGroup` | **10** | roles grouped by company (the "Company — 3 roles" block) — **hard cap**, `paging.total` was 32 |
 | `Company` | 28 | resolved employers + volunteer orgs — `name`, `url`, `logo`, staff count |
@@ -36,7 +36,7 @@ Counts below are from a real rich profile (Reid Hoffman, 179 entities):
 | `VolunteerExperience` | 14 | `role`, `companyName`, `cause`, `dateRange`, `description` — surfaced as `profile.volunteerExperience` |
 | `Publication` | 6 | `name`, `publisher`, `publishedOn`, `url`, `description`, `authors[]` — surfaced as `profile.publications` |
 | `TreasuryMedia` | **3** | "Featured" links/media — also capped |
-| `MemberRelationship` | 6 | connection-degree info to other members |
+| `MemberRelationship` | 6 | connection-degree info between the *credentialed account* and each resolved member — never read by `normalizeProfile()`, stripped from `/profile/raw` (see below) |
 | `Geo` | 5 | resolved locations (many are all-`null` stubs) |
 | `Industry` | 5 | resolved industry names |
 | `EmploymentType` | 1 | "Full-time" etc. |
@@ -48,6 +48,30 @@ The **`Profile` entity** carries `firstName`/`lastName`, `headline`, `summary`
 `backgroundPicture`, `pronounUnion`, `premium`/`influencer`/`creator` flags,
 `birthDateOn`, `address`, `volunteerCauses`, plus `*`-pointers to all 17
 sections (`*profileSkills`, `*profileHonors`, `*memberRelationship`, …).
+
+**`*memberRelationship` is the one pointer `normalizeProfile()` deliberately
+never follows.** Every `Profile` entity LinkedIn resolves in this
+response — the subject, and anyone else referenced (a publication co-author,
+say) — carries its own `*memberRelationship` pointer describing how the
+*credentialed account* relates to that specific person. Following it
+resolves a `MemberRelationship` entity whose `…noInvitation.{inviter,
+*inviterResolutionResult}` embeds the credentialed account's own `Profile`
+entity and URN — the server operator's own LinkedIn identity, present in
+every single lookup regardless of who was actually asked about. Confirmed
+live: fetching Reid Hoffman's profile returns not just Reid Hoffman, but a
+`Profile` entity for the account whose cookies this server runs on, plus one
+`MemberRelationship` entity per resolved member (6 of them) carrying that
+account's URN.
+
+Since none of that is read by `normalizeProfile()`, `/profile/raw` and
+`/profile/sample/raw` run the payload through `sanitizeRawPayload()` first: a
+graph walk from the root profile identical to the one `normalizeProfile()`
+itself performs, except it never crosses a `*memberRelationship` edge. A
+co-author's `Profile` (reached via `*profilePublications` ->
+`authors[].standardizedContributor["*profile"]`, a completely different path)
+survives; the credentialed account's own `Profile` — reachable *only* through
+the excluded edge — doesn't. `GET /profile` was never affected; this only
+touches the two raw-payload routes.
 
 Sections usually **empty**: `*profileCourses`, `*profilePatents`,
 `*profileProjects`, `*profileTestScores`, `*profileOrganizations`,
