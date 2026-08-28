@@ -1,0 +1,38 @@
+# --- Secrets ---
+.env
+.env.*
+*.pem
+*.key
+secrets.*
+
+# --- Credentialed / personal data dumps ---
+raw_response.json
+raw_response*.json
+*.network-request
+*.network-response
+
+# --- Reverse-engineering artifacts (large / third-party) ---
+*.apk
+*.dex
+apk/
+re-captures/
+
+# --- Node ---
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+*.egg-info/
+
+# --- OS / editor ---
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
