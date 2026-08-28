@@ -1,6 +1,7 @@
 # --- Secrets ---
 .env
 .env.*
+.env.local
 !.env.example
 *.pem
 *.key
@@ -41,5 +42,3 @@ Thumbs.db
 .idea/
 .vscode/
 *.swp
-.vercel
-.env*
