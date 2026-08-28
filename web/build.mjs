@@ -140,9 +140,6 @@ console.log('  app.html  (from public/index.html)');
 copyFileSync(root + 'web/site.css', `${dist}/site.css`);
 console.log('  site.css');
 
-writeFileSync(
-  `${dist}/robots.txt`,
-  'User-agent: *\nAllow: /\n\nSitemap: https://linkedin-profile-api.vercel.app/sitemap.txt\n',
-);
+writeFileSync(`${dist}/robots.txt`, 'User-agent: *\nAllow: /\n');
 
 console.log('done → dist/');

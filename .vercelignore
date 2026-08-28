@@ -1,0 +1,18 @@
+# The Vercel build only needs: web/, docs/, public/, README.md, package.json.
+# Everything below is either large, local-only, or irrelevant to the static site.
+node_modules
+dist
+.vercel
+apk
+*.apk
+*.dex
+re-captures
+raw_response*.json
+*.network-request
+*.network-response
+.env
+.env.*
+test
+src
+fixtures
+fetch_profile.py

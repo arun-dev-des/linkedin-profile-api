@@ -9,11 +9,14 @@ with server-side session cookies. **No browser automation** (Selenium / Puppetee
 / Playwright) and **no HTML scraping** — a single authenticated `GET` request per
 lookup, then a pure-function transform of the response.
 
+- **Showcase site:** https://linkedin-profile-api-phi.vercel.app — landing page,
+  the live app, and these docs rendered as pages.
 - **Live API:** https://linkedin-profile-api-production-3c84.up.railway.app
 - **Try it now:**
+  [the app](https://linkedin-profile-api-phi.vercel.app/app) ·
   [`/profile/sample`](https://linkedin-profile-api-production-3c84.up.railway.app/profile/sample)
   (a real cached response, no credentials needed) ·
-  [`/profile?url=https://www.linkedin.com/in/iamarun4official/`](https://linkedin-profile-api-production-3c84.up.railway.app/profile?url=https://www.linkedin.com/in/iamarun4official/)
+  [`/profile?url=…iamarun4official`](https://linkedin-profile-api-production-3c84.up.railway.app/profile?url=https://www.linkedin.com/in/iamarun4official/)
   (live)
 
 ---
