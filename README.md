@@ -89,6 +89,14 @@ curl 'http://localhost:3000/profile?url=https://www.linkedin.com/in/iamarun4offi
 Successful responses are cached in-memory for ~1 hour (`meta.cached` tells you
 which you got). `full=1` and the default are cached separately.
 
+### `GET /profile/raw`
+
+Same `url` parameter. Returns the **unprocessed Voyager payload** — `data` plus
+the flat `included[]` array of URN-cross-referenced entities — before
+normalization. This is what `src/linkedin/normalize.js` consumes; the "Full JSON ·
+not normalised" tab in the browser UI renders it. Also `GET /profile/sample/raw`
+for the payload behind `/profile/sample`.
+
 ### `GET /profile/sample`
 
 Returns a real, pre-captured profile normalized through the exact same code path.

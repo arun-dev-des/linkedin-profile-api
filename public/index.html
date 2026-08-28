@@ -17,6 +17,9 @@
         --danger-bg: #fef2f2;
         --radius: 12px;
         --shadow: 0 1px 3px rgb(0 0 0 / 0.06), 0 8px 24px rgb(0 0 0 / 0.04);
+        --jkey: #8250df;
+        --jstr: #0a7d33;
+        --jnum: #b26b00;
       }
       @media (prefers-color-scheme: dark) {
         :root {
@@ -29,6 +32,9 @@
           --danger: #f87171;
           --danger-bg: #2a1414;
           --shadow: 0 1px 3px rgb(0 0 0 / 0.4), 0 8px 24px rgb(0 0 0 / 0.3);
+          --jkey: #c9a2ff;
+          --jstr: #6cc76c;
+          --jnum: #e0a55c;
         }
       }
       * {
@@ -43,7 +49,7 @@
         -webkit-font-smoothing: antialiased;
       }
       .wrap {
-        max-width: 680px;
+        max-width: 1180px;
         margin: 0 auto;
         padding: 40px 20px 80px;
       }
@@ -64,6 +70,9 @@
         text-decoration: underline;
       }
 
+      .controls {
+        max-width: 640px;
+      }
       form {
         display: flex;
         gap: 8px;
@@ -71,6 +80,7 @@
       }
       input[type='text'] {
         flex: 1;
+        min-width: 0;
         padding: 11px 14px;
         font-size: 15px;
         color: var(--text);
@@ -125,7 +135,7 @@
       }
 
       #status {
-        margin-top: 28px;
+        margin-top: 24px;
       }
       .error {
         padding: 14px 16px;
@@ -150,8 +160,117 @@
         }
       }
 
+      /* ---- split ---- */
+      .split {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: 20px;
+        margin-top: 24px;
+        align-items: start;
+      }
+      @media (max-width: 900px) {
+        .split {
+          grid-template-columns: 1fr;
+        }
+      }
+      .pane-json {
+        position: sticky;
+        top: 16px;
+        display: flex;
+        flex-direction: column;
+        max-height: calc(100vh - 32px);
+        min-height: 320px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        overflow: hidden;
+      }
+      @media (max-width: 900px) {
+        .pane-json {
+          position: static;
+          max-height: 70vh;
+        }
+      }
+      .tabs {
+        display: flex;
+        border-bottom: 1px solid var(--border);
+        flex-shrink: 0;
+      }
+      .tabs button {
+        flex: 0 0 auto;
+        padding: 10px 14px;
+        font-size: 12.5px;
+        font-weight: 500;
+        color: var(--muted);
+        background: none;
+        border: 0;
+        border-bottom: 2px solid transparent;
+        border-radius: 0;
+        cursor: pointer;
+      }
+      .tabs button.on {
+        color: var(--text);
+        border-bottom-color: var(--accent);
+      }
+      .tab-body {
+        overflow: auto;
+        flex: 1;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 12px;
+        line-height: 1.55;
+      }
+      .tab-body pre {
+        margin: 0;
+        padding: 14px 16px;
+        white-space: pre;
+      }
+      .rawnote {
+        padding: 10px 16px;
+        border-bottom: 1px solid var(--border);
+        color: var(--muted);
+        font-size: 11.5px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      }
+      .jtree {
+        padding: 12px 14px;
+      }
+      .jnode {
+        padding-left: 13px;
+      }
+      .jrow {
+        white-space: pre;
+      }
+      .jrow.br {
+        cursor: pointer;
+      }
+      .jtw {
+        display: inline-block;
+        width: 11px;
+        color: var(--muted);
+        user-select: none;
+      }
+      .jkids.collapsed {
+        display: none;
+      }
+      .jk {
+        color: var(--jkey);
+      }
+      .js {
+        color: var(--jstr);
+      }
+      .jn {
+        color: var(--jnum);
+      }
+      .jb {
+        color: var(--accent);
+      }
+      .jz {
+        color: var(--muted);
+        font-style: italic;
+      }
+
+      /* ---- profile card (left) ---- */
       .card {
-        margin-top: 28px;
         background: var(--card);
         border: 1px solid var(--border);
         border-radius: var(--radius);
@@ -193,7 +312,6 @@
         color: var(--accent);
         text-decoration: none;
       }
-
       section.block {
         padding: 20px 24px;
         border-top: 1px solid var(--border);
@@ -209,7 +327,6 @@
         white-space: pre-wrap;
         margin: 0;
       }
-
       .entry {
         display: flex;
         gap: 12px;
@@ -256,18 +373,6 @@
         font-size: 13.5px;
         white-space: pre-wrap;
       }
-      .badge {
-        display: inline-block;
-        font-size: 11px;
-        font-weight: 600;
-        padding: 1px 7px;
-        border-radius: 999px;
-        background: var(--accent);
-        color: var(--accent-contrast);
-        vertical-align: middle;
-        margin-left: 6px;
-      }
-
       .chips {
         display: flex;
         flex-wrap: wrap;
@@ -280,7 +385,6 @@
         border: 1px solid var(--border);
         border-radius: 999px;
       }
-
       ul.links {
         margin: 0;
         padding-left: 18px;
@@ -289,7 +393,6 @@
         color: var(--accent);
         text-decoration: none;
       }
-
       .partial-note {
         margin-top: 10px;
         font-size: 12.5px;
@@ -300,23 +403,6 @@
         border-top: 1px solid var(--border);
         font-size: 12px;
         color: var(--muted);
-        display: flex;
-        justify-content: space-between;
-        gap: 12px;
-        flex-wrap: wrap;
-      }
-      .card footer a {
-        color: var(--accent);
-        text-decoration: none;
-      }
-      pre.raw {
-        margin: 0;
-        padding: 16px 20px;
-        overflow-x: auto;
-        font-size: 12px;
-        line-height: 1.5;
-        background: var(--card);
-        border-top: 1px solid var(--border);
       }
     </style>
   </head>
@@ -332,26 +418,29 @@
         </p>
       </header>
 
-      <form id="form">
-        <input
-          id="url"
-          type="text"
-          placeholder="https://www.linkedin.com/in/…"
-          autocomplete="off"
-          autocapitalize="off"
-          spellcheck="false"
-        />
-        <button id="go" type="submit">Fetch</button>
-      </form>
-      <p class="hint">
-        Try <a data-sample>the sample response</a>, or
-        <a data-example>an example profile</a>. Toggle
-        <a data-toggle-raw>raw JSON</a>.
-      </p>
-      <p class="opts">
-        <input type="checkbox" id="full" />
-        <label for="full">Complete skills list &mdash; one extra request when LinkedIn caps it at 20 (<code>?full=1</code>)</label>
-      </p>
+      <div class="controls">
+        <form id="form">
+          <input
+            id="url"
+            type="text"
+            placeholder="https://www.linkedin.com/in/…"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+          />
+          <button id="go" type="submit">Fetch</button>
+        </form>
+        <p class="hint">
+          Try <a data-sample>the sample response</a>, or <a data-example>an example profile</a>.
+        </p>
+        <p class="opts">
+          <input type="checkbox" id="full" />
+          <label for="full"
+            >Complete skills list &mdash; one extra request when LinkedIn caps it at 20
+            (<code>?full=1</code>)</label
+          >
+        </p>
+      </div>
 
       <div id="status" aria-live="polite"></div>
       <div id="result"></div>
@@ -366,10 +455,16 @@
       const statusEl = $('#status');
       const resultEl = $('#result');
       const EXAMPLE = 'https://www.linkedin.com/in/iamarun4official/';
-      let showRaw = false;
-      let lastData = null;
 
-      // Build the /profile path, adding &full=1 when the box is ticked.
+      // Same-origin when served by the API itself; an absolute URL when the
+      // widget is embedded on the separately-hosted showcase site.
+      const API_BASE = window.API_BASE ?? '';
+
+      let lastData = null; // normalized envelope { profile, meta }
+      let lastRaw = null; // unprocessed Voyager payload (lazy)
+      let lastUrl = null; // the LinkedIn URL behind lastData (null for the sample)
+      let jsonTab = 'tree';
+
       const profilePath = (linkedinUrl) =>
         `/profile?url=${encodeURIComponent(linkedinUrl)}${fullBox.checked ? '&full=1' : ''}`;
 
@@ -379,8 +474,6 @@
           (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c],
         );
 
-      // PROFESSIONAL_WORKING -> "Professional working". The API keeps the raw
-      // enum (machine-usable); the UI shows the friendly form.
       const humanize = (s) =>
         !s
           ? ''
@@ -394,6 +487,88 @@
         return `${a ?? ''}${a || b ? ' – ' : ''}${current ? 'Present' : (b ?? '')}`.trim();
       };
 
+      /* ---------------- JSON tree ---------------- */
+      function jval(v) {
+        if (v === null) return '<span class="jz">null</span>';
+        const t = typeof v;
+        if (t === 'string') return `<span class="js">"${esc(v)}"</span>`;
+        if (t === 'number') return `<span class="jn">${v}</span>`;
+        if (t === 'boolean') return `<span class="jb">${v}</span>`;
+        return esc(String(v));
+      }
+      function jnode(key, val, depth) {
+        const kh = key != null ? `<span class="jk">${esc(key)}</span>: ` : '';
+        if (val === null || typeof val !== 'object') {
+          return `<div class="jnode"><div class="jrow">${kh}${jval(val)}</div></div>`;
+        }
+        const arr = Array.isArray(val);
+        const entries = arr ? val.map((v, i) => [i, v]) : Object.entries(val);
+        const collapsed = depth >= 2 && entries.length > 0;
+        const kids =
+          entries.map(([k, v]) => jnode(k, v, depth + 1)).join('') +
+          `<div class="jrow jz">${arr ? ']' : '}'}</div>`;
+        return (
+          `<div class="jnode"><div class="jrow br"><span class="jtw">${collapsed ? '▸' : '▾'}</span>` +
+          `${kh}${arr ? '[' : '{'} <span class="jz">${entries.length} ${arr ? 'items' : 'keys'}</span></div>` +
+          `<div class="jkids${collapsed ? ' collapsed' : ''}">${kids}</div></div>`
+        );
+      }
+
+      /* ---------------- right pane: JSON ---------------- */
+      function jsonPane() {
+        return `
+          <div class="pane-json">
+            <div class="tabs">
+              <button data-jtab="tree"${jsonTab === 'tree' ? ' class="on"' : ''}>Tree</button>
+              <button data-jtab="raw"${jsonTab === 'raw' ? ' class="on"' : ''}>Raw</button>
+              <button data-jtab="full"${jsonTab === 'full' ? ' class="on"' : ''}>Full JSON · not normalised</button>
+            </div>
+            <div class="tab-body" id="jbody"></div>
+          </div>`;
+      }
+      function renderJsonTab() {
+        const body = $('#jbody');
+        if (!body) return;
+        if (jsonTab === 'tree') {
+          body.innerHTML = `<div class="jtree">${jnode(null, lastData, 0)}</div>`;
+        } else if (jsonTab === 'raw') {
+          body.innerHTML = `<pre>${esc(JSON.stringify(lastData, null, 2))}</pre>`;
+        } else {
+          renderRawTab(body);
+        }
+      }
+      async function renderRawTab(body) {
+        if (lastRaw) {
+          const n = (lastRaw.included ?? []).length;
+          const kb = (JSON.stringify(lastRaw).length / 1024).toFixed(0);
+          body.innerHTML =
+            `<div class="rawnote">The unprocessed Voyager payload — ${kb}&nbsp;KB, ` +
+            `${n} entities in <code>included[]</code>, cross-referenced by URN. ` +
+            `<code>src/linkedin/normalize.js</code> turns this into the tree on the left.</div>` +
+            `<div class="jtree">${jnode(null, lastRaw, 0)}</div>`;
+          return;
+        }
+        body.innerHTML = '<div class="spinner"></div>';
+        const path =
+          lastData?.meta?.source === 'cached-fixture'
+            ? '/profile/sample/raw'
+            : lastUrl && `/profile/raw?url=${encodeURIComponent(lastUrl)}`;
+        if (!path) {
+          body.innerHTML = '<div class="rawnote">No raw payload available for this result.</div>';
+          return;
+        }
+        try {
+          const res = await fetch(API_BASE + path);
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error?.message ?? `Request failed (${res.status}).`);
+          lastRaw = data;
+          if (jsonTab === 'full') renderRawTab(body);
+        } catch (err) {
+          body.innerHTML = `<div class="rawnote" style="color:var(--danger)">${esc(err.message)}</div>`;
+        }
+      }
+
+      /* ---------------- left pane: profile card ---------------- */
       function entry({ logo, title, sub, dates, desc }) {
         const initial = esc((sub || title || '?').trim().charAt(0).toUpperCase());
         const img = logo
@@ -410,23 +585,12 @@
             </div>
           </div>`;
       }
-
       function block(title, inner) {
-        if (!inner) return '';
-        return `<section class="block"><h3>${esc(title)}</h3>${inner}</section>`;
+        return inner ? `<section class="block"><h3>${esc(title)}</h3>${inner}</section>` : '';
       }
-
-      function render(data) {
-        lastData = data;
+      function profileCard(data) {
         const p = data.profile;
         const m = data.meta ?? {};
-
-        if (showRaw) {
-          resultEl.innerHTML = `<div class="card"><pre class="raw">${esc(
-            JSON.stringify(data, null, 2),
-          )}</pre></div>`;
-          return;
-        }
 
         const banner = p.images?.backgroundImage
           ? ` style="background-image:url('${esc(p.images.backgroundImage)}')"`
@@ -434,7 +598,6 @@
         const avatar = p.images?.profilePicture
           ? `<img class="avatar" src="${esc(p.images.profilePicture)}" alt="" onerror="this.style.visibility='hidden'">`
           : `<div class="avatar"></div>`;
-
         const metaLine = [p.location, p.industry].filter(Boolean).map(esc).join(' · ');
 
         const experience = (p.experience ?? [])
@@ -456,7 +619,6 @@
             const degreeLine = [e.degree, e.fieldOfStudy].filter(Boolean).join(', ');
             return entry({
               logo: e.schoolLogo,
-              // Some entries have no resolvable school name — lead with the degree then.
               title: e.school || degreeLine || 'Education',
               sub: e.school ? degreeLine : '',
               dates: dateSpan(e.startDate, e.endDate, e.current),
@@ -480,7 +642,7 @@
         const skills = (p.skills ?? []).length
           ? `<div class="chips">${p.skills.map((s) => `<span class="chip">${esc(s)}</span>`).join('')}</div>` +
             (m.partial?.skills
-              ? `<p class="partial-note">Showing ${m.partial.skills.returned} of ${m.partial.skills.total} — LinkedIn caps this list.</p>`
+              ? `<p class="partial-note">Showing ${m.partial.skills.returned} of ${m.partial.skills.total} — tick "Complete skills list" above.</p>`
               : '')
           : '';
 
@@ -506,7 +668,7 @@
               .join('')}</ul>`
           : '';
 
-        resultEl.innerHTML = `
+        return `
           <div class="card">
             <div class="banner"${banner}></div>
             <div class="identity">
@@ -530,22 +692,28 @@
             ${block('Languages', languages)}
             ${block('Featured', featured)}
             <footer>
-              <span>${m.cached ? 'cached' : 'fetched'} ${
+              ${m.cached ? 'cached' : 'fetched'} ${
                 m.fetchedAt ? esc(new Date(m.fetchedAt).toLocaleString()) : ''
-              }${m.source ? ` · ${esc(m.source)}` : ''}</span>
-              <a data-toggle-raw>view raw JSON</a>
+              }${m.source ? ` · ${esc(m.source)}` : ''}
             </footer>
           </div>`;
       }
 
-      // Same-origin when served by the API itself; an absolute URL when the
-      // widget is embedded on the separately-hosted showcase site.
-      const API_BASE = window.API_BASE ?? '';
+      function render(data) {
+        lastData = data;
+        resultEl.innerHTML = `<div class="split"><div class="pane-ui">${profileCard(
+          data,
+        )}</div>${jsonPane()}</div>`;
+        renderJsonTab();
+      }
 
-      async function load(path, { pushUrl } = {}) {
+      /* ---------------- fetch + events ---------------- */
+      async function load(path, { pushUrl, linkedinUrl = null } = {}) {
         goBtn.disabled = true;
         statusEl.innerHTML = '<div class="spinner"></div>';
         resultEl.innerHTML = '';
+        lastRaw = null;
+        lastUrl = linkedinUrl;
         try {
           const res = await fetch(API_BASE + path);
           const data = await res.json();
@@ -568,7 +736,10 @@
       function submitUrl(value) {
         const pushed = new URLSearchParams({ url: value });
         if (fullBox.checked) pushed.set('full', '1');
-        load(profilePath(value), { pushUrl: `${location.pathname}?${pushed}` });
+        load(profilePath(value), {
+          pushUrl: `${location.pathname}?${pushed}`,
+          linkedinUrl: value,
+        });
       }
 
       form.addEventListener('submit', (e) => {
@@ -577,36 +748,50 @@
         if (value) submitUrl(value);
       });
 
-      // Re-run the current lookup when the toggle changes.
       fullBox.addEventListener('change', () => {
         const value = urlInput.value.trim();
         if (value && lastData?.meta?.source !== 'cached-fixture') submitUrl(value);
       });
 
       document.addEventListener('click', (e) => {
-        const t = e.target.closest('a');
-        if (!t) return;
-        if (t.dataset.sample !== undefined) {
+        const link = e.target.closest('a');
+        if (link?.dataset.sample !== undefined) {
           e.preventDefault();
           load('/profile/sample');
-        } else if (t.dataset.example !== undefined) {
+          return;
+        }
+        if (link?.dataset.example !== undefined) {
           e.preventDefault();
           urlInput.value = EXAMPLE;
           submitUrl(EXAMPLE);
-        } else if (t.dataset.toggleRaw !== undefined) {
-          e.preventDefault();
-          showRaw = !showRaw;
-          if (lastData) render(lastData);
+          return;
+        }
+
+        const tab = e.target.closest('[data-jtab]');
+        if (tab) {
+          jsonTab = tab.dataset.jtab;
+          document
+            .querySelectorAll('[data-jtab]')
+            .forEach((b) => b.classList.toggle('on', b === tab));
+          renderJsonTab();
+          return;
+        }
+
+        const branch = e.target.closest('.jrow.br');
+        if (branch) {
+          const kids = branch.nextElementSibling;
+          const hidden = kids.classList.toggle('collapsed');
+          branch.querySelector('.jtw').textContent = hidden ? '▸' : '▾';
         }
       });
 
-      // Deep-link support: /?url=…&full=1
+      // Deep-link: /?url=…&full=1
       const params = new URLSearchParams(location.search);
       const preset = params.get('url');
       if (preset) {
         urlInput.value = preset;
         fullBox.checked = params.get('full') === '1';
-        load(profilePath(preset));
+        load(profilePath(preset), { linkedinUrl: preset });
       }
     </script>
   </body>

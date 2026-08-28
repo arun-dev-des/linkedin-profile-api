@@ -5,7 +5,12 @@ import { config, hasCredentials, missingCredentials } from './config.js';
 import { rateLimiter } from './cache.js';
 import { ApiError } from './errors.js';
 import { parseProfileUrl } from './linkedin/url.js';
-import { getProfile, getSampleProfile } from './service.js';
+import {
+  getProfile,
+  getProfileRaw,
+  getSampleProfile,
+  getSampleRaw,
+} from './service.js';
 
 const app = express();
 
@@ -57,7 +62,9 @@ app.get('/api', (req, res) => {
       'GET /health': 'Liveness check.',
       'GET /profile?url=<linkedin profile url>': 'Fetch and normalize a profile.',
       'GET /profile?url=<…>&full=1': 'Also fetch the complete skills list (one extra upstream request).',
+      'GET /profile/raw?url=<…>': 'The unprocessed Voyager payload (data + included[]), before normalization.',
       'GET /profile/sample': 'A cached real response. Never calls LinkedIn.',
+      'GET /profile/sample/raw': 'The unprocessed payload behind /profile/sample.',
     },
     documentation: 'https://github.com/arun-dev-des/linkedin-profile-api',
   });
@@ -71,9 +78,18 @@ app.get('/health', (req, res) => {
   });
 });
 
-// Registered before /profile so the literal path wins over the query route.
+// Registered before /profile so the literal paths win over the query route.
+app.get('/profile/sample/raw', (req, res) => {
+  res.json(getSampleRaw());
+});
+
 app.get('/profile/sample', (req, res) => {
   res.json(getSampleProfile());
+});
+
+app.get('/profile/raw', async (req, res) => {
+  const publicId = parseProfileUrl(req.query.url);
+  res.json(await getProfileRaw(publicId));
 });
 
 const truthy = (v) => v === '1' || v === 'true' || v === 'yes' || v === '';

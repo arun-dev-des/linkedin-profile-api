@@ -10,6 +10,9 @@
   --danger: #b91c1c;
   --danger-bg: #fef2f2;
   --shadow: 0 1px 3px rgb(0 0 0 / 0.06), 0 8px 24px rgb(0 0 0 / 0.04);
+  --jkey: #8250df;
+  --jstr: #0a7d33;
+  --jnum: #b26b00;
   --radius: 12px;
   --maxw: 760px;
   --side-w: 232px;
@@ -26,6 +29,9 @@
     --danger: #f87171;
     --danger-bg: #2a1414;
     --shadow: 0 1px 3px rgb(0 0 0 / 0.4), 0 8px 24px rgb(0 0 0 / 0.3);
+    --jkey: #c9a2ff;
+    --jstr: #6cc76c;
+    --jnum: #e0a55c;
   }
 }
 * {
@@ -178,7 +184,7 @@ main.wide {
   max-width: 1000px;
 }
 main.app {
-  max-width: 720px;
+  max-width: 1180px;
   margin: 0;
   padding: 44px 40px 64px;
 }

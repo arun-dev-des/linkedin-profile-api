@@ -51,6 +51,7 @@ export async function getProfile(publicId, { full = false } = {}) {
   if (hit) return envelope(hit.profile, { cached: true, partial: hit.partial });
 
   const raw = await fetchProfileRaw(publicId);
+  cache.set(`raw|${publicId}`, raw);
   const { profile, partial, profileUrn } = normalizeProfile(raw);
 
   if (full) await completeSkills(profile, partial, profileUrn);
@@ -60,16 +61,41 @@ export async function getProfile(publicId, { full = false } = {}) {
 }
 
 /**
+ * The unprocessed Voyager payload for a profile — `data` plus the flat
+ * `included[]` entity array, before normalization. Backs the "not normalised"
+ * view in the browser UI; a live lookup would populate the cache anyway.
+ */
+export async function getProfileRaw(publicId) {
+  const key = `raw|${publicId}`;
+  const hit = cache.get(key);
+  if (hit) return hit;
+
+  const raw = await fetchProfileRaw(publicId);
+  cache.set(key, raw);
+  return raw;
+}
+
+/**
  * The reference payload, normalized through exactly the same code path as a
  * live lookup. Always available — LinkedIn is never contacted — so the API can
  * still demonstrate its output shape when a request is bot-blocked upstream.
  */
+let sampleRaw = null;
 let sample = null;
 
-export function getSampleProfile() {
-  if (!sample) {
-    const raw = JSON.parse(readFileSync(new URL('../fixtures/raw-profile.json', import.meta.url)));
-    sample = normalizeProfile(raw);
+function readSampleRaw() {
+  if (!sampleRaw) {
+    sampleRaw = JSON.parse(readFileSync(new URL('../fixtures/raw-profile.json', import.meta.url)));
   }
+  return sampleRaw;
+}
+
+export function getSampleProfile() {
+  if (!sample) sample = normalizeProfile(readSampleRaw());
   return envelope(sample.profile, { partial: sample.partial, source: 'cached-fixture' });
+}
+
+/** The unprocessed payload behind /profile/sample. */
+export function getSampleRaw() {
+  return readSampleRaw();
 }
