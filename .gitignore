@@ -42,3 +42,6 @@ Thumbs.db
 .idea/
 .vscode/
 *.swp
+
+# --- local API exploration (public profile data, not for commit) ---
+api-samples/

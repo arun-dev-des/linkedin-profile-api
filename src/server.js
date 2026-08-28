@@ -56,6 +56,7 @@ app.get('/api', (req, res) => {
       'GET /': 'Browser UI.',
       'GET /health': 'Liveness check.',
       'GET /profile?url=<linkedin profile url>': 'Fetch and normalize a profile.',
+      'GET /profile?url=<…>&full=1': 'Also fetch the complete skills list (one extra upstream request).',
       'GET /profile/sample': 'A cached real response. Never calls LinkedIn.',
     },
     documentation: 'https://github.com/arun-dev-des/linkedin-profile-api',
@@ -75,9 +76,14 @@ app.get('/profile/sample', (req, res) => {
   res.json(getSampleProfile());
 });
 
+const truthy = (v) => v === '1' || v === 'true' || v === 'yes' || v === '';
+
 app.get('/profile', async (req, res) => {
   const publicId = parseProfileUrl(req.query.url);
-  res.json(await getProfile(publicId));
+  // ?full=1 spends one extra upstream request to return the complete skills
+  // list when the main call caps it at 20.
+  const full = truthy(req.query.full);
+  res.json(await getProfile(publicId, { full }));
 });
 
 app.use((req, res) => {

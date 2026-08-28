@@ -43,12 +43,21 @@ function section(markdown, ...headings) {
 
 /** Rewrite repo-relative links so they work on the deployed site. */
 function fixLinks(html) {
-  return html
-    .replace(/href="docs\/([a-z-]+)\.md(#[^"]*)?"/g, 'href="/$1$2"')
-    .replace(/href="(fetch_profile\.py|src\/[^"#]+)(#L\d+(?:-L\d+)?)?"/g, `href="${BLOB}/$1$2"`)
-    .replace(/href="fixtures\/([^"]+)"/g, `href="${BLOB}/fixtures/$1"`)
-    .replace(/href="README\.md"/g, `href="${BLOB}/README.md"`)
-    .replace(/href="(https:\/\/[^"]+)"/g, 'href="$1" target="_blank" rel="noopener"');
+  return (
+    html
+      // docs/<name>.md and ../<name>.md (sibling docs) -> site page
+      .replace(/href="(?:\.\.\/|docs\/)?([A-Za-z-]+)\.md(#[^"]*)?"/g, (_m, name, hash) => {
+        if (name !== 'README') return `href="/${name}${hash ?? ''}"`;
+        return hash ? `href="/api${hash}"` : `href="${BLOB}/README.md"`;
+      })
+      // source files (any depth of ../) -> GitHub blob
+      .replace(
+        /href="(?:\.\.\/)*(fetch_profile\.py|src\/[^"#]+)(#L\d+(?:-L\d+)?)?"/g,
+        `href="${BLOB}/$1$2"`,
+      )
+      .replace(/href="(?:\.\.\/)*fixtures\/([^"]+)"/g, `href="${BLOB}/fixtures/$1"`)
+      .replace(/href="(https:\/\/[^"]+)"/g, 'href="$1" target="_blank" rel="noopener"')
+  );
 }
 
 marked.use({
@@ -64,7 +73,7 @@ marked.use({
 });
 
 const layout = read('/web/layout.html');
-const navSlugs = ['app', 'approach', 'how-the-fetch-works', 'apk-provenance', 'api'];
+const navSlugs = ['app', 'approach', 'how-the-fetch-works', 'apk-provenance', 'endpoint-map', 'api'];
 
 function page({ slug, title, description = '', md, wide = false }) {
   let content = fixLinks(marked.parse(md));
@@ -127,6 +136,13 @@ page({
   title: 'APK Provenance',
   description: "Verifying the endpoint against the LinkedIn Android app's compiled code.",
   md: `[← Overview](/)\n\n${read('/docs/apk-provenance.md')}`,
+});
+
+page({
+  slug: 'endpoint-map',
+  title: 'Endpoint map',
+  description: 'Every LinkedIn profile endpoint found, and why one call covers almost everything.',
+  md: `[← Overview](/)\n\n${read('/docs/endpoint-map.md')}`,
 });
 
 // The interactive app: public/index.html with an injected absolute API base.

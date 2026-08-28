@@ -1,35 +1,24 @@
 import { config, hasCredentials } from '../config.js';
 import { ApiError, classifyUpstreamBody, fromUpstreamStatus } from '../errors.js';
 
-const VOYAGER_PROFILES_URL = 'https://www.linkedin.com/voyager/api/identity/dash/profiles';
+const VOYAGER = 'https://www.linkedin.com/voyager/api';
 const REQUEST_TIMEOUT_MS = 15_000;
 
 /**
- * Fetches the raw Voyager payload for one profile.
+ * One authenticated GET against Voyager, with the full error-classification
+ * chain. Every header and cookie here is justified in the "Provenance -> code"
+ * table in README.md; do not change one without checking it.
  *
- * Direct port of fetch_profile_view() in fetch_profile.py — same URL, query
- * params, headers and cookies. Every value here is justified in the
- * "Provenance -> code" table in README.md; do not change one without checking it.
- *
- * @param {string} publicId  e.g. "iamarun4official"
- * @param {object} [extraParams]  additional query params (used for experiments)
+ * @param {URL} url
  * @returns {Promise<object>} the normalized+json payload: { data, included }
  */
-export async function fetchProfileRaw(publicId, extraParams = {}) {
+async function voyagerGet(url) {
   if (!hasCredentials()) {
     throw new ApiError(
       503,
       'not_configured',
       'Server is missing LinkedIn credentials (LI_AT / JSESSIONID). See .env.example.',
     );
-  }
-
-  const url = new URL(VOYAGER_PROFILES_URL);
-  url.searchParams.set('q', 'memberIdentity');
-  url.searchParams.set('memberIdentity', publicId);
-  url.searchParams.set('decorationId', config.decorationId);
-  for (const [key, value] of Object.entries(extraParams)) {
-    url.searchParams.set(key, String(value));
   }
 
   const headers = {
@@ -45,10 +34,7 @@ export async function fetchProfileRaw(publicId, extraParams = {}) {
 
   let response;
   try {
-    response = await fetch(url, {
-      headers,
-      signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
-    });
+    response = await fetch(url, { headers, signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS) });
   } catch (cause) {
     const timedOut = cause?.name === 'TimeoutError' || cause?.name === 'AbortError';
     throw new ApiError(
@@ -88,4 +74,39 @@ export async function fetchProfileRaw(publicId, extraParams = {}) {
   }
 
   return body;
+}
+
+/**
+ * Fetches the raw profile payload — the one call that returns experience,
+ * education, skills, certifications, images and more in a single response.
+ * Port of fetch_profile_view() in fetch_profile.py.
+ *
+ * @param {string} publicId  e.g. "iamarun4official"
+ * @returns {Promise<object>} { data, included }
+ */
+export function fetchProfileRaw(publicId) {
+  const url = new URL(`${VOYAGER}/identity/dash/profiles`);
+  url.searchParams.set('q', 'memberIdentity');
+  url.searchParams.set('memberIdentity', publicId);
+  url.searchParams.set('decorationId', config.decorationId);
+  return voyagerGet(url);
+}
+
+/**
+ * Fetches the *complete* skills list for a profile.
+ *
+ * The FullProfileWithEntities decoration hard-caps skills at 20 regardless of
+ * how many the profile has (see docs/endpoint-map.md). This dedicated finder
+ * returns all of them; no decorationId is needed.
+ *
+ * @param {string} profileUrn  the subject's `urn:li:fsd_profile:…`
+ * @returns {Promise<object>} { data, included }
+ */
+export function fetchProfileSkills(profileUrn) {
+  const url = new URL(`${VOYAGER}/identity/dash/profileSkills`);
+  url.searchParams.set('q', 'viewee');
+  url.searchParams.set('profileUrn', profileUrn);
+  url.searchParams.set('start', '0');
+  url.searchParams.set('count', '100');
+  return voyagerGet(url);
 }

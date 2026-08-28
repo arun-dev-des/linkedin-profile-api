@@ -181,11 +181,27 @@ const buildFeatured = (index, profile) =>
     provider: media.providerName ?? null,
   }));
 
+/**
+ * Skill names from a standalone `profileSkills?q=viewee` response, in the order
+ * LinkedIn returns them (which is the profile's own display order). Used to
+ * replace the 20-capped list from the main call — see docs/endpoint-map.md.
+ *
+ * @param {object} payload  raw Voyager response from fetchProfileSkills()
+ * @returns {string[]}
+ */
+export function extractSkillNames(payload) {
+  const index = buildIndex(payload);
+  const ordered = payload?.data?.['*elements'] ?? [];
+  return ordered
+    .map((urn) => resolve(index, urn)?.name)
+    .filter((name) => typeof name === 'string' && name.trim() !== '');
+}
+
 /* -------------------------------------------------------------------- main */
 
 /**
  * @param {object} payload  raw Voyager response: { data, included }
- * @returns {{profile: object, partial: object}}
+ * @returns {{profile: object, partial: object, profileUrn: string}}
  */
 export function normalizeProfile(payload) {
   const index = buildIndex(payload);
@@ -243,5 +259,6 @@ export function normalizeProfile(payload) {
       featured: buildFeatured(index, profile),
     },
     partial,
+    profileUrn: rootUrn,
   };
 }

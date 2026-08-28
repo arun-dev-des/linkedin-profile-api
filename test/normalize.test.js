@@ -157,6 +157,11 @@ test('returns skills and reports the truncation honestly', () => {
   assert.deepEqual(partial.skills, { returned: 20, total: 31 });
 });
 
+test('exposes the root profile URN for follow-up calls', () => {
+  const { profileUrn } = normalizeProfile(payload);
+  assert.match(profileUrn, /^urn:li:fsd_profile:/);
+});
+
 test('parses certifications', () => {
   assert.equal(profile.certifications.length, 1);
   const [cert] = profile.certifications;

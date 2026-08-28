@@ -2,8 +2,8 @@ import { readFileSync } from 'node:fs';
 
 import { config } from './config.js';
 import { TtlCache } from './cache.js';
-import { fetchProfileRaw } from './linkedin/client.js';
-import { normalizeProfile } from './linkedin/normalize.js';
+import { fetchProfileRaw, fetchProfileSkills } from './linkedin/client.js';
+import { extractSkillNames, normalizeProfile } from './linkedin/normalize.js';
 
 const cache = new TtlCache(config.cacheTtlMs);
 
@@ -18,19 +18,44 @@ const envelope = (profile, { cached = false, partial = {}, source = 'linkedin-vo
 });
 
 /**
+ * If the main call capped the skills list, spend one extra request on the
+ * dedicated finder to get all of them. Best-effort: a failure here leaves the
+ * capped list and its `partial.skills` marker in place rather than failing the
+ * whole lookup.
+ */
+async function completeSkills(profile, partial, profileUrn) {
+  if (!partial.skills || !profileUrn) return;
+  try {
+    const full = extractSkillNames(await fetchProfileSkills(profileUrn));
+    if (full.length >= profile.skills.length) {
+      profile.skills = full;
+      delete partial.skills;
+    }
+  } catch (err) {
+    console.warn(`skills completion failed for ${profileUrn}: ${err.code ?? err.message}`);
+  }
+}
+
+/**
  * Fetches and normalizes one profile, serving from cache when warm.
  *
  * @param {string} publicId
+ * @param {object} [opts]
+ * @param {boolean} [opts.full]  also fetch the complete skills list (one extra
+ *   upstream request, only when the main call capped it at 20)
  * @returns {Promise<object>} the API response envelope
  */
-export async function getProfile(publicId) {
-  const hit = cache.get(publicId);
+export async function getProfile(publicId, { full = false } = {}) {
+  const key = `${publicId}|${full ? 'full' : 'basic'}`;
+  const hit = cache.get(key);
   if (hit) return envelope(hit.profile, { cached: true, partial: hit.partial });
 
   const raw = await fetchProfileRaw(publicId);
-  const { profile, partial } = normalizeProfile(raw);
+  const { profile, partial, profileUrn } = normalizeProfile(raw);
 
-  cache.set(publicId, { profile, partial });
+  if (full) await completeSkills(profile, partial, profileUrn);
+
+  cache.set(key, { profile, partial });
   return envelope(profile, { partial });
 }
 

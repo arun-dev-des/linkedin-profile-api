@@ -79,13 +79,15 @@ Fetch and normalize a LinkedIn profile.
 | Query param | Required | Description |
 | --- | --- | --- |
 | `url` | yes | A LinkedIn profile URL. Accepts `https://www.linkedin.com/in/<id>/`, locale subdomains (`in.linkedin.com`), trailing paths, and query strings. |
+| `full` | no | `full=1` also fetches the **complete skills list**. The main call caps skills at 20; with `full=1` the service spends one extra upstream request (only when the cap was hit) to return all of them, and `meta.partial.skills` disappears. Off by default — see [Known limitations](#known-limitations) and [`docs/endpoint-map.md`](docs/endpoint-map.md). |
 
 ```bash
 curl 'http://localhost:3000/profile?url=https://www.linkedin.com/in/iamarun4official/'
+curl 'http://localhost:3000/profile?url=https://www.linkedin.com/in/iamarun4official/&full=1'
 ```
 
 Successful responses are cached in-memory for ~1 hour (`meta.cached` tells you
-which you got).
+which you got). `full=1` and the default are cached separately.
 
 ### `GET /profile/sample`
 
@@ -336,23 +338,30 @@ src/
   cache.js             in-memory TTL cache + per-IP rate limiter
   linkedin/
     url.js             LinkedIn URL → publicId
-    client.js          the one authenticated Voyager GET
+    client.js          the authenticated Voyager GETs (profile, + skills for ?full=1)
     normalize.js       normalized+json graph → clean profile tree
 public/
   index.html           the browser UI — one self-contained file, no build step
 fixtures/
   raw-profile.json     a real captured payload — powers the tests and /profile/sample
+  raw-skills.json      a real profileSkills response — powers the ?full=1 tests
 test/
   normalize.test.js    offline tests, incl. every real-payload edge case
+  skills.test.js       the complete-skills extraction (?full=1)
   errors.test.js       upstream-status classification
 fetch_profile.py       the original Python spike, kept as a reference
-docs/                  reverse-engineering write-ups
+docs/
+  how-the-fetch-works.md   line-by-line walkthrough of the request
+  apk-provenance.md        verifying the endpoint against the Android app
+  endpoint-map.md          the full profile-endpoint landscape + what ?full=1 wires in
 ```
 
 Design choices:
 
-- **Single request per lookup.** The `FullProfileWithEntities` decoration returns
-  experience, education, skills, certifications, images and more in one response.
+- **One request per lookup.** The `FullProfileWithEntities` decoration returns
+  experience, education, skills, certifications, images and more in a single
+  response. `?full=1` adds exactly one more — the dedicated skills finder — and
+  only when the main call capped the list.
 - **Normalizer is a pure function** — no I/O, no throw on missing data — so it is
   fully tested offline against a committed real payload.
 - **In-memory cache + rate limit**, not Redis: a small hosted service backed by
@@ -399,10 +408,17 @@ and update the `DECORATION_ID` env var.
   [Deployment](#bumping-decoration_id).
 - **Session lifetime.** `li_at` is long-lived but revoked on password change and
   some security events. No refresh flow — cookies are re-extracted manually.
-- **Skills are capped at 20.** The `FullProfileWithEntities` decoration returns
-  at most 20 skills even when the profile has more; `meta.partial.skills` reports
-  the true total. Fetching the rest would require a second, separately
-  reverse-engineered endpoint.
+- **Skills are capped at 20 by default.** The `FullProfileWithEntities`
+  decoration returns at most 20 skills regardless of how many the profile has;
+  `meta.partial.skills` reports the true total. Pass **`?full=1`** to have the
+  service fetch the complete list via a dedicated finder
+  (`profileSkills?q=viewee&count=100`) in one extra request — see
+  [`docs/endpoint-map.md`](docs/endpoint-map.md).
+- **"Featured" media is still capped.** The `profileTreasuryMedia` section (the
+  `featured` array) is truncated by the main call the same way skills are, and
+  `?full=1` does **not** currently complete it — that endpoint returns a
+  different entity shape and would need its own parser. Featured links beyond the
+  first few are not returned.
 - **Career breaks are not returned.** A "Career break" entry in the Experience
   section is not part of the Voyager `profilePositionGroups` collection or the
   `FullProfileWithEntities` decoration, and the LinkedIn Android app has no

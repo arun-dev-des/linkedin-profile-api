@@ -90,6 +90,7 @@ on the [Provenance page](/apk-provenance).
 - **`src/server.js`** — Express: the `/profile` route, an always-available
   `/profile/sample`, a per-IP rate limiter, and a short-lived response cache.
 
-Read the [reverse-engineering write-up](/approach) for the investigation, or the
-[known limitations](/api#known-limitations) for what the endpoint does and doesn't
-expose.
+Read the [reverse-engineering write-up](/approach) for the investigation, the
+[endpoint map](/endpoint-map) for every profile endpoint found (and why one call
+covers almost everything), or the [known limitations](/api#known-limitations) for
+what the endpoint does and doesn't expose.

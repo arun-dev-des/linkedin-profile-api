@@ -1,0 +1,295 @@
+{
+  "data": {
+    "entityUrn": "urn:li:collectionResponse:yfWKFY/3FDoOFQkEmBN8PyCZ0WKzbwvjyDf7nyfuhAg=",
+    "paging": {
+      "count": 100,
+      "start": 0,
+      "total": 31,
+      "links": []
+    },
+    "*elements": [
+      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,977647385)",
+      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,977647380)",
+      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,977647381)",
+      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,977647382)",
+      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,977647383)",
+      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,977647384)",
+      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,977647374)",
+      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,977647375)",
+      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,977647376)",
+      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,977647377)",
+      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,977647378)",
+      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,977647379)",
+      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,1)",
+      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,11)",
+      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,9)",
+      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,10)",
+      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,8)",
+      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,12)",
+      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,2)",
+      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,3)",
+      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,4)",
+      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,5)",
+      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,1140112977)",
+      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,6)",
+      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,7)",
+      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,13)",
+      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,14)",
+      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,15)",
+      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,16)",
+      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,17)",
+      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,18)"
+    ],
+    "$type": "com.linkedin.restli.common.CollectionResponse"
+  },
+  "included": [
+    {
+      "multiLocaleName": {
+        "en_US": "Python (Programming Language)"
+      },
+      "name": "Python (Programming Language)",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,18)",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
+    },
+    {
+      "multiLocaleName": {
+        "en_US": "Design Systems"
+      },
+      "name": "Design Systems",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,977647375)",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
+    },
+    {
+      "multiLocaleName": {
+        "en_US": "Graphic Design"
+      },
+      "name": "Graphic Design",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,8)",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
+    },
+    {
+      "multiLocaleName": {
+        "en_US": "Typography"
+      },
+      "name": "Typography",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,977647385)",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
+    },
+    {
+      "multiLocaleName": {
+        "en_US": "Product Design"
+      },
+      "name": "Product Design",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,16)",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
+    },
+    {
+      "multiLocaleName": {
+        "en_US": "Interaction Design"
+      },
+      "name": "Interaction Design",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,977647383)",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
+    },
+    {
+      "multiLocaleName": {
+        "en_US": "Usability"
+      },
+      "name": "Usability",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,14)",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
+    },
+    {
+      "multiLocaleName": {
+        "en_US": "Javascript"
+      },
+      "name": "Javascript",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,4)",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
+    },
+    {
+      "multiLocaleName": {
+        "en_US": "Jupyter"
+      },
+      "name": "Jupyter",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,977647381)",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
+    },
+    {
+      "multiLocaleName": {
+        "en_US": "Web Design"
+      },
+      "name": "Web Design",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,12)",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
+    },
+    {
+      "multiLocaleName": {
+        "en_US": "Wireframing"
+      },
+      "name": "Wireframing",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,6)",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
+    },
+    {
+      "multiLocaleName": {
+        "en_US": "Illustrator"
+      },
+      "name": "Illustrator",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,10)",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
+    },
+    {
+      "multiLocaleName": {
+        "en_US": "HTML"
+      },
+      "name": "HTML",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,2)",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
+    },
+    {
+      "multiLocaleName": {
+        "en_US": "React.js"
+      },
+      "name": "React.js",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,977647379)",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
+    },
+    {
+      "multiLocaleName": {
+        "en_US": "Framer"
+      },
+      "name": "Framer",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,977647377)",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
+    },
+    {
+      "multiLocaleName": {
+        "en_US": "Claude Code"
+      },
+      "name": "Claude Code",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,977647376)",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
+    },
+    {
+      "multiLocaleName": {
+        "en_US": "Prototyping"
+      },
+      "name": "Prototyping",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,7)",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
+    },
+    {
+      "multiLocaleName": {
+        "en_US": "Adobe Photoshop"
+      },
+      "name": "Adobe Photoshop",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,1140112977)",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
+    },
+    {
+      "multiLocaleName": {
+        "en_US": "Figma (Software)"
+      },
+      "name": "Figma (Software)",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,977647374)",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
+    },
+    {
+      "multiLocaleName": {
+        "en_US": "Photoshop"
+      },
+      "name": "Photoshop",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,9)",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
+    },
+    {
+      "multiLocaleName": {
+        "en_US": "User Interface Design"
+      },
+      "name": "User Interface Design",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,977647384)",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
+    },
+    {
+      "multiLocaleName": {
+        "en_US": "web application"
+      },
+      "name": "web application",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,17)",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
+    },
+    {
+      "multiLocaleName": {
+        "en_US": "CSS"
+      },
+      "name": "CSS",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,3)",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
+    },
+    {
+      "multiLocaleName": {
+        "en_US": "Pandas (Software)"
+      },
+      "name": "Pandas (Software)",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,977647382)",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
+    },
+    {
+      "multiLocaleName": {
+        "en_US": "User Experience"
+      },
+      "name": "User Experience",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,15)",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
+    },
+    {
+      "multiLocaleName": {
+        "en_US": "Visual Design"
+      },
+      "name": "Visual Design",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,5)",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
+    },
+    {
+      "multiLocaleName": {
+        "en_US": "Next.js"
+      },
+      "name": "Next.js",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,977647380)",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
+    },
+    {
+      "multiLocaleName": {
+        "en_US": "User Testing"
+      },
+      "name": "User Testing",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,13)",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
+    },
+    {
+      "multiLocaleName": {
+        "en_US": "Sketch App"
+      },
+      "name": "Sketch App",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,11)",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
+    },
+    {
+      "multiLocaleName": {
+        "en_US": "UI/UX"
+      },
+      "name": "UI/UX",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,1)",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
+    },
+    {
+      "multiLocaleName": {
+        "en_US": "TypeScript"
+      },
+      "name": "TypeScript",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,977647378)",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
+    }
+  ]
+}
