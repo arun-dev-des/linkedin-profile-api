@@ -23,6 +23,10 @@ node_modules/
 npm-debug.log*
 yarn-error.log*
 
+# --- Build output ---
+dist/
+.vercel/
+
 # --- Python ---
 __pycache__/
 *.py[cod]

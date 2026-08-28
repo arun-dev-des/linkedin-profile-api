@@ -10,11 +10,15 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "node --watch src/server.js",
-    "test": "node --test \"test/*.test.js\""
+    "test": "node --test \"test/*.test.js\"",
+    "build:site": "node web/build.mjs"
   },
   "dependencies": {
     "dotenv": "^17.2.3",
     "express": "^5.2.1"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "marked": "^18.0.11"
+  }
 }

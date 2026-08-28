@@ -515,12 +515,16 @@
           </div>`;
       }
 
+      // Same-origin when served by the API itself; an absolute URL when the
+      // widget is embedded on the separately-hosted showcase site.
+      const API_BASE = window.API_BASE ?? '';
+
       async function load(path, { pushUrl } = {}) {
         goBtn.disabled = true;
         statusEl.innerHTML = '<div class="spinner"></div>';
         resultEl.innerHTML = '';
         try {
-          const res = await fetch(path);
+          const res = await fetch(API_BASE + path);
           const data = await res.json();
           statusEl.innerHTML = '';
           if (!res.ok) {
@@ -542,7 +546,9 @@
         e.preventDefault();
         const value = urlInput.value.trim();
         if (!value) return;
-        load(`/profile?url=${encodeURIComponent(value)}`, { pushUrl: `/?url=${encodeURIComponent(value)}` });
+        load(`/profile?url=${encodeURIComponent(value)}`, {
+          pushUrl: `${location.pathname}?url=${encodeURIComponent(value)}`,
+        });
       });
 
       document.addEventListener('click', (e) => {

@@ -31,6 +31,17 @@ app.use((req, res, next) => {
   next();
 });
 
+// Public read-only API — the showcase site (hosted separately) calls it from
+// the browser, so permit cross-origin GETs. No cookies or auth cross this
+// boundary; the LinkedIn session lives only server-side.
+app.use((req, res, next) => {
+  res.set('Access-Control-Allow-Origin', '*');
+  res.set('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  res.set('Access-Control-Allow-Headers', 'Content-Type');
+  if (req.method === 'OPTIONS') return res.sendStatus(204);
+  next();
+});
+
 app.use(rateLimiter(config.rateLimit));
 
 // The browser UI. Static files are served before the API routes; only paths
