@@ -1,4 +1,5 @@
 import express from 'express';
+import { fileURLToPath } from 'node:url';
 
 import { config, hasCredentials, missingCredentials } from './config.js';
 import { rateLimiter } from './cache.js';
@@ -32,11 +33,16 @@ app.use((req, res, next) => {
 
 app.use(rateLimiter(config.rateLimit));
 
-app.get('/', (req, res) => {
+// The browser UI. Static files are served before the API routes; only paths
+// that match a file in public/ are handled here, everything else falls through.
+app.use(express.static(fileURLToPath(new URL('../public', import.meta.url))));
+
+app.get('/api', (req, res) => {
   res.json({
     service: 'linkedin-profile-api',
     description: 'Returns a LinkedIn profile as structured JSON.',
     endpoints: {
+      'GET /': 'Browser UI.',
       'GET /health': 'Liveness check.',
       'GET /profile?url=<linkedin profile url>': 'Fetch and normalize a profile.',
       'GET /profile/sample': 'A cached real response. Never calls LinkedIn.',

@@ -1,0 +1,573 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LinkedIn Profile API</title>
+    <style>
+      :root {
+        --bg: #f4f4f5;
+        --card: #ffffff;
+        --text: #18181b;
+        --muted: #71717a;
+        --border: #e4e4e7;
+        --accent: #0a66c2;
+        --accent-contrast: #ffffff;
+        --danger: #b91c1c;
+        --danger-bg: #fef2f2;
+        --radius: 12px;
+        --shadow: 0 1px 3px rgb(0 0 0 / 0.06), 0 8px 24px rgb(0 0 0 / 0.04);
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #09090b;
+          --card: #18181b;
+          --text: #fafafa;
+          --muted: #a1a1aa;
+          --border: #27272a;
+          --accent: #4098e6;
+          --danger: #f87171;
+          --danger-bg: #2a1414;
+          --shadow: 0 1px 3px rgb(0 0 0 / 0.4), 0 8px 24px rgb(0 0 0 / 0.3);
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font: 15px/1.55 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial,
+          sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      .wrap {
+        max-width: 680px;
+        margin: 0 auto;
+        padding: 40px 20px 80px;
+      }
+      header h1 {
+        font-size: 1.5rem;
+        margin: 0 0 4px;
+        letter-spacing: -0.01em;
+      }
+      header p {
+        margin: 0 0 24px;
+        color: var(--muted);
+      }
+      header a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+      header a:hover {
+        text-decoration: underline;
+      }
+
+      form {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 12px;
+      }
+      input[type='text'] {
+        flex: 1;
+        padding: 11px 14px;
+        font-size: 15px;
+        color: var(--text);
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        outline: none;
+      }
+      input[type='text']:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgb(10 102 194 / 0.15);
+      }
+      button {
+        padding: 11px 20px;
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--accent-contrast);
+        background: var(--accent);
+        border: 0;
+        border-radius: var(--radius);
+        cursor: pointer;
+      }
+      button:disabled {
+        opacity: 0.55;
+        cursor: default;
+      }
+      .hint {
+        font-size: 13px;
+        color: var(--muted);
+      }
+      .hint a {
+        color: var(--accent);
+        text-decoration: none;
+        cursor: pointer;
+      }
+      .hint a:hover {
+        text-decoration: underline;
+      }
+
+      #status {
+        margin-top: 28px;
+      }
+      .error {
+        padding: 14px 16px;
+        background: var(--danger-bg);
+        color: var(--danger);
+        border: 1px solid currentColor;
+        border-radius: var(--radius);
+        font-size: 14px;
+      }
+      .spinner {
+        width: 22px;
+        height: 22px;
+        border: 2.5px solid var(--border);
+        border-top-color: var(--accent);
+        border-radius: 50%;
+        animation: spin 0.7s linear infinite;
+        margin: 32px auto;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .card {
+        margin-top: 28px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+      .banner {
+        height: 96px;
+        background: linear-gradient(120deg, var(--accent), #63b3ed);
+        background-size: cover;
+        background-position: center;
+      }
+      .identity {
+        padding: 0 24px 20px;
+        margin-top: -44px;
+      }
+      .avatar {
+        width: 88px;
+        height: 88px;
+        border-radius: 50%;
+        border: 4px solid var(--card);
+        background: var(--border);
+        object-fit: cover;
+        display: block;
+      }
+      .identity h2 {
+        margin: 12px 0 2px;
+        font-size: 1.35rem;
+        letter-spacing: -0.01em;
+      }
+      .identity .headline {
+        margin: 0 0 6px;
+      }
+      .identity .meta {
+        color: var(--muted);
+        font-size: 13.5px;
+      }
+      .identity .meta a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+
+      section.block {
+        padding: 20px 24px;
+        border-top: 1px solid var(--border);
+      }
+      section.block h3 {
+        margin: 0 0 14px;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--muted);
+      }
+      .about {
+        white-space: pre-wrap;
+        margin: 0;
+      }
+
+      .entry {
+        display: flex;
+        gap: 12px;
+        padding: 12px 0;
+      }
+      .entry + .entry {
+        border-top: 1px solid var(--border);
+      }
+      .entry .logo {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        object-fit: contain;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        flex-shrink: 0;
+      }
+      .entry .logo.placeholder {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 15px;
+        color: var(--muted);
+      }
+      .entry .body {
+        min-width: 0;
+      }
+      .entry .title {
+        font-weight: 600;
+      }
+      .entry .sub {
+        color: var(--text);
+        font-size: 14px;
+      }
+      .entry .dates {
+        color: var(--muted);
+        font-size: 13px;
+        margin-top: 1px;
+      }
+      .entry .desc {
+        margin: 6px 0 0;
+        color: var(--muted);
+        font-size: 13.5px;
+        white-space: pre-wrap;
+      }
+      .badge {
+        display: inline-block;
+        font-size: 11px;
+        font-weight: 600;
+        padding: 1px 7px;
+        border-radius: 999px;
+        background: var(--accent);
+        color: var(--accent-contrast);
+        vertical-align: middle;
+        margin-left: 6px;
+      }
+
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .chip {
+        padding: 5px 11px;
+        font-size: 13px;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 999px;
+      }
+
+      ul.links {
+        margin: 0;
+        padding-left: 18px;
+      }
+      ul.links a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+
+      .partial-note {
+        margin-top: 10px;
+        font-size: 12.5px;
+        color: var(--muted);
+      }
+      .card footer {
+        padding: 14px 24px;
+        border-top: 1px solid var(--border);
+        font-size: 12px;
+        color: var(--muted);
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .card footer a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+      pre.raw {
+        margin: 0;
+        padding: 16px 20px;
+        overflow-x: auto;
+        font-size: 12px;
+        line-height: 1.5;
+        background: var(--card);
+        border-top: 1px solid var(--border);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <h1>LinkedIn Profile API</h1>
+        <p>
+          Paste a LinkedIn profile URL to get it back as structured JSON.
+          <a href="https://github.com/arun-dev-des/linkedin-profile-api" target="_blank" rel="noopener"
+            >Source &amp; docs</a
+          >.
+        </p>
+      </header>
+
+      <form id="form">
+        <input
+          id="url"
+          type="text"
+          placeholder="https://www.linkedin.com/in/…"
+          autocomplete="off"
+          autocapitalize="off"
+          spellcheck="false"
+        />
+        <button id="go" type="submit">Fetch</button>
+      </form>
+      <p class="hint">
+        Try <a data-sample>the sample response</a>, or
+        <a data-example>an example profile</a>. Toggle
+        <a data-toggle-raw>raw JSON</a>.
+      </p>
+
+      <div id="status" aria-live="polite"></div>
+      <div id="result"></div>
+    </div>
+
+    <script>
+      const $ = (sel) => document.querySelector(sel);
+      const form = $('#form');
+      const urlInput = $('#url');
+      const goBtn = $('#go');
+      const statusEl = $('#status');
+      const resultEl = $('#result');
+      const EXAMPLE = 'https://www.linkedin.com/in/iamarun4official/';
+      let showRaw = false;
+      let lastData = null;
+
+      const esc = (s) =>
+        String(s ?? '').replace(
+          /[&<>"']/g,
+          (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c],
+        );
+
+      // PROFESSIONAL_WORKING -> "Professional working". The API keeps the raw
+      // enum (machine-usable); the UI shows the friendly form.
+      const humanize = (s) =>
+        !s
+          ? ''
+          : String(s)
+              .toLowerCase()
+              .replace(/_/g, ' ')
+              .replace(/^./, (c) => c.toUpperCase());
+
+      const dateSpan = (a, b, current) => {
+        if (!a && !b) return '';
+        return `${a ?? ''}${a || b ? ' – ' : ''}${current ? 'Present' : (b ?? '')}`.trim();
+      };
+
+      function entry({ logo, title, sub, dates, desc }) {
+        const initial = esc((sub || title || '?').trim().charAt(0).toUpperCase());
+        const img = logo
+          ? `<img class="logo" src="${esc(logo)}" alt="" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'logo placeholder',textContent:'${initial}'}))">`
+          : `<div class="logo placeholder">${initial}</div>`;
+        return `
+          <div class="entry">
+            ${img}
+            <div class="body">
+              <div class="title">${esc(title)}</div>
+              ${sub ? `<div class="sub">${esc(sub)}</div>` : ''}
+              ${dates ? `<div class="dates">${esc(dates)}</div>` : ''}
+              ${desc ? `<p class="desc">${esc(desc)}</p>` : ''}
+            </div>
+          </div>`;
+      }
+
+      function block(title, inner) {
+        if (!inner) return '';
+        return `<section class="block"><h3>${esc(title)}</h3>${inner}</section>`;
+      }
+
+      function render(data) {
+        lastData = data;
+        const p = data.profile;
+        const m = data.meta ?? {};
+
+        if (showRaw) {
+          resultEl.innerHTML = `<div class="card"><pre class="raw">${esc(
+            JSON.stringify(data, null, 2),
+          )}</pre></div>`;
+          return;
+        }
+
+        const banner = p.images?.backgroundImage
+          ? ` style="background-image:url('${esc(p.images.backgroundImage)}')"`
+          : '';
+        const avatar = p.images?.profilePicture
+          ? `<img class="avatar" src="${esc(p.images.profilePicture)}" alt="" onerror="this.style.visibility='hidden'">`
+          : `<div class="avatar"></div>`;
+
+        const metaLine = [p.location, p.industry].filter(Boolean).map(esc).join(' · ');
+
+        const experience = (p.experience ?? [])
+          .map((e) =>
+            entry({
+              logo: e.companyLogo,
+              title: e.title,
+              sub: [e.company, e.employmentType].filter(Boolean).join(' · '),
+              dates: [dateSpan(e.startDate, e.endDate, e.current), e.location]
+                .filter(Boolean)
+                .join('  ·  '),
+              desc: e.description,
+            }),
+          )
+          .join('');
+
+        const education = (p.education ?? [])
+          .map((e) => {
+            const degreeLine = [e.degree, e.fieldOfStudy].filter(Boolean).join(', ');
+            return entry({
+              logo: e.schoolLogo,
+              // Some entries have no resolvable school name — lead with the degree then.
+              title: e.school || degreeLine || 'Education',
+              sub: e.school ? degreeLine : '',
+              dates: dateSpan(e.startDate, e.endDate, e.current),
+              desc: e.description,
+            });
+          })
+          .join('');
+
+        const certs = (p.certifications ?? [])
+          .map((c) =>
+            entry({
+              title: c.name,
+              sub: c.authority,
+              dates: [dateSpan(c.startDate, c.endDate, c.current), c.licenseNumber]
+                .filter(Boolean)
+                .join('  ·  '),
+            }),
+          )
+          .join('');
+
+        const skills = (p.skills ?? []).length
+          ? `<div class="chips">${p.skills.map((s) => `<span class="chip">${esc(s)}</span>`).join('')}</div>` +
+            (m.partial?.skills
+              ? `<p class="partial-note">Showing ${m.partial.skills.returned} of ${m.partial.skills.total} — LinkedIn caps this list.</p>`
+              : '')
+          : '';
+
+        const languages = (p.languages ?? []).length
+          ? `<div class="chips">${p.languages
+              .map(
+                (l) =>
+                  `<span class="chip">${esc(l.name)}${
+                    l.proficiency ? ` · ${esc(humanize(l.proficiency))}` : ''
+                  }</span>`,
+              )
+              .join('')}</div>`
+          : '';
+
+        const featured = (p.featured ?? []).length
+          ? `<ul class="links">${p.featured
+              .map(
+                (f) =>
+                  `<li><a href="${esc(f.url)}" target="_blank" rel="noopener">${esc(
+                    f.title || f.url,
+                  )}</a>${f.provider ? ` <span class="dates">— ${esc(f.provider)}</span>` : ''}</li>`,
+              )
+              .join('')}</ul>`
+          : '';
+
+        resultEl.innerHTML = `
+          <div class="card">
+            <div class="banner"${banner}></div>
+            <div class="identity">
+              ${avatar}
+              <h2>${esc(p.name ?? 'Unknown')}</h2>
+              ${p.headline ? `<p class="headline">${esc(p.headline)}</p>` : ''}
+              <div class="meta">
+                ${metaLine}
+                ${
+                  p.profileUrl
+                    ? ` · <a href="${esc(p.profileUrl)}" target="_blank" rel="noopener">LinkedIn ↗</a>`
+                    : ''
+                }
+              </div>
+            </div>
+            ${block('About', p.about ? `<p class="about">${esc(p.about)}</p>` : '')}
+            ${block('Experience', experience)}
+            ${block('Education', education)}
+            ${block('Skills', skills)}
+            ${block('Certifications', certs)}
+            ${block('Languages', languages)}
+            ${block('Featured', featured)}
+            <footer>
+              <span>${m.cached ? 'cached' : 'fetched'} ${
+                m.fetchedAt ? esc(new Date(m.fetchedAt).toLocaleString()) : ''
+              }${m.source ? ` · ${esc(m.source)}` : ''}</span>
+              <a data-toggle-raw>view raw JSON</a>
+            </footer>
+          </div>`;
+      }
+
+      async function load(path, { pushUrl } = {}) {
+        goBtn.disabled = true;
+        statusEl.innerHTML = '<div class="spinner"></div>';
+        resultEl.innerHTML = '';
+        try {
+          const res = await fetch(path);
+          const data = await res.json();
+          statusEl.innerHTML = '';
+          if (!res.ok) {
+            statusEl.innerHTML = `<div class="error">${esc(
+              data.error?.message ?? `Request failed (${res.status}).`,
+            )}</div>`;
+            return;
+          }
+          render(data);
+          if (pushUrl) history.replaceState(null, '', pushUrl);
+        } catch (err) {
+          statusEl.innerHTML = `<div class="error">${esc(err.message)}</div>`;
+        } finally {
+          goBtn.disabled = false;
+        }
+      }
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const value = urlInput.value.trim();
+        if (!value) return;
+        load(`/profile?url=${encodeURIComponent(value)}`, { pushUrl: `/?url=${encodeURIComponent(value)}` });
+      });
+
+      document.addEventListener('click', (e) => {
+        const t = e.target.closest('a');
+        if (!t) return;
+        if (t.dataset.sample !== undefined) {
+          e.preventDefault();
+          load('/profile/sample');
+        } else if (t.dataset.example !== undefined) {
+          e.preventDefault();
+          urlInput.value = EXAMPLE;
+          load(`/profile?url=${encodeURIComponent(EXAMPLE)}`);
+        } else if (t.dataset.toggleRaw !== undefined) {
+          e.preventDefault();
+          showRaw = !showRaw;
+          if (lastData) render(lastData);
+        }
+      });
+
+      // Deep-link support: /?url=…
+      const preset = new URLSearchParams(location.search).get('url');
+      if (preset) {
+        urlInput.value = preset;
+        load(`/profile?url=${encodeURIComponent(preset)}`);
+      }
+    </script>
+  </body>
+</html>
