@@ -9,8 +9,12 @@ with server-side session cookies. **No browser automation** (Selenium / Puppetee
 / Playwright) and **no HTML scraping** — a single authenticated `GET` request per
 lookup, then a pure-function transform of the response.
 
-- **Live API:** _(add the deployed URL here)_
-- **Try it without credentials:** `GET /profile/sample` returns a real cached response.
+- **Live API:** https://linkedin-profile-api-production-3c84.up.railway.app
+- **Try it now:**
+  [`/profile/sample`](https://linkedin-profile-api-production-3c84.up.railway.app/profile/sample)
+  (a real cached response, no credentials needed) ·
+  [`/profile?url=https://www.linkedin.com/in/iamarun4official/`](https://linkedin-profile-api-production-3c84.up.railway.app/profile?url=https://www.linkedin.com/in/iamarun4official/)
+  (live)
 
 ---
 
