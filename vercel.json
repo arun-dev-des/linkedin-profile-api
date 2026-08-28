@@ -5,6 +5,7 @@
   "outputDirectory": "dist",
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [{ "source": "/app", "destination": "/", "permanent": true }],
   "headers": [
     {
       "source": "/site.css",
