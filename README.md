@@ -100,7 +100,12 @@ Liveness check. Does not call LinkedIn.
 
 ### `GET /`
 
-Service metadata and the endpoint list.
+A minimal browser UI — paste a profile URL, see the rendered result, toggle
+raw JSON. Deep-linkable: `/?url=<linkedin profile url>`.
+
+### `GET /api`
+
+Service metadata and the endpoint list, as JSON.
 
 ### Errors
 
@@ -321,7 +326,7 @@ schema above is the job of [`src/linkedin/normalize.js`](src/linkedin/normalize.
 
 ```
 src/
-  server.js            Express app — routes, rate limiting, error envelope, logging
+  server.js            Express app — routes, static UI, rate limiting, error envelope, logging
   service.js           orchestration — cache lookup, fetch, normalize, envelope
   config.js            environment config (credentials never logged)
   errors.js            ApiError + upstream-status → API-status mapping
@@ -330,10 +335,13 @@ src/
     url.js             LinkedIn URL → publicId
     client.js          the one authenticated Voyager GET
     normalize.js       normalized+json graph → clean profile tree
+public/
+  index.html           the browser UI — one self-contained file, no build step
 fixtures/
   raw-profile.json     a real captured payload — powers the tests and /profile/sample
 test/
-  normalize.test.js    18 offline tests, incl. every real-payload edge case
+  normalize.test.js    offline tests, incl. every real-payload edge case
+  errors.test.js       upstream-status classification
 fetch_profile.py       the original Python spike, kept as a reference
 docs/                  reverse-engineering write-ups
 ```
