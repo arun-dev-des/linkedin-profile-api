@@ -109,6 +109,20 @@
       .hint a:hover {
         text-decoration: underline;
       }
+      .opts {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 13px;
+        color: var(--muted);
+        margin: 8px 0 0;
+      }
+      .opts input {
+        accent-color: var(--accent);
+      }
+      .opts label {
+        cursor: pointer;
+      }
 
       #status {
         margin-top: 28px;
@@ -334,6 +348,10 @@
         <a data-example>an example profile</a>. Toggle
         <a data-toggle-raw>raw JSON</a>.
       </p>
+      <p class="opts">
+        <input type="checkbox" id="full" />
+        <label for="full">Complete skills list &mdash; one extra request when LinkedIn caps it at 20 (<code>?full=1</code>)</label>
+      </p>
 
       <div id="status" aria-live="polite"></div>
       <div id="result"></div>
@@ -344,11 +362,16 @@
       const form = $('#form');
       const urlInput = $('#url');
       const goBtn = $('#go');
+      const fullBox = $('#full');
       const statusEl = $('#status');
       const resultEl = $('#result');
       const EXAMPLE = 'https://www.linkedin.com/in/iamarun4official/';
       let showRaw = false;
       let lastData = null;
+
+      // Build the /profile path, adding &full=1 when the box is ticked.
+      const profilePath = (linkedinUrl) =>
+        `/profile?url=${encodeURIComponent(linkedinUrl)}${fullBox.checked ? '&full=1' : ''}`;
 
       const esc = (s) =>
         String(s ?? '').replace(
@@ -542,13 +565,22 @@
         }
       }
 
+      function submitUrl(value) {
+        const pushed = new URLSearchParams({ url: value });
+        if (fullBox.checked) pushed.set('full', '1');
+        load(profilePath(value), { pushUrl: `${location.pathname}?${pushed}` });
+      }
+
       form.addEventListener('submit', (e) => {
         e.preventDefault();
         const value = urlInput.value.trim();
-        if (!value) return;
-        load(`/profile?url=${encodeURIComponent(value)}`, {
-          pushUrl: `${location.pathname}?url=${encodeURIComponent(value)}`,
-        });
+        if (value) submitUrl(value);
+      });
+
+      // Re-run the current lookup when the toggle changes.
+      fullBox.addEventListener('change', () => {
+        const value = urlInput.value.trim();
+        if (value && lastData?.meta?.source !== 'cached-fixture') submitUrl(value);
       });
 
       document.addEventListener('click', (e) => {
@@ -560,7 +592,7 @@
         } else if (t.dataset.example !== undefined) {
           e.preventDefault();
           urlInput.value = EXAMPLE;
-          load(`/profile?url=${encodeURIComponent(EXAMPLE)}`);
+          submitUrl(EXAMPLE);
         } else if (t.dataset.toggleRaw !== undefined) {
           e.preventDefault();
           showRaw = !showRaw;
@@ -568,11 +600,13 @@
         }
       });
 
-      // Deep-link support: /?url=…
-      const preset = new URLSearchParams(location.search).get('url');
+      // Deep-link support: /?url=…&full=1
+      const params = new URLSearchParams(location.search);
+      const preset = params.get('url');
       if (preset) {
         urlInput.value = preset;
-        load(`/profile?url=${encodeURIComponent(preset)}`);
+        fullBox.checked = params.get('full') === '1';
+        load(profilePath(preset));
       }
     </script>
   </body>
