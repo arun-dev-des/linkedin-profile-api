@@ -1,15 +1,10 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
-  "buildCommand": "node web/build.mjs",
-  "outputDirectory": "dist",
+  "installCommand": "cd site && npm install",
+  "buildCommand": "cd site && npm run build",
+  "outputDirectory": "site/out",
   "cleanUrls": true,
   "trailingSlash": false,
-  "redirects": [{ "source": "/app", "destination": "/", "permanent": true }],
-  "headers": [
-    {
-      "source": "/(.*).css",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
-    }
-  ]
+  "redirects": [{ "source": "/app", "destination": "/", "permanent": true }]
 }

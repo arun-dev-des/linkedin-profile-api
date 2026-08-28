@@ -1,0 +1,235 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --font-heading: var(--font-sans);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+}
+
+:root {
+  --background: oklch(0.995 0 0);
+  --foreground: oklch(0.18 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.18 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.18 0 0);
+  --primary: oklch(0.52 0.16 250);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.22 0 0);
+  --muted: oklch(0.968 0 0);
+  --muted-foreground: oklch(0.52 0 0);
+  --accent: oklch(0.965 0.01 250);
+  --accent-foreground: oklch(0.22 0 0);
+  --destructive: oklch(0.58 0.22 25);
+  --border: oklch(0.92 0 0);
+  --input: oklch(0.92 0 0);
+  --ring: oklch(0.52 0.16 250);
+  --radius: 0.6rem;
+  --sidebar: oklch(1 0 0);
+  --sidebar-foreground: oklch(0.18 0 0);
+  --sidebar-primary: oklch(0.52 0.16 250);
+  --sidebar-primary-foreground: oklch(0.99 0 0);
+  --sidebar-accent: oklch(0.965 0 0);
+  --sidebar-accent-foreground: oklch(0.22 0 0);
+  --sidebar-border: oklch(0.92 0 0);
+  --sidebar-ring: oklch(0.52 0.16 250);
+  --jkey: #8250df;
+  --jstr: #0a7d33;
+  --jnum: #b26b00;
+}
+
+.dark {
+  --background: oklch(0.16 0 0);
+  --foreground: oklch(0.97 0 0);
+  --card: oklch(0.195 0 0);
+  --card-foreground: oklch(0.97 0 0);
+  --popover: oklch(0.195 0 0);
+  --popover-foreground: oklch(0.97 0 0);
+  --primary: oklch(0.68 0.14 245);
+  --primary-foreground: oklch(0.16 0 0);
+  --secondary: oklch(0.26 0 0);
+  --secondary-foreground: oklch(0.97 0 0);
+  --muted: oklch(0.24 0 0);
+  --muted-foreground: oklch(0.68 0 0);
+  --accent: oklch(0.27 0.02 245);
+  --accent-foreground: oklch(0.97 0 0);
+  --destructive: oklch(0.7 0.19 22);
+  --border: oklch(1 0 0 / 11%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.68 0.14 245);
+  --sidebar: oklch(0.185 0 0);
+  --sidebar-foreground: oklch(0.97 0 0);
+  --sidebar-primary: oklch(0.68 0.14 245);
+  --sidebar-primary-foreground: oklch(0.16 0 0);
+  --sidebar-accent: oklch(0.26 0 0);
+  --sidebar-accent-foreground: oklch(0.97 0 0);
+  --sidebar-border: oklch(1 0 0 / 11%);
+  --sidebar-ring: oklch(0.68 0.14 245);
+  --jkey: #c9a2ff;
+  --jstr: #6cc76c;
+  --jnum: #e0a55c;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+}
+
+/* ---------------- prose (doc pages) ---------------- */
+.prose {
+  @apply text-[15.5px] leading-7 text-foreground;
+}
+.prose > :first-child {
+  margin-top: 0;
+}
+.prose h1 {
+  @apply mt-0 mb-2 text-3xl font-bold tracking-tight;
+}
+.prose h2 {
+  @apply mt-12 mb-3 scroll-mt-6 text-xl font-semibold tracking-tight;
+}
+.prose h3 {
+  @apply mt-8 mb-2 scroll-mt-6 text-base font-semibold;
+}
+.prose p,
+.prose ul,
+.prose ol {
+  @apply my-4;
+}
+.prose ul {
+  @apply list-disc pl-6;
+}
+.prose ol {
+  @apply list-decimal pl-6;
+}
+.prose li {
+  @apply my-1;
+}
+.prose li > ul,
+.prose li > ol {
+  @apply my-1;
+}
+.prose a {
+  @apply font-medium text-primary underline-offset-4 hover:underline;
+}
+.prose strong {
+  @apply font-semibold;
+}
+.prose hr {
+  @apply my-9 border-border;
+}
+.prose blockquote {
+  @apply my-4 border-l-2 border-primary pl-4 text-muted-foreground;
+}
+.prose img {
+  @apply my-4 max-w-full rounded-lg border border-border;
+}
+
+/* inline code */
+.prose :not(pre) > code {
+  @apply rounded-[5px] border border-border bg-muted px-1.5 py-0.5 font-mono text-[0.84em];
+}
+
+/* tables */
+.prose .table-wrap {
+  @apply my-5 overflow-x-auto rounded-lg border border-border;
+}
+.prose table {
+  @apply w-full border-collapse text-sm;
+}
+.prose thead {
+  @apply bg-muted;
+}
+.prose th,
+.prose td {
+  @apply border-b border-border px-3 py-2 text-left align-top;
+}
+.prose tbody tr:last-child td,
+.prose tr:last-child td {
+  @apply border-b-0;
+}
+
+/* heading anchor */
+.prose .heading-anchor {
+  @apply ml-1.5 font-normal text-muted-foreground opacity-0 no-underline transition-opacity;
+}
+.prose h2:hover .heading-anchor,
+.prose h3:hover .heading-anchor,
+.prose .heading-anchor:focus-visible {
+  @apply opacity-100;
+}
+
+/* ---------------- code blocks (rehype-pretty-code + Shiki, dual theme) ---------------- */
+.prose figure[data-rehype-pretty-code-figure] {
+  @apply my-4;
+}
+.prose [data-rehype-pretty-code-title] {
+  @apply rounded-t-lg border border-b-0 border-border bg-muted px-4 py-2 font-mono text-xs text-muted-foreground;
+}
+.prose [data-rehype-pretty-code-title] + pre {
+  @apply rounded-t-none;
+}
+.prose pre {
+  @apply overflow-x-auto rounded-lg border border-border bg-muted p-4 font-mono text-[12.75px] leading-relaxed;
+}
+.prose pre code {
+  @apply grid; /* one row per line */
+}
+.prose pre code > [data-line] {
+  @apply px-0;
+}
+.prose [data-rehype-pretty-code-figure] code span {
+  color: var(--shiki-light);
+}
+.dark .prose [data-rehype-pretty-code-figure] code span {
+  color: var(--shiki-dark);
+}
+
+.code-block {
+  @apply relative;
+}
+.code-block .copy-btn {
+  @apply absolute top-2.5 right-2.5 rounded-md border border-border bg-card px-2 py-1 text-[11px] font-medium text-muted-foreground opacity-0 transition-opacity hover:text-foreground;
+}
+.code-block:hover .copy-btn {
+  @apply opacity-100;
+}

@@ -1,6 +1,8 @@
-# The Vercel build only needs: web/, docs/, public/, README.md, package.json.
-# Everything below is either large, local-only, or irrelevant to the static site.
+# The Vercel build (Next.js in site/) needs: site/, docs/, README.md.
 node_modules
+site/node_modules
+site/.next
+site/out
 dist
 .vercel
 apk
@@ -12,6 +14,8 @@ raw_response*.json
 *.network-response
 .env
 .env.*
+api-samples
+web
 test
 src
 fixtures
