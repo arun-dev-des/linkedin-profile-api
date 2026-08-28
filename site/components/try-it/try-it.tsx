@@ -102,7 +102,7 @@ export function TryIt() {
         <h1 className="text-2xl font-bold tracking-tight">Try it</h1>
         <p className="text-muted-foreground mt-1 text-sm">
           A LinkedIn profile URL in, structured JSON out.{' '}
-          <a href="/overview" className="text-primary hover:underline">
+          <a href="/approach" className="text-primary hover:underline">
             How it works
           </a>
         </p>

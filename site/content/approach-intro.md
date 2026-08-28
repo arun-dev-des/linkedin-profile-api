@@ -12,8 +12,6 @@ automation, no HTML scraping.
 - **Provenance verified** against the LinkedIn Android app's compiled code
 - **Offline-tested normalizer** — every real-payload edge case has a test
 
----
-
 ## What it does
 
 `GET /profile?url=<linkedin profile url>` returns:
@@ -40,30 +38,9 @@ automation, no HTML scraping.
 }
 ```
 
-Full field reference and error codes are on the [API page](/api).
-
-## How it works, in one paragraph
-
-LinkedIn's apps talk to an internal API called **Voyager**. Profile data lives in a
-resource named `identityDashProfiles`. Requesting it with `q=memberIdentity` and a
-`decorationId` of `…FullProfileWithEntities-107` returns the whole profile —
-experience, education, skills, and more — in **one** authenticated `GET`, using the
-`li_at` and `JSESSIONID` cookies from a logged-in session. The response is
-LinkedIn's "normalized" format: a flat array of entities linked by URN, which a
-[pure-function normalizer](/how-the-fetch-works) reassembles into the schema above.
-
-## Why this is a real endpoint, not a lucky guess
-
-The exact request was verified against **two first-party LinkedIn clients**:
-
-- **The website** — its server-driven UI resolves the same `identityDashProfiles`
-  resource, just server-side; the browser never sees the JSON.
-- **The Android app** (`com.linkedin.android` 4.1.1239) — its compiled code
-  contains, verbatim, the finder `identityDashProfilesByMemberIdentity` and the
-  decoration `com.linkedin.voyager.dash.deco.identity.profile.FullProfileWithEntities-107`.
-
-The full walkthrough, including a one-line command to reproduce the APK check, is
-on the [Provenance page](/apk-provenance).
+Full field reference and error codes are on the [API page](/api). Every profile
+endpoint that was found — and why the single call above covers almost all of
+them — is on the [endpoint map](/endpoint-map).
 
 ## Architecture
 
@@ -74,11 +51,7 @@ on the [Provenance page](/apk-provenance).
   a clean tree. Pure function, no I/O, tested entirely offline against a real
   captured payload — including every edge case that payload contains (null
   `locationName` resolved via a Geo lookup, all-null Geo stubs, placeholder school
-  names, unsorted positions, missing company logos).
+  names, unsorted positions, missing company logos). A line-by-line walkthrough of
+  the request itself is on [The request](/how-the-fetch-works).
 - **`src/server.js`** — Express: the `/profile` route, an always-available
   `/profile/sample`, a per-IP rate limiter, and a short-lived response cache.
-
-Read the [reverse-engineering write-up](/approach) for the investigation, the
-[endpoint map](/endpoint-map) for every profile endpoint found, or the
-[known limitations](/api#known-limitations) for what the endpoint does and doesn't
-expose.

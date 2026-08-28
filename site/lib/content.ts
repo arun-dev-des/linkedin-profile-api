@@ -47,58 +47,50 @@ export interface Doc {
 }
 
 const README = () => read('README.md');
-const back = '[← Overview](/overview)\n\n';
 
 export function getDoc(slug: string): Doc {
   switch (slug) {
-    case 'overview': {
-      const raw = readLocal('content/overview.md');
-      return {
-        title: 'Overview',
-        description:
-          "A hosted API that turns a LinkedIn profile URL into structured JSON, from a reverse-engineered call to LinkedIn's internal Voyager API.",
-        markdown: fixLinks(raw.replace(/<!--[\s\S]*?-->/g, '').trim()),
-      };
-    }
-    case 'approach':
+    case 'approach': {
+      const intro = readLocal('content/approach-intro.md').replace(/<!--[\s\S]*?-->/g, '').trim();
       return {
         title: 'Approach',
-        description: 'How the LinkedIn Voyager endpoint was reverse-engineered and verified.',
+        description:
+          "A hosted API that turns a LinkedIn profile URL into structured JSON, from a reverse-engineered call to LinkedIn's internal Voyager API.",
         markdown: fixLinks(
-          back + section(README(), 'Approach — how the endpoint was reverse-engineered'),
+          `${intro}\n\n---\n\n${section(README(), 'Approach — how the endpoint was reverse-engineered')}`,
         ),
       };
+    }
     case 'api':
       return {
         title: 'API Reference',
         description: 'Endpoints, response schema, error codes, and known limitations.',
         markdown: fixLinks(
-          back +
-            [
-              section(README(), 'API documentation'),
-              section(README(), 'Response schema'),
-              section(README(), 'Known limitations'),
-            ].join('\n\n---\n\n'),
+          [
+            section(README(), 'API documentation'),
+            section(README(), 'Response schema'),
+            section(README(), 'Known limitations'),
+          ].join('\n\n---\n\n'),
         ),
       };
     case 'how-the-fetch-works':
       return {
         title: 'The request, line by line',
         description: 'A beginner-friendly walkthrough of the single authenticated request.',
-        markdown: fixLinks(back + read('docs/how-the-fetch-works.md')),
+        markdown: fixLinks(read('docs/how-the-fetch-works.md')),
       };
     case 'apk-provenance':
       return {
         title: 'APK Provenance',
         description: "Verifying the endpoint against the LinkedIn Android app's compiled code.",
-        markdown: fixLinks(back + read('docs/apk-provenance.md')),
+        markdown: fixLinks(read('docs/apk-provenance.md')),
       };
     case 'endpoint-map':
       return {
         title: 'Endpoint map',
         description:
           'Every LinkedIn profile endpoint found, and why one call covers almost everything.',
-        markdown: fixLinks(back + read('docs/endpoint-map.md')),
+        markdown: fixLinks(read('docs/endpoint-map.md')),
       };
     default:
       throw new Error(`unknown doc: ${slug}`);

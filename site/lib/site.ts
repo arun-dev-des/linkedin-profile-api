@@ -6,7 +6,6 @@ export const BLOB = `${REPO}/blob/main`;
 
 export const NAV: { href: string; label: string; icon: string; group?: string }[] = [
   { href: '/', label: 'Try it', icon: 'zap' },
-  { href: '/overview', label: 'Overview', icon: 'book-open' },
   { href: '/approach', label: 'Approach', icon: 'compass', group: 'Docs' },
   { href: '/how-the-fetch-works', label: 'The request', icon: 'terminal', group: 'Docs' },
   { href: '/apk-provenance', label: 'Provenance', icon: 'shield-check', group: 'Docs' },
