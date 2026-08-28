@@ -1,29 +1,16 @@
-<!-- title: Overview -->
-<!-- description: A hosted API that turns a LinkedIn profile URL into structured JSON, built by reverse-engineering LinkedIn's internal Voyager API. No browser automation. -->
-
-<div class="hero">
-
 # A reverse-engineered LinkedIn Profile API
 
-<p class="lede">Paste a LinkedIn profile URL, get the profile back as structured JSON —
-name, headline, location, experience, education, skills, certifications, languages,
+Paste a LinkedIn profile URL, get the profile back as structured JSON — name,
+headline, location, experience, education, skills, certifications, languages,
 images. One authenticated request to LinkedIn's own internal API. No browser
-automation, no HTML scraping.</p>
+automation, no HTML scraping.
 
-<div class="cta">
-  <a class="btn primary" href="/">Try it</a>
-  <a class="btn ghost" href="https://linkedin-profile-api-production-3c84.up.railway.app/profile/sample" target="_blank" rel="noopener">See a sample response</a>
-  <a class="btn ghost" href="https://github.com/arun-dev-des/linkedin-profile-api" target="_blank" rel="noopener">Source on GitHub</a>
-</div>
+[**Try it →**](/) &nbsp;·&nbsp; [Sample response](https://linkedin-profile-api-production-3c84.up.railway.app/profile/sample) &nbsp;·&nbsp; [Source on GitHub](https://github.com/arun-dev-des/linkedin-profile-api)
 
-<div class="pill-row">
-  <span class="pill">Node + Express on Railway</span>
-  <span class="pill">Single Voyager API call</span>
-  <span class="pill">Provenance verified against the Android app</span>
-  <span class="pill">Offline-tested normalizer</span>
-</div>
-
-</div>
+- **Node + Express on Railway** — the hosted API
+- **Single Voyager API call** per lookup, then a pure-function transform
+- **Provenance verified** against the LinkedIn Android app's compiled code
+- **Offline-tested normalizer** — every real-payload edge case has a test
 
 ---
 
@@ -42,11 +29,11 @@ automation, no HTML scraping.</p>
       { "title": "Product Designer", "company": "Applix",
         "startDate": "2024-08", "endDate": "2025-08", "current": false, "description": "…" }
     ],
-    "education": [ … ],
-    "skills": [ "Design Systems", "Figma (Software)", … ],
-    "certifications": [ … ],
-    "languages": [ … ],
-    "featured": [ … ],
+    "education": [ ],
+    "skills": [ "Design Systems", "Figma (Software)" ],
+    "certifications": [ ],
+    "languages": [ ],
+    "featured": [ ],
     "images": { "profilePicture": "https://media.licdn.com/…", "backgroundImage": "…" }
   },
   "meta": { "fetchedAt": "…", "cached": false, "source": "linkedin-voyager" }
@@ -92,6 +79,6 @@ on the [Provenance page](/apk-provenance).
   `/profile/sample`, a per-IP rate limiter, and a short-lived response cache.
 
 Read the [reverse-engineering write-up](/approach) for the investigation, the
-[endpoint map](/endpoint-map) for every profile endpoint found (and why one call
-covers almost everything), or the [known limitations](/api#known-limitations) for
-what the endpoint does and doesn't expose.
+[endpoint map](/endpoint-map) for every profile endpoint found, or the
+[known limitations](/api#known-limitations) for what the endpoint does and doesn't
+expose.
