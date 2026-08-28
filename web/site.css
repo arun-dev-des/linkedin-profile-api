@@ -49,7 +49,7 @@ body {
 .sidebar {
   border-right: 1px solid var(--border);
   background: var(--card);
-  padding: 22px 16px;
+  padding: 16px 12px;
   position: sticky;
   top: 0;
   height: 100vh;
@@ -59,47 +59,70 @@ body {
 }
 .sidebar .brand {
   font-weight: 700;
-  font-size: 15px;
+  font-size: 14px;
   color: var(--text);
   text-decoration: none;
   display: block;
-  margin-bottom: 22px;
+  padding: 6px 10px;
+  margin-bottom: 14px;
   line-height: 1.3;
 }
 .sidebar nav {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 1px;
 }
-.sidebar nav a {
-  padding: 7px 10px;
-  border-radius: 7px;
+.sidebar nav a,
+.side-foot a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 10px;
+  border-radius: 9px;
   color: var(--muted);
   text-decoration: none;
   font-size: 14px;
+  line-height: 1.2;
 }
-.sidebar nav a:hover {
+.sidebar nav a:hover,
+.side-foot a:hover {
   background: var(--bg);
   color: var(--text);
 }
 .sidebar nav a[aria-current] {
-  background: var(--accent);
-  color: var(--accent-contrast);
+  background: var(--bg);
+  color: var(--text);
+  font-weight: 600;
+}
+.sidebar .ico {
+  width: 19px;
+  height: 19px;
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+.nav-label {
+  margin: 16px 0 4px;
+  padding: 0 10px;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--muted);
 }
 .side-foot {
   margin-top: auto;
-  padding-top: 20px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
   display: flex;
   flex-direction: column;
-  gap: 9px;
-  font-size: 13px;
+  gap: 1px;
 }
-.side-foot a {
-  color: var(--muted);
-  text-decoration: none;
-}
-.side-foot a:hover {
-  color: var(--text);
+.side-foot .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22c55e;
+  margin-left: auto;
 }
 
 @media (max-width: 760px) {
@@ -113,11 +136,11 @@ body {
     height: auto;
     flex-direction: row;
     align-items: center;
-    gap: 14px;
+    gap: 4px;
     overflow-x: auto;
     border-right: 0;
     border-bottom: 1px solid var(--border);
-    padding: 11px 16px;
+    padding: 8px 12px;
   }
   .sidebar .brand {
     margin-bottom: 0;
@@ -125,16 +148,22 @@ body {
   }
   .sidebar nav {
     flex-direction: row;
-    gap: 3px;
+    gap: 2px;
   }
   .sidebar nav a {
     white-space: nowrap;
   }
+  .nav-label {
+    display: none;
+  }
   .side-foot {
     margin-top: 0;
     padding-top: 0;
+    border-top: 0;
     flex-direction: row;
-    gap: 12px;
+  }
+  .side-foot .dot {
+    display: none;
   }
 }
 
