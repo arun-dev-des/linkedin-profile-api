@@ -32,9 +32,9 @@ Counts below are from a real rich profile (Reid Hoffman, 179 entities):
 | `School` | 5 | resolved schools |
 | `Education` | 6 | degrees |
 | `Skill` | **20** | **hard cap** — `paging.total` was 47 |
-| `Honor` | 9 | awards (`title`, `issuer`, `issuedOn`, `description`, `occupation`) |
-| `VolunteerExperience` | 14 | `role`, `companyName`, `cause`, `dateRange`, `description` |
-| `Publication` | 6 | `name`, `publisher`, `publishedOn`, `url`, `description`, `authors[]` |
+| `Honor` | 9 | awards (`title`, `issuer`, `issuedOn`, `description`, `occupation`) — surfaced as `profile.honors` |
+| `VolunteerExperience` | 14 | `role`, `companyName`, `cause`, `dateRange`, `description` — surfaced as `profile.volunteerExperience` |
+| `Publication` | 6 | `name`, `publisher`, `publishedOn`, `url`, `description`, `authors[]` — surfaced as `profile.publications` |
 | `TreasuryMedia` | **3** | "Featured" links/media — also capped |
 | `MemberRelationship` | 6 | connection-degree info to other members |
 | `Geo` | 5 | resolved locations (many are all-`null` stubs) |
@@ -53,16 +53,19 @@ Sections usually **empty**: `*profileCourses`, `*profilePatents`,
 `*profileProjects`, `*profileTestScores`, `*profileOrganizations`,
 `*profileVideoPreview`, `*profileRingStatusCollection`.
 
-**Three capped sections, one honest signal.** `profileSkills`,
-`profilePositionGroups` and `profileTreasuryMediaProfile` are the only
-sections in this decoration whose `CollectionResponse` carries a
-`paging.total` larger than the `*elements` actually attached. Each of the
-three now surfaces this the same way: `normalizeProfile()` compares the
-resolved count against `paging.total` and, when they differ, adds a key to
-`meta.partial` — `skills`, `experience` (`{ returnedGroups, totalGroups }`,
-since the cap is on position *groups*, not flattened role entries), and
-`featured`. No other section in the decoration is truncated by LinkedIn, so
-no other key appears there.
+**One honest signal, checked on every list section.** `normalizeProfile()`
+compares each collection's resolved count against its own `paging.total` and,
+when they differ, adds a matching key to `meta.partial` — the same check now
+runs for `skills`, `experience` (`{ returnedGroups, totalGroups }`, since the
+cap is on position *groups*, not flattened role entries), `featured`,
+`volunteerExperience`, `honors`, and `publications`. In practice only
+`profileSkills`, `profilePositionGroups`, and `profileTreasuryMediaProfile`
+have ever been observed exceeding their own `paging.total` in this decoration
+— the other three (14/9/6 on Reid Hoffman, all well under the default
+20-item page) show no sign of being capped. The check runs on all six anyway,
+uniformly, on the chance a profile with more honors, volunteer roles, or
+publications than that ever turns up — cheaper to check always than to
+special-case it later.
 
 ---
 
@@ -99,9 +102,9 @@ Every one returns HTTP 200. They exist for `profileSkills`, `profilePositions`,
 | `profilePositionGroups` (`&count=100`) | Also returns all 32 (verified live) — but only company-level fields (`companyName`, `companyUrn`, `dateRange`), no per-role `title`/`description`. **Superseded by `profilePositions` above**, which returns the same total at role granularity. |
 | **`profileTreasuryMedia` (`&count=100`)** | Adds real media metadata: `width`, `height`, `previewImages`, `mediaTitle`, `mediaDescription`, `createdAtText`, `assetAvailable`. **Still capped at 3 of ~10 even with `count=100`** — verified live. Unlike skills and positions, this is a genuine server-side limit on this finder, not something a bigger `count` fixes. |
 | `profileEducations` | Adds `fieldOfStudyUrn`. Loses resolved `*school` / `*company`. |
-| `profileHonors` | Identical (main call additionally has `occupation`). |
-| `profileVolunteerExperiences` | Identical (main call additionally resolves `*company`). |
-| `profilePublications` | Byte-for-byte identical fields. |
+| `profileHonors` | Identical (main call additionally has `occupation`). **Parsed by this project** — see below. |
+| `profileVolunteerExperiences` | Identical (main call additionally resolves `*company`). **Parsed by this project** — see below. |
+| `profilePublications` | Byte-for-byte identical fields. **Parsed by this project** — see below. |
 
 So for education, honors, volunteer, publications, languages, certifications,
 industry and images, the single decoration call already returns everything —
@@ -110,6 +113,23 @@ call's `profilePositionGroups` collection is capped the same way skills is
 (10 groups regardless of total), which is why `experience` gets the same
 `meta.partial` treatment and the same `?full=1` completion path as skills —
 see below.
+
+**Honors, volunteer experience, and publications were captured live and
+confirmed present in the main call, but were not wired into the normalizer
+until now** — the data sat unused in the same response every lookup already
+fetches. No new request, no new finder: `normalizeProfile()` now walks
+`*profileHonors`, `*profileVolunteerExperiences`, and `*profilePublications`
+the same way it already walked `*profileCertifications`. Each gets the same
+honest `meta.partial` treatment as every other section (paging.total compared
+against what's returned), on the off chance a profile ever has more than the
+default 20-item page size for one of these — not observed live (Reid Hoffman:
+14 / 9 / 6, all under the cap), but the check costs nothing and keeps the
+"never silently incomplete" guarantee uniform across every section rather
+than special-cased to the three that happened to get discovered first.
+`publications[].authors` resolves each co-author's name only when that
+person's `Profile` entity happens to be inlined in the same response — which
+it usually is, the same mechanism that resolves a connection's name elsewhere
+in the payload — and is skipped, not guessed at, when it isn't.
 
 ### GraphQL-only (404 as REST)
 

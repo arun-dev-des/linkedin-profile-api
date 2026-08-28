@@ -236,6 +236,142 @@ test('reports featured/treasury-media truncation honestly, like skills', () => {
   assert.deepEqual(partial.featured, { returned: 1, total: 10 });
 });
 
+/* ------------------------------ volunteer experience, honors, publications */
+
+test('returns an empty array for volunteer experience, honors and publications when absent', () => {
+  // This profile has none of the three listed — must be [], never null or a
+  // throw, and never silently dropped from the profile object either.
+  assert.deepEqual(profile.volunteerExperience, []);
+  assert.deepEqual(profile.honors, []);
+  assert.deepEqual(profile.publications, []);
+});
+
+test('parses volunteer experience, resolving the company like an employer', () => {
+  const { profile: p } = normalizeProfile({
+    data: { '*elements': ['urn:li:fsd_profile:X'] },
+    included: [
+      {
+        entityUrn: 'urn:li:fsd_profile:X',
+        firstName: 'A',
+        lastName: 'B',
+        '*profileVolunteerExperiences': 'urn:li:collectionResponse:V',
+      },
+      { entityUrn: 'urn:li:collectionResponse:V', '*elements': ['urn:li:v:1'], paging: { total: 1 } },
+      {
+        entityUrn: 'urn:li:v:1',
+        role: 'Chair, Board of Directors',
+        companyName: 'Opportunity@Work',
+        cause: 'ECONOMIC_EMPOWERMENT',
+        '*company': 'urn:li:fsd_company:1',
+        dateRange: { start: { year: 2016, month: 6 } },
+        description: 'Nonprofit social enterprise.',
+      },
+      {
+        entityUrn: 'urn:li:fsd_company:1',
+        name: 'Opportunity@Work',
+        url: 'https://www.linkedin.com/company/opportunity-work/',
+      },
+    ],
+  });
+
+  assert.deepEqual(p.volunteerExperience, [
+    {
+      role: 'Chair, Board of Directors',
+      company: 'Opportunity@Work',
+      companyUrl: 'https://www.linkedin.com/company/opportunity-work/',
+      companyLogo: null,
+      cause: 'ECONOMIC_EMPOWERMENT',
+      startDate: '2016-06',
+      endDate: null,
+      current: true,
+      description: 'Nonprofit social enterprise.',
+    },
+  ]);
+});
+
+test('parses honors, formatting issuedOn as a single date (not a range)', () => {
+  const { profile: p } = normalizeProfile({
+    data: { '*elements': ['urn:li:fsd_profile:X'] },
+    included: [
+      {
+        entityUrn: 'urn:li:fsd_profile:X',
+        firstName: 'A',
+        lastName: 'B',
+        '*profileHonors': 'urn:li:collectionResponse:H',
+      },
+      { entityUrn: 'urn:li:collectionResponse:H', '*elements': ['urn:li:h:1'], paging: { total: 1 } },
+      {
+        entityUrn: 'urn:li:h:1',
+        title: 'Sigillum Magnum',
+        issuer: 'University of Bologna',
+        issuedOn: { year: 2023, month: 9 },
+        description: 'A silver-bronze medal.',
+      },
+    ],
+  });
+
+  assert.deepEqual(p.honors, [
+    {
+      title: 'Sigillum Magnum',
+      issuer: 'University of Bologna',
+      issuedOn: '2023-09',
+      description: 'A silver-bronze medal.',
+    },
+  ]);
+});
+
+test('resolves publication co-authors present in included[], skips ones that aren\'t', () => {
+  const { profile: p } = normalizeProfile({
+    data: { '*elements': ['urn:li:fsd_profile:X'] },
+    included: [
+      {
+        entityUrn: 'urn:li:fsd_profile:X',
+        firstName: 'A',
+        lastName: 'B',
+        '*profilePublications': 'urn:li:collectionResponse:P',
+      },
+      { entityUrn: 'urn:li:collectionResponse:P', '*elements': ['urn:li:p:1'], paging: { total: 1 } },
+      {
+        entityUrn: 'urn:li:p:1',
+        name: 'Superagency',
+        publisher: 'Authors Equity',
+        publishedOn: { year: 2025, month: 1, day: 28 },
+        url: 'https://www.superagency.ai/',
+        description: 'A book about AI.',
+        authors: [
+          { standardizedContributor: { '*profile': 'urn:li:fsd_profile:X' } }, // resolvable
+          { standardizedContributor: { '*profile': 'urn:li:fsd_profile:not-included' } }, // not in included[]
+        ],
+      },
+    ],
+  });
+
+  assert.equal(p.publications.length, 1);
+  assert.equal(p.publications[0].publishedOn, '2025-01');
+  assert.deepEqual(p.publications[0].authors, [{ name: 'A B', profileUrl: null }]);
+});
+
+test('reports honors truncation honestly, like every other capped section', () => {
+  const { partial } = normalizeProfile({
+    data: { '*elements': ['urn:li:fsd_profile:X'] },
+    included: [
+      {
+        entityUrn: 'urn:li:fsd_profile:X',
+        firstName: 'A',
+        lastName: 'B',
+        '*profileHonors': 'urn:li:collectionResponse:H',
+      },
+      {
+        entityUrn: 'urn:li:collectionResponse:H',
+        '*elements': ['urn:li:h:1'],
+        paging: { total: 25 },
+      },
+      { entityUrn: 'urn:li:h:1', title: 'One of many' },
+    ],
+  });
+  assert.deepEqual(partial.honors, { returned: 1, total: 25 });
+});
+
 /* --------------------------------------------------------- URL parsing */
 
 test('parses profile URLs in the shapes users actually paste', () => {

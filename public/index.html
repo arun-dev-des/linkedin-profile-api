@@ -718,6 +718,50 @@
               : '')
           : '';
 
+        const volunteer = (p.volunteerExperience ?? []).length
+          ? (p.volunteerExperience ?? [])
+              .map((v) =>
+                entry({
+                  logo: v.companyLogo,
+                  title: v.role,
+                  sub: [v.company, v.cause ? humanize(v.cause) : null].filter(Boolean).join(' · '),
+                  dates: dateSpan(v.startDate, v.endDate, v.current),
+                  desc: v.description,
+                }),
+              )
+              .join('') +
+            (m.partial?.volunteerExperience
+              ? `<p class="partial-note">Showing ${m.partial.volunteerExperience.returned} of ${m.partial.volunteerExperience.total}.</p>`
+              : '')
+          : '';
+
+        const honors = (p.honors ?? []).length
+          ? (p.honors ?? [])
+              .map((h) => entry({ title: h.title, sub: h.issuer, dates: h.issuedOn, desc: h.description }))
+              .join('') +
+            (m.partial?.honors
+              ? `<p class="partial-note">Showing ${m.partial.honors.returned} of ${m.partial.honors.total}.</p>`
+              : '')
+          : '';
+
+        const publications = (p.publications ?? []).length
+          ? (p.publications ?? [])
+              .map((pub) =>
+                entry({
+                  title: pub.name,
+                  sub: [pub.publisher, pub.authors?.length ? pub.authors.map((a) => a.name).join(', ') : null]
+                    .filter(Boolean)
+                    .join(' · '),
+                  dates: pub.publishedOn,
+                  desc: pub.description,
+                }),
+              )
+              .join('') +
+            (m.partial?.publications
+              ? `<p class="partial-note">Showing ${m.partial.publications.returned} of ${m.partial.publications.total}.</p>`
+              : '')
+          : '';
+
         return `
           <div class="card">
             <div class="banner"${banner}></div>
@@ -741,6 +785,9 @@
             ${block('Certifications', certs)}
             ${block('Languages', languages)}
             ${block('Featured', featured)}
+            ${block('Volunteering', volunteer)}
+            ${block('Honors & Awards', honors)}
+            ${block('Publications', publications)}
             <footer>
               ${m.cached ? 'cached' : 'fetched'} ${
                 m.fetchedAt ? esc(new Date(m.fetchedAt).toLocaleString()) : ''

@@ -2,7 +2,8 @@
 
 A hosted HTTP API that accepts a LinkedIn profile URL and returns the profile's
 information (name, headline, location, about, experience, education, skills,
-certifications, languages, profile images, featured links) as structured JSON.
+certifications, languages, profile images, featured links, volunteer
+experience, honors & awards, publications) as structured JSON.
 
 The data is retrieved by calling LinkedIn's own internal **Voyager** API directly
 with server-side session cookies. **No browser automation** (Selenium / Puppeteer
@@ -48,7 +49,7 @@ cp .env.example .env
 # edit .env — see "Getting the credentials" below
 
 npm run dev          # http://localhost:3000
-npm test             # 38 tests, fully offline
+npm test             # 43 tests, fully offline
 ```
 
 ### Getting the credentials
@@ -208,6 +209,39 @@ of ~100 cross-referenced entities; this is the flattened, cleaned view.
     "languages": [],
     "featured": [
       { "title": "Resume", "url": "https://...", "provider": "..." }
+    ],
+    "volunteerExperience": [
+      {
+        "role": "Chair, Board of Directors",
+        "company": "Opportunity@Work",
+        "companyUrl": "https://www.linkedin.com/company/opportunity-work/",
+        "companyLogo": "https://media.licdn.com/dms/image/v2/...",
+        "cause": "ECONOMIC_EMPOWERMENT",
+        "startDate": "2016-06",
+        "endDate": null,
+        "current": true,
+        "description": "..."
+      }
+    ],
+    "honors": [
+      {
+        "title": "Sigillum Magnum",
+        "issuer": "University of Bologna",
+        "issuedOn": "2023-09",
+        "description": "..."
+      }
+    ],
+    "publications": [
+      {
+        "name": "Superagency",
+        "publisher": "Authors Equity",
+        "publishedOn": "2025-01",
+        "url": "https://www.superagency.ai/",
+        "description": "...",
+        "authors": [
+          { "name": "Reid Hoffman", "profileUrl": "https://www.linkedin.com/in/reidhoffman/" }
+        ]
+      }
     ]
   },
   "meta": {
@@ -236,6 +270,14 @@ Notes:
   `experience` reports `returnedGroups`/`totalGroups` rather than
   `returned`/`total` because LinkedIn's cap is on position *groups* (the
   "Company — 3 roles" block), not the flattened role entries in the response.
+- **`volunteerExperience[].cause`** is LinkedIn's raw enum
+  (`"ECONOMIC_EMPOWERMENT"`, `"EDUCATION"`, …), not humanized — same treatment
+  as `pronouns`. Formatting an enum into display text is a UI concern; both
+  showcase UIs do it client-side.
+- **`publications[].authors`** only includes co-authors LinkedIn's response
+  happens to resolve to a full Profile entity in the same payload — usually
+  true for people on LinkedIn, never true for a name-only credit. A co-author
+  this can't resolve is left out of the array rather than guessed at.
 
 ---
 

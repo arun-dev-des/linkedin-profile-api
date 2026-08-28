@@ -249,6 +249,72 @@ export function ProfileCard({ data }: { data: ProfileEnvelope }) {
         </Section>
       )}
 
+      {p.volunteerExperience.length > 0 && (
+        <Section title="Volunteering">
+          {p.volunteerExperience.map((v, i) => (
+            <Entry
+              key={i}
+              logo={v.companyLogo}
+              fallback={v.company ?? ''}
+              title={v.role ?? ''}
+              sub={[v.company, v.cause ? humanize(v.cause) : null].filter(Boolean).join(' · ')}
+              dates={dateSpan(v.startDate, v.endDate, v.current)}
+              desc={v.description}
+            />
+          ))}
+          {m.partial?.volunteerExperience && (
+            <p className="text-muted-foreground mt-2.5 text-[12.5px]">
+              Showing {m.partial.volunteerExperience.returned} of{' '}
+              {m.partial.volunteerExperience.total}.
+            </p>
+          )}
+        </Section>
+      )}
+
+      {p.honors.length > 0 && (
+        <Section title="Honors & Awards">
+          {p.honors.map((h, i) => (
+            <Entry
+              key={i}
+              logo={null}
+              fallback={h.issuer ?? h.title ?? ''}
+              title={h.title ?? ''}
+              sub={h.issuer ?? undefined}
+              dates={h.issuedOn ?? undefined}
+              desc={h.description}
+            />
+          ))}
+          {m.partial?.honors && (
+            <p className="text-muted-foreground mt-2.5 text-[12.5px]">
+              Showing {m.partial.honors.returned} of {m.partial.honors.total}.
+            </p>
+          )}
+        </Section>
+      )}
+
+      {p.publications.length > 0 && (
+        <Section title="Publications">
+          {p.publications.map((pub, i) => (
+            <Entry
+              key={i}
+              logo={null}
+              fallback={pub.publisher ?? pub.name ?? ''}
+              title={pub.name ?? ''}
+              sub={[pub.publisher, pub.authors.length ? pub.authors.map((a) => a.name).join(', ') : null]
+                .filter(Boolean)
+                .join(' · ')}
+              dates={pub.publishedOn ?? undefined}
+              desc={pub.description}
+            />
+          ))}
+          {m.partial?.publications && (
+            <p className="text-muted-foreground mt-2.5 text-[12.5px]">
+              Showing {m.partial.publications.returned} of {m.partial.publications.total}.
+            </p>
+          )}
+        </Section>
+      )}
+
       <footer className="border-border text-muted-foreground border-t px-5 py-3.5 text-xs">
         {m.cached ? 'cached' : 'fetched'} {new Date(m.fetchedAt).toLocaleString()} · {m.source}
       </footer>

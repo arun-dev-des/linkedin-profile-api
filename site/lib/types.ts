@@ -35,6 +35,34 @@ export interface CertificationEntry {
   current: boolean;
 }
 
+export interface VolunteerEntry {
+  role: string | null;
+  company: string | null;
+  companyUrl: string | null;
+  companyLogo: string | null;
+  cause: string | null;
+  startDate: string | null;
+  endDate: string | null;
+  current: boolean;
+  description: string | null;
+}
+
+export interface HonorEntry {
+  title: string | null;
+  issuer: string | null;
+  issuedOn: string | null;
+  description: string | null;
+}
+
+export interface PublicationEntry {
+  name: string | null;
+  publisher: string | null;
+  publishedOn: string | null;
+  url: string | null;
+  description: string | null;
+  authors: { name: string; profileUrl: string | null }[];
+}
+
 export interface Profile {
   publicId: string | null;
   profileUrl: string | null;
@@ -54,6 +82,9 @@ export interface Profile {
   certifications: CertificationEntry[];
   languages: { name: string | null; proficiency: string | null }[];
   featured: { title: string | null; url: string | null; provider: string | null }[];
+  volunteerExperience: VolunteerEntry[];
+  honors: HonorEntry[];
+  publications: PublicationEntry[];
 }
 
 export interface ProfileEnvelope {
@@ -66,6 +97,9 @@ export interface ProfileEnvelope {
       skills?: { returned: number; total: number };
       experience?: { returnedGroups: number; totalGroups: number };
       featured?: { returned: number; total: number };
+      volunteerExperience?: { returned: number; total: number };
+      honors?: { returned: number; total: number };
+      publications?: { returned: number; total: number };
     };
   };
 }

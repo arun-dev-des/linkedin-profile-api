@@ -218,6 +218,85 @@ function buildFeatured(index, profile) {
 }
 
 /**
+ * Volunteer roles. The main call resolves `*company` here (unlike featured
+ * media), so the logo/URL come for free.
+ */
+function buildVolunteerExperience(index, profile) {
+  const urn = profile['*profileVolunteerExperiences'];
+  const entries = resolveCollection(index, urn).map((volunteer) => {
+    const company = resolve(index, volunteer['*company']);
+    return {
+      role: volunteer.role ?? null,
+      company: volunteer.companyName ?? company?.name ?? null,
+      companyUrl: company?.url ?? null,
+      companyLogo: logoUrl(company),
+      // Raw LinkedIn enum, e.g. "ECONOMIC_EMPOWERMENT" — same treatment as
+      // `pronouns`; humanizing enum strings is a display concern, not this
+      // layer's job.
+      cause: volunteer.cause ?? null,
+      ...readDateRange(volunteer.dateRange),
+      description: volunteer.description ?? null,
+    };
+  });
+
+  const paging = pagingFor(index, urn);
+  const partial = paging?.total > entries.length ? { returned: entries.length, total: paging.total } : null;
+
+  return { entries, partial };
+}
+
+/** Awards and honors. `issuedOn` is a single Date, not a range. */
+function buildHonors(index, profile) {
+  const urn = profile['*profileHonors'];
+  const entries = resolveCollection(index, urn).map((honor) => ({
+    title: honor.title ?? null,
+    issuer: honor.issuer ?? null,
+    issuedOn: formatDate(honor.issuedOn),
+    description: honor.description ?? null,
+  }));
+
+  const paging = pagingFor(index, urn);
+  const partial = paging?.total > entries.length ? { returned: entries.length, total: paging.total } : null;
+
+  return { entries, partial };
+}
+
+/**
+ * A co-author is a pointer to another member's Profile entity
+ * (`authors[].standardizedContributor["*profile"]`) — resolvable only when
+ * that entity happens to be inlined in this response's `included[]` (it
+ * usually is, the same way a connection's Profile stub rides along). No
+ * entity means no way to know the name from this payload; skip rather than
+ * guess.
+ */
+function resolvePublicationAuthor(index, author) {
+  const person = resolve(index, author?.standardizedContributor?.['*profile']);
+  const name = [person?.firstName, person?.lastName].filter(Boolean).join(' ') || null;
+  if (!name) return null;
+  return { name, profileUrl: person.publicIdentifier ? profileUrlFor(person.publicIdentifier) : null };
+}
+
+/** Books, papers, and articles. `publishedOn` is a single Date, not a range. */
+function buildPublications(index, profile) {
+  const urn = profile['*profilePublications'];
+  const entries = resolveCollection(index, urn).map((publication) => ({
+    name: publication.name ?? null,
+    publisher: publication.publisher ?? null,
+    publishedOn: formatDate(publication.publishedOn),
+    url: publication.url ?? null,
+    description: publication.description ?? null,
+    authors: (publication.authors ?? [])
+      .map((author) => resolvePublicationAuthor(index, author))
+      .filter(Boolean),
+  }));
+
+  const paging = pagingFor(index, urn);
+  const partial = paging?.total > entries.length ? { returned: entries.length, total: paging.total } : null;
+
+  return { entries, partial };
+}
+
+/**
  * Skill names from a standalone `profileSkills?q=viewee` response, in the order
  * LinkedIn returns them (which is the profile's own display order). Used to
  * replace the 20-capped list from the main call — see docs/endpoint-map.md.
@@ -314,6 +393,12 @@ export function normalizeProfile(payload) {
     enrichmentByUrn: experienceEnrichment,
   } = buildExperience(index, profile);
   const { entries: featured, partial: featuredPartial } = buildFeatured(index, profile);
+  const { entries: volunteerExperience, partial: volunteerPartial } = buildVolunteerExperience(
+    index,
+    profile,
+  );
+  const { entries: honors, partial: honorsPartial } = buildHonors(index, profile);
+  const { entries: publications, partial: publicationsPartial } = buildPublications(index, profile);
 
   // LinkedIn caps several sections inside this projection; surface any
   // shortfall rather than silently returning a partial list.
@@ -323,6 +408,9 @@ export function normalizeProfile(payload) {
   }
   if (experiencePartial) partial.experience = experiencePartial;
   if (featuredPartial) partial.featured = featuredPartial;
+  if (volunteerPartial) partial.volunteerExperience = volunteerPartial;
+  if (honorsPartial) partial.honors = honorsPartial;
+  if (publicationsPartial) partial.publications = publicationsPartial;
 
   return {
     profile: {
@@ -347,6 +435,9 @@ export function normalizeProfile(payload) {
       certifications: buildCertifications(index, profile),
       languages: buildLanguages(index, profile),
       featured,
+      volunteerExperience,
+      honors,
+      publications,
     },
     partial,
     profileUrn: rootUrn,
