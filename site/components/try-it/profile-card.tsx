@@ -84,18 +84,36 @@ export function ProfileCard({ data }: { data: ProfileEnvelope }) {
   const p = data.profile;
   const m = data.meta;
 
+  // This page and the API deploy independently, so the response can be a
+  // version behind what `Profile` describes — a section added to the schema
+  // is simply absent until the API catches up. Defaulting every list here
+  // means a newer page never crashes against an older API; the section just
+  // doesn't render. Same reason `images` is read defensively below.
+  const {
+    experience = [],
+    careerBreaks = [],
+    education = [],
+    skills = [],
+    certifications = [],
+    languages = [],
+    featured = [],
+    volunteerExperience = [],
+    honors = [],
+    publications = [],
+  } = p;
+
   return (
     <div className="bg-card border-border overflow-hidden rounded-xl border shadow-sm">
       <div
         className="from-primary h-24 bg-gradient-to-tr to-sky-400 bg-cover bg-center"
         style={
-          p.images.backgroundImage
+          p.images?.backgroundImage
             ? { backgroundImage: `url(${p.images.backgroundImage})` }
             : undefined
         }
       />
       <div className="-mt-11 px-5 pb-5">
-        {p.images.profilePicture ? (
+        {p.images?.profilePicture ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={p.images.profilePicture}
@@ -131,9 +149,9 @@ export function ProfileCard({ data }: { data: ProfileEnvelope }) {
         </Section>
       )}
 
-      {p.experience.length > 0 && (
+      {experience.length > 0 && (
         <Section title="Experience">
-          {p.experience.map((e, i) => (
+          {experience.map((e, i) => (
             <Entry
               key={i}
               logo={e.companyLogo}
@@ -156,9 +174,9 @@ export function ProfileCard({ data }: { data: ProfileEnvelope }) {
         </Section>
       )}
 
-      {p.careerBreaks.length > 0 && (
+      {careerBreaks.length > 0 && (
         <Section title="Career Breaks">
-          {p.careerBreaks.map((b, i) => (
+          {careerBreaks.map((b, i) => (
             <Entry
               key={i}
               logo={null}
@@ -173,9 +191,9 @@ export function ProfileCard({ data }: { data: ProfileEnvelope }) {
         </Section>
       )}
 
-      {p.education.length > 0 && (
+      {education.length > 0 && (
         <Section title="Education">
-          {p.education.map((e, i) => {
+          {education.map((e, i) => {
             const degree = [e.degree, e.fieldOfStudy].filter(Boolean).join(', ');
             return (
               <Entry
@@ -192,10 +210,10 @@ export function ProfileCard({ data }: { data: ProfileEnvelope }) {
         </Section>
       )}
 
-      {p.skills.length > 0 && (
+      {skills.length > 0 && (
         <Section title="Skills">
           <div className="flex flex-wrap gap-2">
-            {p.skills.map((s) => (
+            {skills.map((s) => (
               <Badge key={s} variant="secondary" className="font-normal">
                 {s}
               </Badge>
@@ -210,9 +228,9 @@ export function ProfileCard({ data }: { data: ProfileEnvelope }) {
         </Section>
       )}
 
-      {p.certifications.length > 0 && (
+      {certifications.length > 0 && (
         <Section title="Certifications">
-          {p.certifications.map((c, i) => (
+          {certifications.map((c, i) => (
             <Entry
               key={i}
               logo={null}
@@ -227,10 +245,10 @@ export function ProfileCard({ data }: { data: ProfileEnvelope }) {
         </Section>
       )}
 
-      {p.languages.length > 0 && (
+      {languages.length > 0 && (
         <Section title="Languages">
           <div className="flex flex-wrap gap-2">
-            {p.languages.map((l, i) => (
+            {languages.map((l, i) => (
               <Badge key={i} variant="secondary" className="font-normal">
                 {l.name}
                 {l.proficiency ? ` · ${humanize(l.proficiency)}` : ''}
@@ -240,10 +258,10 @@ export function ProfileCard({ data }: { data: ProfileEnvelope }) {
         </Section>
       )}
 
-      {p.featured.length > 0 && (
+      {featured.length > 0 && (
         <Section title="Featured">
           <ul className="list-disc space-y-1 pl-5 text-sm">
-            {p.featured.map((f, i) => (
+            {featured.map((f, i) => (
               <li key={i}>
                 <a
                   href={f.url ?? '#'}
@@ -266,9 +284,9 @@ export function ProfileCard({ data }: { data: ProfileEnvelope }) {
         </Section>
       )}
 
-      {p.volunteerExperience.length > 0 && (
+      {volunteerExperience.length > 0 && (
         <Section title="Volunteering">
-          {p.volunteerExperience.map((v, i) => (
+          {volunteerExperience.map((v, i) => (
             <Entry
               key={i}
               logo={v.companyLogo}
@@ -288,9 +306,9 @@ export function ProfileCard({ data }: { data: ProfileEnvelope }) {
         </Section>
       )}
 
-      {p.honors.length > 0 && (
+      {honors.length > 0 && (
         <Section title="Honors & Awards">
-          {p.honors.map((h, i) => (
+          {honors.map((h, i) => (
             <Entry
               key={i}
               logo={null}
@@ -309,9 +327,9 @@ export function ProfileCard({ data }: { data: ProfileEnvelope }) {
         </Section>
       )}
 
-      {p.publications.length > 0 && (
+      {publications.length > 0 && (
         <Section title="Publications">
-          {p.publications.map((pub, i) => (
+          {publications.map((pub, i) => (
             <Entry
               key={i}
               logo={null}

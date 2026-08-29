@@ -83,17 +83,17 @@ export interface Profile {
   industry: string | null;
   about: string | null;
   pronouns: string | null;
-  images: { profilePicture: string | null; backgroundImage: string | null };
-  experience: ExperienceEntry[];
-  education: EducationEntry[];
-  skills: string[];
-  certifications: CertificationEntry[];
-  languages: { name: string | null; proficiency: string | null }[];
-  featured: { title: string | null; url: string | null; provider: string | null }[];
-  volunteerExperience: VolunteerEntry[];
-  honors: HonorEntry[];
-  publications: PublicationEntry[];
-  careerBreaks: CareerBreakEntry[];
+  images?: { profilePicture: string | null; backgroundImage: string | null };
+  experience?: ExperienceEntry[];
+  education?: EducationEntry[];
+  skills?: string[];
+  certifications?: CertificationEntry[];
+  languages?: { name: string | null; proficiency: string | null }[];
+  featured?: { title: string | null; url: string | null; provider: string | null }[];
+  volunteerExperience?: VolunteerEntry[];
+  honors?: HonorEntry[];
+  publications?: PublicationEntry[];
+  careerBreaks?: CareerBreakEntry[];
 }
 
 export interface ProfileEnvelope {
