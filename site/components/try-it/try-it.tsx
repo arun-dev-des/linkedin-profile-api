@@ -9,11 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Skeleton } from '@/components/ui/skeleton';
-import {
-  ResizablePanelGroup,
-  ResizablePanel,
-  ResizableHandle,
-} from '@/components/ui/resizable';
+import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from '@/components/ui/resizable';
 import { PRESETS } from '@/lib/site';
 import { fetchProfile, fetchProfileRaw } from '@/lib/api';
 import type { ProfileEnvelope, RawPayload } from '@/lib/types';
@@ -105,6 +101,12 @@ export function TryIt() {
           <a href="/approach" className="text-primary hover:underline">
             How it works
           </a>
+          <span className="hidden sm:inline">
+            {' · '}
+            <span className="text-muted-foreground">
+              Hover any value in the card to see the field it came from
+            </span>
+          </span>
         </p>
 
         <form onSubmit={submit} className="mt-4 flex max-w-2xl gap-2">
