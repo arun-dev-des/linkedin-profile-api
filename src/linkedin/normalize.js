@@ -406,6 +406,36 @@ function readSduiCaption(caption) {
 }
 
 /**
+ * The description an entity component renders beneath itself.
+ *
+ * SDUI nests it several levels down —
+ * `subComponents.components[].components.fixedListComponent.components[]
+ *  .components.textComponent.text.text` — and the exact depth varies by
+ * component, so this walks for the first `textComponent` rather than
+ * hard-coding that path. Career-break entries carry exactly one (verified
+ * against two real profiles); taking the first is therefore unambiguous
+ * here, and returning null is the right answer when there is none.
+ */
+function sduiDescription(subComponents) {
+  let text = null;
+
+  const walk = (node) => {
+    if (text !== null || !node || typeof node !== 'object') return;
+    if (Array.isArray(node)) return node.forEach(walk);
+
+    const candidate = node.textComponent?.text?.text;
+    if (typeof candidate === 'string' && candidate.trim() !== '') {
+      text = candidate;
+      return;
+    }
+    for (const value of Object.values(node)) walk(value);
+  };
+
+  walk(subComponents);
+  return text;
+}
+
+/**
  * Extracts career breaks from a `profileComponents?sectionType=experience`
  * GraphQL response (see fetchExperienceComponents).
  *
@@ -432,6 +462,7 @@ export function extractCareerBreaks(payload) {
         type: entity.titleV2?.text?.text ?? null,
         ...readSduiCaption(entity.caption?.text),
         location: entity.metadata?.text ?? null,
+        description: sduiDescription(entity.subComponents),
       });
     }
 

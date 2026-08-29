@@ -41,6 +41,7 @@ export interface CareerBreakEntry {
   endDate: string | null;
   current: boolean;
   location: string | null;
+  description: string | null;
 }
 
 export interface VolunteerEntry {

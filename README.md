@@ -51,7 +51,7 @@ cp .env.example .env
 # edit .env — see "Getting the credentials" below
 
 npm run dev          # http://localhost:3000
-npm test             # 55 tests, fully offline
+npm test             # 56 tests, fully offline
 ```
 
 ### Getting the credentials
@@ -258,7 +258,8 @@ of ~100 cross-referenced entities; this is the flattened, cleaned view.
         "startDate": "2025-07",
         "endDate": null,
         "current": true,
-        "location": "Greater Bengaluru Area"
+        "location": "Greater Bengaluru Area",
+        "description": "Built and shipped two products independently..."
       }
     ]
   },

@@ -303,6 +303,7 @@ A career break looks like this:
 | `entityComponent.subtitle.text` | `"Career Break"` — the literal marker |
 | `entityComponent.caption.text` | `"Jul 2025 - Present · 1 yr 2 mos"` |
 | `entityComponent.metadata.text` | `"Greater Bengaluru Area"` (often absent) |
+| `entityComponent.subComponents` → first `textComponent.text.text` | the free-text description, nested several levels down rather than on the entity itself |
 
 [`extractCareerBreaks()`](../src/linkedin/normalize.js) walks the tree for
 `entityComponent` nodes whose subtitle is exactly `"Career Break"` — ordinary

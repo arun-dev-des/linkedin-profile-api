@@ -41,6 +41,19 @@
        "attributesV2": [],
        "accessibilityTextAttributesV2": [],
        "accessibilityText": "Greater Bengaluru Area"
+      },
+      "subComponents": {
+       "components": [
+        {
+         "components": {
+          "textComponent": {
+           "text": {
+            "text": "Built and shipped two products independently:\n\ngreymemory \u2014 self-hosted memory layer for AI agents. Scores 80% on LongMemEval benchmark. npmjs.com/package/greymemory \u00b7 github.com/arun-dev-des/greymemory\n\nFirst Rank Pro \u2014 live SEO analysis plugin, published on the Framer marketplace. framer.com/marketplace/plugins/first-rank-pro \u00b7 github.com/arun-dev-des/FirstRankPro\n\nAn AI design tool built solo for Razorpay's Blade Build Challenge: type a prompt, Claude picks the components and lays out the screen, and it renders live in real Blade \u2014 Razorpay's production design system. https://razorpay-challenge.vercel.app/"
+           }
+          }
+         }
+        }
+       ]
       }
      }
     },
@@ -83,6 +96,19 @@
        "attributesV2": [],
        "accessibilityTextAttributesV2": [],
        "accessibilityText": "Bengaluru \u00b7 Remote"
+      },
+      "subComponents": {
+       "components": [
+        {
+         "components": {
+          "textComponent": {
+           "text": {
+            "text": "\u25cf Worked closely with CEO and stakeholders weekly to map workflow pain, turned it directly into designs \u25cf Designed data-intensive dashboards for enterprise workflow automation, working directly with founders and engineers \u25cf Crafted product demos for enterprise customer pitch"
+           }
+          }
+         }
+        }
+       ]
       }
      }
     },
@@ -113,7 +139,20 @@
        "accessibilityText": "Full-time \u00b7 2 yrs 7 mos"
       },
       "caption": null,
-      "metadata": null
+      "metadata": null,
+      "subComponents": {
+       "components": [
+        {
+         "components": {
+          "textComponent": {
+           "text": {
+            "text": "\u25cf Led UX for Tekion Open API for 3rd party developers to build apps and integrate with Tekion ecosystem \u25cf Designed dashboards and user workflow for enterprise automotive platform at meaningful scale across dealerships"
+           }
+          }
+         }
+        }
+       ]
+      }
      }
     },
     {
@@ -149,6 +188,19 @@
        "attributesV2": [],
        "accessibilityTextAttributesV2": [],
        "accessibilityText": "Bangalore Urban \u00b7 On-site"
+      },
+      "subComponents": {
+       "components": [
+        {
+         "components": {
+          "textComponent": {
+           "text": {
+            "text": "\u25cf Led UX for Tekion Open API for 3rd party developers to build apps and integrate with Tekion ecosystem \u25cf Designed dashboards and user workflow for enterprise automotive platform at meaningful scale across dealerships"
+           }
+          }
+         }
+        }
+       ]
       }
      }
     },
@@ -269,6 +321,19 @@
        "attributesV2": [],
        "accessibilityTextAttributesV2": [],
        "accessibilityText": "Bengaluru"
+      },
+      "subComponents": {
+       "components": [
+        {
+         "components": {
+          "textComponent": {
+           "text": {
+            "text": "\u25cf Designed UX for a vernacular short video platform across 10 Indian languages - 40M installs, 3M DAU. \u25cf Home feed redesign drove 30% uplift in time spent and 8% reduction in uninstalls. Related videos feature drove an additional 20% uplift."
+           }
+          }
+         }
+        }
+       ]
       }
      }
     },
@@ -311,6 +376,19 @@
        "attributesV2": [],
        "accessibilityTextAttributesV2": [],
        "accessibilityText": "Bengaluru Area, India"
+      },
+      "subComponents": {
+       "components": [
+        {
+         "components": {
+          "textComponent": {
+           "text": {
+            "text": "\u25cf Designed the Developer Console end-to-end, enabling third-party developers to build and push mini apps inside Hike's platform for 100M+ users."
+           }
+          }
+         }
+        }
+       ]
       }
      }
     },

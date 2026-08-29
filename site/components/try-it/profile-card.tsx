@@ -186,6 +186,7 @@ export function ProfileCard({ data }: { data: ProfileEnvelope }) {
               dates={[dateSpan(b.startDate, b.endDate, b.current), b.location]
                 .filter(Boolean)
                 .join('  ·  ')}
+              desc={b.description}
             />
           ))}
         </Section>

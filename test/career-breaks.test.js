@@ -12,28 +12,51 @@ const load = (name) =>
 const ongoing = load('sdui-experience-iamarun4official'); // an open-ended break
 const closed = load('sdui-experience-padamkataria'); // a break with an end date
 
-test('extracts an in-progress career break, with location', () => {
-  assert.deepEqual(extractCareerBreaks(ongoing), [
+test('extracts an in-progress career break, with location and description', () => {
+  const [b] = extractCareerBreaks(ongoing);
+  assert.deepEqual(
+    { ...b, description: null },
     {
       type: 'Professional development',
       startDate: '2025-07',
       endDate: null,
       current: true,
       location: 'Greater Bengaluru Area',
+      description: null,
     },
-  ]);
+  );
+  // The description lives several levels down in subComponents, not on the
+  // entity itself — assert it survives that walk.
+  assert.match(b.description, /^Built and shipped two products independently:/);
+  assert.ok(b.description.includes('greymemory'), 'multi-paragraph text kept intact');
 });
 
 test('extracts a completed career break, tolerating a missing location', () => {
-  assert.deepEqual(extractCareerBreaks(closed), [
+  const [b] = extractCareerBreaks(closed);
+  assert.deepEqual(
+    { ...b, description: null },
     {
       type: 'Personal goal pursuit',
       startDate: '2025-02',
       endDate: '2025-06',
       current: false,
       location: null,
+      description: null,
     },
-  ]);
+  );
+  assert.match(b.description, /^Took time out to travel and train\./);
+  assert.ok(b.description.includes('\n'), 'newlines preserved');
+});
+
+test('returns a null description when the break has none', () => {
+  const [b] = extractCareerBreaks({
+    entityComponent: {
+      titleV2: { text: { text: 'Break' } },
+      subtitle: { text: 'Career Break' },
+      caption: { text: 'Jan 2020 - Feb 2020 · 2 mos' },
+    },
+  });
+  assert.equal(b.description, null);
 });
 
 test('does not mistake ordinary roles for career breaks', () => {
@@ -118,7 +141,7 @@ test('tolerates empty, malformed, and error responses', () => {
     entityComponent: { titleV2: { text: { text: 'B' } }, subtitle: { text: 'Career Break' } },
   };
   assert.deepEqual(extractCareerBreaks(noCaption), [
-    { type: 'B', startDate: null, endDate: null, current: false, location: null },
+    { type: 'B', startDate: null, endDate: null, current: false, location: null, description: null },
   ]);
 });
 
