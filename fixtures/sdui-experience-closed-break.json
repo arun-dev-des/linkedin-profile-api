@@ -1,0 +1,213 @@
+{
+ "data": {
+  "identityDashProfileComponentsBySectionType": {
+   "elements": [
+    {
+     "entityComponent": {
+      "titleV2": {
+       "text": {
+        "text": "Co-Founder"
+       }
+      },
+      "subtitle": {
+       "text": "Northwind Labs \u00b7 Full-time"
+      },
+      "caption": {
+       "text": "Dec 2025 - Present \u00b7 9 mos"
+      },
+      "metadata": {
+       "text": "San Francisco Bay Area"
+      },
+      "subComponents": {
+       "components": [
+        {
+         "components": {
+          "textComponent": {
+           "text": {
+            "text": "Building developer tooling."
+           }
+          }
+         }
+        }
+       ]
+      }
+     }
+    },
+    {
+     "entityComponent": {
+      "titleV2": {
+       "text": {
+        "text": "Personal goal pursuit"
+       }
+      },
+      "subtitle": {
+       "text": "Career Break"
+      },
+      "caption": {
+       "text": "Feb 2025 - Jun 2025 \u00b7 5 mos"
+      },
+      "metadata": null,
+      "subComponents": {
+       "components": [
+        {
+         "components": {
+          "textComponent": {
+           "text": {
+            "text": "Took time out to travel and train.\nHighlights\n- Ran a half marathon\n- Cycled 100km in a day\n- Shipped two side projects"
+           }
+          }
+         }
+        }
+       ]
+      }
+     }
+    },
+    {
+     "entityComponent": {
+      "titleV2": {
+       "text": {
+        "text": "Business Head"
+       }
+      },
+      "subtitle": {
+       "text": "Contoso Financial \u00b7 Full-time"
+      },
+      "caption": {
+       "text": "May 2024 - Feb 2025 \u00b7 10 mos"
+      },
+      "metadata": null,
+      "subComponents": {
+       "components": [
+        {
+         "components": {
+          "textComponent": {
+           "text": {
+            "text": "Led the lending business line."
+           }
+          }
+         }
+        }
+       ]
+      }
+     }
+    },
+    {
+     "entityComponent": {
+      "titleV2": {
+       "text": {
+        "text": "Co-Founder"
+       }
+      },
+      "subtitle": {
+       "text": "Fabrikam Health (acquired)"
+      },
+      "caption": {
+       "text": "Apr 2023 - May 2024 \u00b7 1 yr 2 mos"
+      },
+      "metadata": null,
+      "subComponents": {
+       "components": [
+        {
+         "components": {
+          "textComponent": {
+           "text": {
+            "text": "Healthcare fintech; payments and lending products."
+           }
+          }
+         }
+        }
+       ]
+      }
+     }
+    },
+    {
+     "entityComponent": {
+      "titleV2": {
+       "text": {
+        "text": "Product"
+       }
+      },
+      "subtitle": {
+       "text": "Adventure Works"
+      },
+      "caption": {
+       "text": "Jan 2022 - Apr 2023 \u00b7 1 yr 4 mos"
+      },
+      "metadata": null,
+      "subComponents": {
+       "components": [
+        {
+         "components": {
+          "textComponent": {
+           "text": {
+            "text": "Personal loans: KYC, mandates, account aggregator."
+           }
+          }
+         }
+        }
+       ]
+      }
+     }
+    },
+    {
+     "entityComponent": {
+      "titleV2": {
+       "text": {
+        "text": "Founding Member"
+       }
+      },
+      "subtitle": {
+       "text": "Tailspin Social \u00b7 Full-time"
+      },
+      "caption": {
+       "text": "Sep 2020 - Feb 2021 \u00b7 6 mos"
+      },
+      "metadata": null,
+      "subComponents": {
+       "components": [
+        {
+         "components": {
+          "textComponent": {
+           "text": {
+            "text": "Third member of the team at a seed-stage social product."
+           }
+          }
+         }
+        }
+       ]
+      }
+     }
+    },
+    {
+     "entityComponent": {
+      "titleV2": {
+       "text": {
+        "text": "Product"
+       }
+      },
+      "subtitle": {
+       "text": "Litware Inc"
+      },
+      "caption": {
+       "text": "2021 - 2021 \u00b7 Less than a year"
+      },
+      "metadata": null,
+      "subComponents": {
+       "components": [
+        {
+         "components": {
+          "textComponent": {
+           "text": {
+            "text": "B2B SaaS in customer experience management."
+           }
+          }
+         }
+        }
+       ]
+      }
+     }
+    }
+   ]
+  }
+ }
+}

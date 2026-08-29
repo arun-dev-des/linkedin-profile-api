@@ -7,10 +7,13 @@ import { extractCareerBreaks, normalizeProfile } from '../src/linkedin/normalize
 const load = (name) =>
   JSON.parse(readFileSync(new URL(`../fixtures/${name}.json`, import.meta.url)));
 
-// Both captured live from the SDUI experience query, trimmed to the
-// entityComponent nodes the parser actually reads.
+// `ongoing` is captured live from the SDUI experience query, trimmed to the
+// entityComponent nodes the parser reads. `closed` is anonymised: it mirrors
+// the structure of a real capture (a closed-date break with a description and
+// no location, among ordinary roles) without committing a third party's
+// personal profile data to a public repo.
 const ongoing = load('sdui-experience-iamarun4official'); // an open-ended break
-const closed = load('sdui-experience-padamkataria'); // a break with an end date
+const closed = load('sdui-experience-closed-break'); // a break with an end date
 
 test('extracts an in-progress career break, with location and description', () => {
   const [b] = extractCareerBreaks(ongoing);
