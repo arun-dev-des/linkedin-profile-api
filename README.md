@@ -51,7 +51,7 @@ cp .env.example .env
 # edit .env — see "Getting the credentials" below
 
 npm run dev          # http://localhost:3000
-npm test             # 56 tests, fully offline
+npm test             # 57 tests, fully offline
 ```
 
 ### Getting the credentials
@@ -160,6 +160,7 @@ of ~100 cross-referenced entities; this is the flattened, cleaned view.
 {
   "profile": {
     "publicId": "iamarun4official",
+    "profileUrn": "urn:li:fsd_profile:ACoAAB0H...",
     "profileUrl": "https://www.linkedin.com/in/iamarun4official/",
     "name": "Arunkumar Alagarsamy",
     "firstName": "Arunkumar",
@@ -170,6 +171,7 @@ of ~100 cross-referenced entities; this is the flattened, cleaned view.
     "industry": "Information Technology & Services",
     "about": "Extensively worked in both B2B & B2C products...",
     "pronouns": "HE_HIM",
+    "badges": { "premium": true, "influencer": false, "creator": false },
     "images": {
       "profilePicture": "https://media.licdn.com/dms/image/v2/...",
       "backgroundImage": "https://media.licdn.com/dms/image/v2/..."
@@ -280,6 +282,11 @@ Notes:
 
 - **Every field is optional.** Missing scalars are `null`; missing lists are `[]`.
   Nothing throws on an absent section.
+- **`profileUrn`** is LinkedIn's stable internal id for the member. The public
+  slug in `profileUrl` can be changed by its owner; the URN cannot, so it's the
+  durable key for callers that store results.
+- **`badges`** are always all three booleans — an absent flag means `false`,
+  not unknown.
 - **Dates** are `"YYYY"` or `"YYYY-MM"` strings (LinkedIn rarely provides a day).
   A currently-held role has `endDate: null` and `current: true`.
 - **`meta.partial`** appears only when LinkedIn returned a capped section, and

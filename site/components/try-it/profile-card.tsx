@@ -123,7 +123,24 @@ export function ProfileCard({ data }: { data: ProfileEnvelope }) {
         ) : (
           <div className="border-card bg-muted size-[88px] rounded-full border-4" />
         )}
-        <h2 className="mt-3 text-xl font-semibold tracking-tight">{p.name ?? 'Unknown'}</h2>
+        <div className="mt-3 flex flex-wrap items-center gap-2">
+          <h2 className="text-xl font-semibold tracking-tight">{p.name ?? 'Unknown'}</h2>
+          {p.badges?.influencer && (
+            <Badge variant="secondary" className="font-normal">
+              Influencer
+            </Badge>
+          )}
+          {p.badges?.creator && (
+            <Badge variant="secondary" className="font-normal">
+              Creator
+            </Badge>
+          )}
+          {p.badges?.premium && (
+            <Badge variant="secondary" className="font-normal">
+              Premium
+            </Badge>
+          )}
+        </div>
         {p.headline && <p className="mt-0.5">{p.headline}</p>}
         <div className="text-muted-foreground mt-1.5 text-[13.5px]">
           {[p.location, p.industry].filter(Boolean).join(' · ')}

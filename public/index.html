@@ -782,7 +782,16 @@
             <div class="banner"${banner}></div>
             <div class="identity">
               ${avatar}
-              <h2>${esc(p.name ?? 'Unknown')}</h2>
+              <h2>${esc(p.name ?? 'Unknown')}${
+                [
+                  p.badges?.influencer ? 'Influencer' : null,
+                  p.badges?.creator ? 'Creator' : null,
+                  p.badges?.premium ? 'Premium' : null,
+                ]
+                  .filter(Boolean)
+                  .map((b) => ` <span class="chip">${esc(b)}</span>`)
+                  .join('')
+              }</h2>
               ${p.headline ? `<p class="headline">${esc(p.headline)}</p>` : ''}
               <div class="meta">
                 ${metaLine}

@@ -403,8 +403,28 @@ test('rejects non-profile URLs with a 400', () => {
 /* ------------------------------------------------------------- hygiene */
 
 test('strips LinkedIn-internal fields from the output', () => {
-  const serialized = JSON.stringify(profile);
+  // profileUrn is the one URN deliberately exposed — it's the member's stable
+  // id, and the point of the field. Drop it before the sweep so the guard
+  // still catches every *accidental* URN or raw-entity leak elsewhere.
+  const { profileUrn, ...rest } = profile;
+  assert.match(profileUrn, /^urn:li:fsd_profile:/, 'profileUrn should be the member urn');
+
+  const serialized = JSON.stringify(rest);
   for (const leak of ['$type', '$recipeTypes', 'entityUrn', 'multiLocale', 'urn:li:']) {
     assert.equal(serialized.includes(leak), false, `output should not contain ${leak}`);
   }
+});
+
+test('exposes the profile badges as booleans, never null', () => {
+  // The fixture profile is premium but neither an influencer nor a creator —
+  // absent flags must normalize to false, not null or undefined.
+  assert.deepEqual(profile.badges, { premium: true, influencer: false, creator: false });
+
+  // A payload with no flags at all must still produce all three as false.
+  const { profile: bare } = normalizeProfile({
+    data: { '*elements': ['urn:li:fsd_profile:X'] },
+    included: [{ entityUrn: 'urn:li:fsd_profile:X', firstName: 'A', lastName: 'B' }],
+  });
+  assert.deepEqual(bare.badges, { premium: false, influencer: false, creator: false });
+  assert.equal(bare.profileUrn, 'urn:li:fsd_profile:X');
 });

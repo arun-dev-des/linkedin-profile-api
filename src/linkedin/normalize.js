@@ -592,6 +592,10 @@ export function normalizeProfile(payload) {
   return {
     profile: {
       publicId,
+      // LinkedIn's own stable id for the member. The public slug can be
+      // changed by its owner; this cannot, so it's the durable key for
+      // callers that store results.
+      profileUrn: rootUrn ?? null,
       profileUrl: publicId ? profileUrlFor(publicId) : null,
       name,
       firstName: profile.firstName ?? null,
@@ -602,6 +606,13 @@ export function normalizeProfile(payload) {
       industry: resolve(index, profile.industryUrn)?.name ?? null,
       about: profile.summary ?? null,
       pronouns: profile.pronounUnion?.standardizedPronoun ?? null,
+      // Account-status flags LinkedIn renders as badges on the profile.
+      // Booleans rather than null: absent means false, not unknown.
+      badges: {
+        premium: profile.premium === true,
+        influencer: profile.influencer === true,
+        creator: profile.creator === true,
+      },
       images: {
         profilePicture: pictureUrl(profile.profilePicture),
         backgroundImage: pictureUrl(profile.backgroundPicture),

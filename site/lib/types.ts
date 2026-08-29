@@ -74,6 +74,7 @@ export interface PublicationEntry {
 
 export interface Profile {
   publicId: string | null;
+  profileUrn?: string | null;
   profileUrl: string | null;
   name: string | null;
   firstName: string | null;
@@ -84,6 +85,7 @@ export interface Profile {
   industry: string | null;
   about: string | null;
   pronouns: string | null;
+  badges?: { premium: boolean; influencer: boolean; creator: boolean };
   images?: { profilePicture: string | null; backgroundImage: string | null };
   experience?: ExperienceEntry[];
   education?: EducationEntry[];
