@@ -3,12 +3,14 @@
 A hosted HTTP API that accepts a LinkedIn profile URL and returns the profile's
 information (name, headline, location, about, experience, education, skills,
 certifications, languages, profile images, featured links, volunteer
-experience, honors & awards, publications) as structured JSON.
+experience, honors & awards, publications, career breaks) as structured JSON.
 
 The data is retrieved by calling LinkedIn's own internal **Voyager** API directly
 with server-side session cookies. **No browser automation** (Selenium / Puppeteer
-/ Playwright) and **no HTML scraping** — a single authenticated `GET` request per
-lookup, then a pure-function transform of the response.
+/ Playwright) and **no HTML scraping** — authenticated `GET` requests against
+LinkedIn's own JSON APIs, then a pure-function transform of the response. One
+request covers the whole profile; a second covers career breaks, which no
+Rest.li resource carries (see [Known limitations](#known-limitations)).
 
 - **Showcase site:** https://linkedin-profile-api-phi.vercel.app — the live app on
   the home page, with these docs in the sidebar.
@@ -49,7 +51,7 @@ cp .env.example .env
 # edit .env — see "Getting the credentials" below
 
 npm run dev          # http://localhost:3000
-npm test             # 48 tests, fully offline
+npm test             # 55 tests, fully offline
 ```
 
 ### Getting the credentials
@@ -249,6 +251,15 @@ of ~100 cross-referenced entities; this is the flattened, cleaned view.
           { "name": "Reid Hoffman", "profileUrl": "https://www.linkedin.com/in/reidhoffman/" }
         ]
       }
+    ],
+    "careerBreaks": [
+      {
+        "type": "Professional development",
+        "startDate": "2025-07",
+        "endDate": null,
+        "current": true,
+        "location": "Greater Bengaluru Area"
+      }
     ]
   },
   "meta": {
@@ -403,7 +414,7 @@ src/
   cache.js             in-memory TTL cache + per-IP rate limiter
   linkedin/
     url.js             LinkedIn URL → publicId
-    client.js          the authenticated Voyager GETs (profile, + skills/positions for ?full=1)
+    client.js          the authenticated Voyager GETs (profile, career breaks, + skills/positions for ?full=1)
     normalize.js       normalized+json graph → clean profile tree
 public/
   index.html           the browser UI — one self-contained file, no build step
@@ -411,11 +422,13 @@ fixtures/
   raw-profile.json     a real captured payload — powers the tests and /profile/sample
   raw-skills.json      a real profileSkills response — powers the skills half of ?full=1 tests
   raw-positions.json   a real profilePositions response — powers the experience half of ?full=1 tests
+  sdui-experience-*.json  two real SDUI experience responses — power the career-break tests
 test/
   normalize.test.js    offline tests, incl. every real-payload edge case
   skills.test.js       the complete-skills extraction (?full=1)
   experience.test.js   the complete-experience extraction + enrichment merge (?full=1)
   sanitize.test.js     the /profile/raw viewer-identity strip
+  career-breaks.test.js   SDUI career-break extraction + display-date parsing
   errors.test.js       upstream-status classification
 fetch_profile.py       the original Python spike, kept as a reference
 docs/
@@ -426,11 +439,15 @@ docs/
 
 Design choices:
 
-- **One request per lookup, up to two more with `?full=1`.** The
+- **Two requests per lookup, up to two more with `?full=1`.** The
   `FullProfileWithEntities` decoration returns experience, education, skills,
-  certifications, images and more in a single response. `?full=1` adds one
-  request per capped section — the dedicated skills and/or positions finder,
-  fetched in parallel, and only for whichever section(s) were actually capped.
+  certifications, images and more in a single response. A second, parallel
+  request covers career breaks, which no Rest.li resource carries at all
+  (see [Known limitations](#known-limitations)). `?full=1` then adds one
+  request per *capped* section — the dedicated skills and/or positions finder
+  — again in parallel, and only for whichever section(s) were actually capped.
+  Every request past the first is best-effort: any of them can fail without
+  failing the lookup.
 - **Normalizer is a pure function** — no I/O, no throw on missing data — so it is
   fully tested offline against a committed real payload.
 - **In-memory cache + rate limit**, not Redis: a small hosted service backed by
@@ -501,13 +518,27 @@ and update the `DECORATION_ID` env var.
   verified live — so there's no bigger request that would help, and its
   response is a different entity shape besides. `meta.partial.featured` at
   least tells you when it's capped.
-- **Career breaks are not returned.** A "Career break" entry in the Experience
-  section is not part of the Voyager `profilePositionGroups` collection or the
-  `FullProfileWithEntities` decoration, and the LinkedIn Android app has no
-  career-break entity type either. It is rendered only by LinkedIn's web
-  server-driven UI. Surfacing it would mean scraping that HTML, which this
-  project deliberately does not do. `experience` therefore reflects only
-  position-backed roles.
+- **Career breaks come from LinkedIn's SDUI, and are lower-confidence than
+  everything else.** They are returned, in their own `careerBreaks` array —
+  but they are the one part of the response not derived from the entity
+  graph. No Rest.li resource carries them: not `profilePositionGroups`, not
+  `profilePositions`, not any of the 17 section pointers on the
+  `FullProfileWithEntities` decoration, and career break is not one of the six
+  values `employmentTypes` returns (all verified against a profile that has
+  one). They exist only in the server-driven-UI GraphQL response, as rendered
+  text, so:
+  - **dates are parsed from display strings** (`"Feb 2025 - Jun 2025 · 5 mos"`)
+    rather than read from `{year, month}` records;
+  - **it is English-only** — the request pins `x-li-lang: en_US` and the
+    parser expects English month abbreviations;
+  - **the persisted GraphQL query id is versioned** like `DECORATION_ID` and
+    will eventually be retired — override it with `CAREER_BREAK_QUERY_ID`.
+
+  The lookup is best-effort: if any of that breaks, `careerBreaks` returns
+  `[]` and no entity-derived field is affected. It is a separate array
+  precisely so display-parsed data never mixes into `experience`. Full
+  write-up, including the `Accept`-header quirk that makes the call work at
+  all, in [`docs/endpoint-map.md`](docs/endpoint-map.md#career-breaks-the-sdui-exception).
 - **Coverage varies by relationship.** Private profiles, out-of-network members,
   and some fields depend on the credentialed account's relationship to the target.
   Sections a profile hasn't filled in (e.g. `languages`) come back as `[]`.

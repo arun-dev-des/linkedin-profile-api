@@ -156,6 +156,23 @@ export function ProfileCard({ data }: { data: ProfileEnvelope }) {
         </Section>
       )}
 
+      {p.careerBreaks.length > 0 && (
+        <Section title="Career Breaks">
+          {p.careerBreaks.map((b, i) => (
+            <Entry
+              key={i}
+              logo={null}
+              fallback={b.type ?? 'Career Break'}
+              title={b.type ?? 'Career Break'}
+              sub="Career Break"
+              dates={[dateSpan(b.startDate, b.endDate, b.current), b.location]
+                .filter(Boolean)
+                .join('  ·  ')}
+            />
+          ))}
+        </Section>
+      )}
+
       {p.education.length > 0 && (
         <Section title="Education">
           {p.education.map((e, i) => {

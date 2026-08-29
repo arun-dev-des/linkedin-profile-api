@@ -1,0 +1,500 @@
+{
+ "data": {
+  "identityDashProfileComponentsBySectionType": {
+   "elements": [
+    {
+     "entityComponent": {
+      "titleV2": {
+       "seeMoreActionTarget": null,
+       "padded": false,
+       "expandable": true,
+       "numInitialLinesToShow": null,
+       "actionTrackingMetadata": [],
+       "text": {
+        "textDirection": "USER_LOCALE",
+        "text": "Professional development",
+        "attributesV2": [],
+        "accessibilityTextAttributesV2": [],
+        "accessibilityText": "Professional development"
+       },
+       "actionTarget": null,
+       "seeMoreControlName": null,
+       "inlineAdditionalInfo": null
+      },
+      "subtitle": {
+       "textDirection": "USER_LOCALE",
+       "text": "Career Break",
+       "attributesV2": [],
+       "accessibilityTextAttributesV2": [],
+       "accessibilityText": "Career Break"
+      },
+      "caption": {
+       "textDirection": "USER_LOCALE",
+       "text": "Jul 2025 - Present \u00b7 1 yr 2 mos",
+       "attributesV2": [],
+       "accessibilityTextAttributesV2": [],
+       "accessibilityText": "Jul 2025 to Present \u00b7 1 yr 2 mos"
+      },
+      "metadata": {
+       "textDirection": "USER_LOCALE",
+       "text": "Greater Bengaluru Area",
+       "attributesV2": [],
+       "accessibilityTextAttributesV2": [],
+       "accessibilityText": "Greater Bengaluru Area"
+      }
+     }
+    },
+    {
+     "entityComponent": {
+      "titleV2": {
+       "seeMoreActionTarget": null,
+       "padded": false,
+       "expandable": true,
+       "numInitialLinesToShow": null,
+       "actionTrackingMetadata": [],
+       "text": {
+        "textDirection": "USER_LOCALE",
+        "text": "Product Designer",
+        "attributesV2": [],
+        "accessibilityTextAttributesV2": [],
+        "accessibilityText": "Product Designer"
+       },
+       "actionTarget": null,
+       "seeMoreControlName": null,
+       "inlineAdditionalInfo": null
+      },
+      "subtitle": {
+       "textDirection": "USER_LOCALE",
+       "text": "Applix \u00b7 Full-time",
+       "attributesV2": [],
+       "accessibilityTextAttributesV2": [],
+       "accessibilityText": "Applix \u00b7 Full-time"
+      },
+      "caption": {
+       "textDirection": "USER_LOCALE",
+       "text": "Aug 2024 - Aug 2025 \u00b7 1 yr 1 mo",
+       "attributesV2": [],
+       "accessibilityTextAttributesV2": [],
+       "accessibilityText": "Aug 2024 to Aug 2025 \u00b7 1 yr 1 mo"
+      },
+      "metadata": {
+       "textDirection": "USER_LOCALE",
+       "text": "Bengaluru \u00b7 Remote",
+       "attributesV2": [],
+       "accessibilityTextAttributesV2": [],
+       "accessibilityText": "Bengaluru \u00b7 Remote"
+      }
+     }
+    },
+    {
+     "entityComponent": {
+      "titleV2": {
+       "seeMoreActionTarget": null,
+       "padded": false,
+       "expandable": true,
+       "numInitialLinesToShow": null,
+       "actionTrackingMetadata": [],
+       "text": {
+        "textDirection": "USER_LOCALE",
+        "text": "Tekion Corp",
+        "attributesV2": [],
+        "accessibilityTextAttributesV2": [],
+        "accessibilityText": "Tekion Corp"
+       },
+       "actionTarget": null,
+       "seeMoreControlName": null,
+       "inlineAdditionalInfo": null
+      },
+      "subtitle": {
+       "textDirection": "USER_LOCALE",
+       "text": "Full-time \u00b7 2 yrs 7 mos",
+       "attributesV2": [],
+       "accessibilityTextAttributesV2": [],
+       "accessibilityText": "Full-time \u00b7 2 yrs 7 mos"
+      },
+      "caption": null,
+      "metadata": null
+     }
+    },
+    {
+     "entityComponent": {
+      "titleV2": {
+       "seeMoreActionTarget": null,
+       "padded": false,
+       "expandable": true,
+       "numInitialLinesToShow": null,
+       "actionTrackingMetadata": [],
+       "text": {
+        "textDirection": "USER_LOCALE",
+        "text": "Product Designer",
+        "attributesV2": [],
+        "accessibilityTextAttributesV2": [],
+        "accessibilityText": "Product Designer"
+       },
+       "actionTarget": null,
+       "seeMoreControlName": null,
+       "inlineAdditionalInfo": null
+      },
+      "subtitle": null,
+      "caption": {
+       "textDirection": "USER_LOCALE",
+       "text": "Aug 2022 - Aug 2024 \u00b7 2 yrs 1 mo",
+       "attributesV2": [],
+       "accessibilityTextAttributesV2": [],
+       "accessibilityText": "Aug 2022 to Aug 2024 \u00b7 2 yrs 1 mo"
+      },
+      "metadata": {
+       "textDirection": "USER_LOCALE",
+       "text": "Bangalore Urban \u00b7 On-site",
+       "attributesV2": [],
+       "accessibilityTextAttributesV2": [],
+       "accessibilityText": "Bangalore Urban \u00b7 On-site"
+      }
+     }
+    },
+    {
+     "entityComponent": {
+      "titleV2": {
+       "seeMoreActionTarget": null,
+       "padded": false,
+       "expandable": true,
+       "numInitialLinesToShow": null,
+       "actionTrackingMetadata": [],
+       "text": {
+        "textDirection": "USER_LOCALE",
+        "text": "Senior Product Designer",
+        "attributesV2": [],
+        "accessibilityTextAttributesV2": [],
+        "accessibilityText": "Senior Product Designer"
+       },
+       "actionTarget": null,
+       "seeMoreControlName": null,
+       "inlineAdditionalInfo": null
+      },
+      "subtitle": null,
+      "caption": {
+       "textDirection": "USER_LOCALE",
+       "text": "Feb 2022 - Jul 2023 \u00b7 1 yr 6 mos",
+       "attributesV2": [],
+       "accessibilityTextAttributesV2": [],
+       "accessibilityText": "Feb 2022 to Jul 2023 \u00b7 1 yr 6 mos"
+      },
+      "metadata": {
+       "textDirection": "USER_LOCALE",
+       "text": "Bengaluru, Karnataka, India",
+       "attributesV2": [],
+       "accessibilityTextAttributesV2": [],
+       "accessibilityText": "Bengaluru, Karnataka, India"
+      }
+     }
+    },
+    {
+     "entityComponent": {
+      "titleV2": {
+       "seeMoreActionTarget": null,
+       "padded": false,
+       "expandable": true,
+       "numInitialLinesToShow": null,
+       "actionTrackingMetadata": [],
+       "text": {
+        "textDirection": "USER_LOCALE",
+        "text": "Senior UX Designer",
+        "attributesV2": [],
+        "accessibilityTextAttributesV2": [],
+        "accessibilityText": "Senior UX Designer"
+       },
+       "actionTarget": null,
+       "seeMoreControlName": null,
+       "inlineAdditionalInfo": null
+      },
+      "subtitle": {
+       "textDirection": "USER_LOCALE",
+       "text": "Mech Mocha \u00b7 Full-time",
+       "attributesV2": [],
+       "accessibilityTextAttributesV2": [],
+       "accessibilityText": "Mech Mocha \u00b7 Full-time"
+      },
+      "caption": {
+       "textDirection": "USER_LOCALE",
+       "text": "Apr 2019 - Sep 2020 \u00b7 1 yr 6 mos",
+       "attributesV2": [],
+       "accessibilityTextAttributesV2": [],
+       "accessibilityText": "Apr 2019 to Sep 2020 \u00b7 1 yr 6 mos"
+      },
+      "metadata": {
+       "textDirection": "USER_LOCALE",
+       "text": "Bengaluru Area, India",
+       "attributesV2": [],
+       "accessibilityTextAttributesV2": [],
+       "accessibilityText": "Bengaluru Area, India"
+      }
+     }
+    },
+    {
+     "entityComponent": {
+      "titleV2": {
+       "seeMoreActionTarget": null,
+       "padded": false,
+       "expandable": true,
+       "numInitialLinesToShow": null,
+       "actionTrackingMetadata": [],
+       "text": {
+        "textDirection": "USER_LOCALE",
+        "text": "UX Designer",
+        "attributesV2": [],
+        "accessibilityTextAttributesV2": [],
+        "accessibilityText": "UX Designer"
+       },
+       "actionTarget": null,
+       "seeMoreControlName": null,
+       "inlineAdditionalInfo": null
+      },
+      "subtitle": {
+       "textDirection": "USER_LOCALE",
+       "text": "Clip",
+       "attributesV2": [],
+       "accessibilityTextAttributesV2": [],
+       "accessibilityText": "Clip"
+      },
+      "caption": {
+       "textDirection": "USER_LOCALE",
+       "text": "May 2018 - Apr 2019 \u00b7 1 yr",
+       "attributesV2": [],
+       "accessibilityTextAttributesV2": [],
+       "accessibilityText": "May 2018 to Apr 2019 \u00b7 1 yr"
+      },
+      "metadata": {
+       "textDirection": "USER_LOCALE",
+       "text": "Bengaluru",
+       "attributesV2": [],
+       "accessibilityTextAttributesV2": [],
+       "accessibilityText": "Bengaluru"
+      }
+     }
+    },
+    {
+     "entityComponent": {
+      "titleV2": {
+       "seeMoreActionTarget": null,
+       "padded": false,
+       "expandable": true,
+       "numInitialLinesToShow": null,
+       "actionTrackingMetadata": [],
+       "text": {
+        "textDirection": "USER_LOCALE",
+        "text": "Product Designer",
+        "attributesV2": [],
+        "accessibilityTextAttributesV2": [],
+        "accessibilityText": "Product Designer"
+       },
+       "actionTarget": null,
+       "seeMoreControlName": null,
+       "inlineAdditionalInfo": null
+      },
+      "subtitle": {
+       "textDirection": "USER_LOCALE",
+       "text": "Hike",
+       "attributesV2": [],
+       "accessibilityTextAttributesV2": [],
+       "accessibilityText": "Hike"
+      },
+      "caption": {
+       "textDirection": "USER_LOCALE",
+       "text": "2017 - 2018 \u00b7 1 yr",
+       "attributesV2": [],
+       "accessibilityTextAttributesV2": [],
+       "accessibilityText": "2017 to 2018 \u00b7 1 yr"
+      },
+      "metadata": {
+       "textDirection": "USER_LOCALE",
+       "text": "Bengaluru Area, India",
+       "attributesV2": [],
+       "accessibilityTextAttributesV2": [],
+       "accessibilityText": "Bengaluru Area, India"
+      }
+     }
+    },
+    {
+     "entityComponent": {
+      "titleV2": {
+       "seeMoreActionTarget": null,
+       "padded": false,
+       "expandable": true,
+       "numInitialLinesToShow": null,
+       "actionTrackingMetadata": [],
+       "text": {
+        "textDirection": "USER_LOCALE",
+        "text": "UX Designer - Intern",
+        "attributesV2": [],
+        "accessibilityTextAttributesV2": [],
+        "accessibilityText": "UX Designer - Intern"
+       },
+       "actionTarget": null,
+       "seeMoreControlName": null,
+       "inlineAdditionalInfo": null
+      },
+      "subtitle": {
+       "textDirection": "USER_LOCALE",
+       "text": "NetBramha Studios ( hiring now! )",
+       "attributesV2": [],
+       "accessibilityTextAttributesV2": [],
+       "accessibilityText": "NetBramha Studios ( hiring now! )"
+      },
+      "caption": {
+       "textDirection": "USER_LOCALE",
+       "text": "May 2017 - Jul 2017 \u00b7 3 mos",
+       "attributesV2": [],
+       "accessibilityTextAttributesV2": [],
+       "accessibilityText": "May 2017 to Jul 2017 \u00b7 3 mos"
+      },
+      "metadata": {
+       "textDirection": "USER_LOCALE",
+       "text": "Bangalore",
+       "attributesV2": [],
+       "accessibilityTextAttributesV2": [],
+       "accessibilityText": "Bangalore"
+      }
+     }
+    },
+    {
+     "entityComponent": {
+      "titleV2": {
+       "seeMoreActionTarget": null,
+       "padded": false,
+       "expandable": true,
+       "numInitialLinesToShow": null,
+       "actionTrackingMetadata": [],
+       "text": {
+        "textDirection": "USER_LOCALE",
+        "text": "UX Designer - Intern",
+        "attributesV2": [],
+        "accessibilityTextAttributesV2": [],
+        "accessibilityText": "UX Designer - Intern"
+       },
+       "actionTarget": null,
+       "seeMoreControlName": null,
+       "inlineAdditionalInfo": null
+      },
+      "subtitle": {
+       "textDirection": "USER_LOCALE",
+       "text": "FULL Creative",
+       "attributesV2": [],
+       "accessibilityTextAttributesV2": [],
+       "accessibilityText": "FULL Creative"
+      },
+      "caption": {
+       "textDirection": "USER_LOCALE",
+       "text": "Nov 2016 - Jan 2017 \u00b7 3 mos",
+       "attributesV2": [],
+       "accessibilityTextAttributesV2": [],
+       "accessibilityText": "Nov 2016 to Jan 2017 \u00b7 3 mos"
+      },
+      "metadata": null
+     }
+    },
+    {
+     "entityComponent": {
+      "titleV2": {
+       "seeMoreActionTarget": null,
+       "padded": false,
+       "expandable": true,
+       "numInitialLinesToShow": null,
+       "actionTrackingMetadata": [],
+       "text": {
+        "textDirection": "USER_LOCALE",
+        "text": "Uptown Ideas",
+        "attributesV2": [],
+        "accessibilityTextAttributesV2": [],
+        "accessibilityText": "Uptown Ideas"
+       },
+       "actionTarget": null,
+       "seeMoreControlName": null,
+       "inlineAdditionalInfo": null
+      },
+      "subtitle": {
+       "textDirection": "USER_LOCALE",
+       "text": "1 yr 4 mos",
+       "attributesV2": [],
+       "accessibilityTextAttributesV2": [],
+       "accessibilityText": "1 yr 4 mos"
+      },
+      "caption": null,
+      "metadata": null
+     }
+    },
+    {
+     "entityComponent": {
+      "titleV2": {
+       "seeMoreActionTarget": null,
+       "padded": false,
+       "expandable": true,
+       "numInitialLinesToShow": null,
+       "actionTrackingMetadata": [],
+       "text": {
+        "textDirection": "USER_LOCALE",
+        "text": "Graphic Designer",
+        "attributesV2": [],
+        "accessibilityTextAttributesV2": [],
+        "accessibilityText": "Graphic Designer"
+       },
+       "actionTarget": null,
+       "seeMoreControlName": null,
+       "inlineAdditionalInfo": null
+      },
+      "subtitle": null,
+      "caption": {
+       "textDirection": "USER_LOCALE",
+       "text": "Oct 2015 - Oct 2016 \u00b7 1 yr 1 mo",
+       "attributesV2": [],
+       "accessibilityTextAttributesV2": [],
+       "accessibilityText": "Oct 2015 to Oct 2016 \u00b7 1 yr 1 mo"
+      },
+      "metadata": {
+       "textDirection": "USER_LOCALE",
+       "text": "Chennai, India",
+       "attributesV2": [],
+       "accessibilityTextAttributesV2": [],
+       "accessibilityText": "Chennai, India"
+      }
+     }
+    },
+    {
+     "entityComponent": {
+      "titleV2": {
+       "seeMoreActionTarget": null,
+       "padded": false,
+       "expandable": true,
+       "numInitialLinesToShow": null,
+       "actionTrackingMetadata": [],
+       "text": {
+        "textDirection": "USER_LOCALE",
+        "text": "Graphic Designer - Intern",
+        "attributesV2": [],
+        "accessibilityTextAttributesV2": [],
+        "accessibilityText": "Graphic Designer - Intern"
+       },
+       "actionTarget": null,
+       "seeMoreControlName": null,
+       "inlineAdditionalInfo": null
+      },
+      "subtitle": null,
+      "caption": {
+       "textDirection": "USER_LOCALE",
+       "text": "Jul 2015 - Sep 2015 \u00b7 3 mos",
+       "attributesV2": [],
+       "accessibilityTextAttributesV2": [],
+       "accessibilityText": "Jul 2015 to Sep 2015 \u00b7 3 mos"
+      },
+      "metadata": {
+       "textDirection": "USER_LOCALE",
+       "text": "Chennai Area, India",
+       "attributesV2": [],
+       "accessibilityTextAttributesV2": [],
+       "accessibilityText": "Chennai Area, India"
+      }
+     }
+    }
+   ]
+  }
+ }
+}

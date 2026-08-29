@@ -157,9 +157,20 @@ in the payload — and is skipped, not guessed at, when it isn't.
 
 ### GraphQL-only (404 as REST)
 
-- **`profileComponents`** (`q=sectionType`) — the section API LinkedIn's **web
-  SDUI** uses; needs a persisted-query hash and a specific variable shape.
-- **`profileCards`** — the full card stack the web renders.
+- **`profileComponents`** (`sectionType:experience`) — the section API
+  LinkedIn's **SDUI** uses; needs a persisted-query id and a specific variable
+  shape. **This is where career breaks live** — see below.
+- **`profileCards`** — the full card stack rendered on the profile page.
+  `…ProfileCards.c7d33a73c633e2f96731688717a89d9e` with just
+  `(profileUrn:<urn>)` returns every card, the Experience one included — but
+  capped at 5 entries with a "Show all N experiences" footer, so
+  `profileComponents` is the better source.
+
+Persisted query ids for both are in the APK:
+
+```bash
+strings apk/classes*.dex | grep -oE 'voyagerIdentityDashProfile(Components|Cards)\.[a-f0-9]+' | sort -u
+```
 
 ### Dead / not found
 
@@ -167,7 +178,7 @@ in the payload — and is skipped, not guessed at, when it isn't.
 | --- | --- |
 | `identity/profiles/{id}/profileView` | 410 |
 | `identity/profiles/{id}/profileContactInfo` | 410; no dash replacement found at any tried path |
-| **Career breaks** | not in any Voyager route, no entity type in the Android app — web-only (see [README "Known limitations"](../README.md#known-limitations)) |
+| ~~Career breaks~~ | **This was wrong — see [Career breaks](#career-breaks-the-sdui-exception) below.** They are not in any *Rest.li* route, but they are reachable, via GraphQL. |
 
 ---
 
@@ -215,3 +226,116 @@ skills and experience — its dedicated finder is capped at 3 of ~10 even with
 actually return more. Fully surfacing it would mean scraping LinkedIn's web
 UI, which this project deliberately does not do — noted here so the gap is
 explicit rather than silent.
+
+---
+
+## Career breaks: the SDUI exception
+
+**An earlier version of this document said career breaks were "not in any
+Voyager route, no entity type in the Android app — web-only". That was wrong,
+and it had never been tested against a profile that actually has one.** They
+are reachable. Just not from any Rest.li resource.
+
+### What was verified, against a real profile with a career break
+
+| Source | Career break present? |
+| --- | --- |
+| `FullProfileWithEntities-107` — **all 17** `*` section pointers | ❌ no |
+| `profilePositions?q=viewee&count=100` | ❌ no |
+| `profilePositionGroups?q=viewee&count=100` | ❌ no |
+| `identity/dash/employmentTypes` | ❌ no — returns exactly 6 values (Full-time, Part-time, Self-employed, Freelance, Internship, Trainee); career break is not one |
+| **`profileComponents` GraphQL, `sectionType:experience`** | ✅ **yes** |
+
+The entity graph genuinely does not carry it: no `urn:li:fsd_careerBreak*`
+type exists, there is no `profileCareerBreaks` finder, no career-break
+decoration, and no `CareerBreak` model class in the APK.
+
+What the APK *does* have — and what makes the old "no entity type" claim
+wrong — is career break as a first-class **profile section**, sitting in the
+same list as the sections that do have resources:
+
+```
+ProfileTreasuryEditModelUtilsKt$CAREER_BREAK$2
+ProfileTreasuryEditModelUtilsKt$POSITION$2
+ProfileTreasuryEditModelUtilsKt$EDUCATION$2
+ProfileTreasuryEditModelUtilsKt$HONOR$2
+ProfileTreasuryEditModelUtilsKt$VOLUNTEER$2
+```
+
+plus `buildExperienceAddCareerBreakButton` — it is added from inside the
+Experience section, which is exactly where it renders.
+
+### The call
+
+```
+GET /voyager/api/graphql
+    ?queryId=voyagerIdentityDashProfileComponents.4d8c0decb1483bab947f7bbaba1c3107
+    &variables=(profileUrn:<urn>,sectionType:experience)
+
+Accept: application/json
+```
+
+**The `Accept` header is the whole trick, and is why this was missed.** With
+`application/vnd.linkedin.normalized+json+2.1` — the header every other call
+in this project uses — LinkedIn returns **HTTP 500**:
+
+```
+java.lang.RuntimeException: A record in the included list does not have a type.
+```
+
+That is LinkedIn's *own* normalized serializer failing on its *own* response.
+The query executes fine; only the serialization step dies. Ask for plain
+`application/json` and the same request returns the full section. This is the
+one call in the service that does not use the normalized+json header — see
+`voyagerGet(url, { accept })` in [`client.js`](../src/linkedin/client.js).
+
+`variables` is Rest.li-style syntax, so the parentheses and colons must stay
+literal — only the URN inside is percent-encoded.
+
+### The shape, and why it is weaker than everything else here
+
+The response is a **component tree of rendered text**, not an entity graph.
+A career break looks like this:
+
+| Field | Value |
+| --- | --- |
+| `entityComponent.titleV2.text.text` | `"Professional development"` — the break *type* |
+| `entityComponent.subtitle.text` | `"Career Break"` — the literal marker |
+| `entityComponent.caption.text` | `"Jul 2025 - Present · 1 yr 2 mos"` |
+| `entityComponent.metadata.text` | `"Greater Bengaluru Area"` (often absent) |
+
+[`extractCareerBreaks()`](../src/linkedin/normalize.js) walks the tree for
+`entityComponent` nodes whose subtitle is exactly `"Career Break"` — ordinary
+roles in the same list carry a company name there instead, so the two never
+collide.
+
+Three honest caveats, all consequences of this being display text:
+
+- **Dates are parsed from rendered strings**, not `{year, month}` records.
+  `"Feb 2025 - Jun 2025 · 5 mos"` → `startDate: "2025-02"`, `endDate:
+  "2025-06"`. The duration suffix is discarded, `"Present"` becomes `current:
+  true`, and year-only captions stay year-only.
+- **It is locale-bound.** The request pins `x-li-lang: en_US` and the parser
+  expects English month abbreviations. A different locale would need a
+  different month table.
+- **The persisted query id is versioned**, exactly like `decorationId`, and
+  will be retired eventually. It is configurable via `CAREER_BREAK_QUERY_ID`;
+  fresh ids come from the APK with the `strings` command above.
+
+Because of all three, the career-break lookup is strictly **best-effort**: if
+it fails for any reason, `careerBreaks` comes back `[]` and every
+entity-derived field on the profile is completely unaffected. A lookup never
+fails because the SDUI side did.
+
+### Why it is a separate array, not merged into `experience`
+
+`profile.careerBreaks` is its own top-level array rather than entries inside
+`profile.experience`, so that one array is not a mix of entity-derived data
+(exact dates, resolved companies, logos) and SDUI-derived data (parsed
+display strings). Callers that want the LinkedIn-style combined view can
+merge the two on start date; callers that want only high-confidence data can
+ignore `careerBreaks` entirely.
+
+Unlike `?full=1`, this request fires on **every** `/profile` call — a career
+break is not a truncated section that needs completing, it is a section the
+entity graph never had.

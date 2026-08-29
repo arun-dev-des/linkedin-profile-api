@@ -357,6 +357,92 @@ export function extractFullExperience(payload, enrichmentByUrn = new Map()) {
   );
 }
 
+/* ------------------------------------------------------- career breaks */
+
+const MONTHS = {
+  jan: 1, feb: 2, mar: 3, apr: 4, may: 5, jun: 6,
+  jul: 7, aug: 8, sep: 9, oct: 10, nov: 11, dec: 12,
+};
+
+/**
+ * Parses one side of an SDUI date caption: "Jul 2025" -> "2025-07",
+ * "2021" -> "2021", "Present" -> null.
+ *
+ * Unlike every other date in this file, these arrive as rendered display
+ * text rather than a `{year, month}` record, because career breaks only
+ * exist in the server-driven-UI response. The request pins `x-li-lang:
+ * en_US`, so month names are English three-letter abbreviations.
+ */
+function parseSduiDate(part) {
+  const text = part?.trim();
+  if (!text || /^present$/i.test(text)) return null;
+
+  const withMonth = /^([A-Za-z]{3})[a-z]*\s+(\d{4})$/.exec(text);
+  if (withMonth) {
+    const month = MONTHS[withMonth[1].toLowerCase()];
+    return month ? `${withMonth[2]}-${String(month).padStart(2, '0')}` : withMonth[2];
+  }
+
+  const yearOnly = /^(\d{4})$/.exec(text);
+  return yearOnly ? yearOnly[1] : null;
+}
+
+/**
+ * Splits an SDUI caption into a date range.
+ * "Feb 2025 - Jun 2025 · 5 mos" -> { startDate: "2025-02", endDate: "2025-06" }
+ * "Jul 2025 - Present · 1 yr 2 mos" -> { startDate: "2025-07", endDate: null, current: true }
+ */
+function readSduiCaption(caption) {
+  // Everything from the "·" on is a humanized duration ("· 1 yr 2 mos").
+  const range = (caption ?? '').split('·')[0].trim();
+  const [rawStart, rawEnd] = range.split(/\s+[-–]\s+/);
+
+  const startDate = parseSduiDate(rawStart);
+  const endDate = parseSduiDate(rawEnd);
+  // "Present" is the only reason a parsed end is absent when text was there.
+  const current = Boolean(startDate) && /present/i.test(rawEnd ?? '');
+
+  return { startDate, endDate, current };
+}
+
+/**
+ * Extracts career breaks from a `profileComponents?sectionType=experience`
+ * GraphQL response (see fetchExperienceComponents).
+ *
+ * The response is a component tree, not an entity graph, so this walks it
+ * looking for `entityComponent` nodes and keeps the ones whose subtitle is
+ * literally "Career Break" — that's how LinkedIn labels them, with the
+ * *title* holding the break type ("Professional development", "Personal
+ * goal pursuit"). Normal roles in the same list carry a company name in
+ * that subtitle instead, so the check cleanly separates the two.
+ *
+ * @param {object} payload  GraphQL response from fetchExperienceComponents()
+ * @returns {object[]}
+ */
+export function extractCareerBreaks(payload) {
+  const found = [];
+
+  const walk = (node) => {
+    if (Array.isArray(node)) return node.forEach(walk);
+    if (!node || typeof node !== 'object') return;
+
+    const entity = node.entityComponent;
+    if (entity && /^career break$/i.test(entity.subtitle?.text?.trim() ?? '')) {
+      found.push({
+        type: entity.titleV2?.text?.text ?? null,
+        ...readSduiCaption(entity.caption?.text),
+        location: entity.metadata?.text ?? null,
+      });
+    }
+
+    for (const value of Object.values(node)) walk(value);
+  };
+
+  walk(payload);
+
+  return found.sort((a, b) => dateSortKey(b.startDate) - dateSortKey(a.startDate));
+}
+
 /**
  * Strips viewer-identifying data out of a raw Voyager payload before it's
  * returned over `/profile/raw` or `/profile/sample/raw`.
@@ -498,6 +584,10 @@ export function normalizeProfile(payload) {
       volunteerExperience,
       honors,
       publications,
+      // Never present in the entity graph — the service fills this from the
+      // SDUI call (see addCareerBreaks). Declared here so the response shape
+      // is identical whether or not that call ran or succeeded.
+      careerBreaks: [],
     },
     partial,
     profileUrn: rootUrn,

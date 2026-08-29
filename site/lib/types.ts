@@ -35,6 +35,14 @@ export interface CertificationEntry {
   current: boolean;
 }
 
+export interface CareerBreakEntry {
+  type: string | null;
+  startDate: string | null;
+  endDate: string | null;
+  current: boolean;
+  location: string | null;
+}
+
 export interface VolunteerEntry {
   role: string | null;
   company: string | null;
@@ -85,6 +93,7 @@ export interface Profile {
   volunteerExperience: VolunteerEntry[];
   honors: HonorEntry[];
   publications: PublicationEntry[];
+  careerBreaks: CareerBreakEntry[];
 }
 
 export interface ProfileEnvelope {

@@ -12,7 +12,7 @@ const REQUEST_TIMEOUT_MS = 15_000;
  * @param {URL} url
  * @returns {Promise<object>} the normalized+json payload: { data, included }
  */
-async function voyagerGet(url) {
+async function voyagerGet(url, { accept = 'application/vnd.linkedin.normalized+json+2.1' } = {}) {
   if (!hasCredentials()) {
     throw new ApiError(
       503,
@@ -27,7 +27,11 @@ async function voyagerGet(url) {
     'csrf-token': config.jsessionId,
     'x-restli-protocol-version': '2.0.0',
     'x-li-lang': 'en_US',
-    Accept: 'application/vnd.linkedin.normalized+json+2.1',
+    // Rest.li resources use normalized+json. The SDUI GraphQL query used for
+    // career breaks must NOT — LinkedIn's own normalized serializer throws a
+    // 500 on it ("a record in the included list does not have a type"), so
+    // that one call asks for plain JSON. See docs/endpoint-map.md.
+    Accept: accept,
     // JSESSIONID is stored by LinkedIn *with* literal double quotes in the value.
     Cookie: `li_at=${config.liAt}; JSESSIONID="${config.jsessionId}"`,
   };
@@ -132,4 +136,35 @@ export function fetchProfilePositions(profileUrn) {
   url.searchParams.set('start', '0');
   url.searchParams.set('count', '100');
   return voyagerGet(url);
+}
+
+/**
+ * Fetches the rendered Experience section — the only place career breaks
+ * exist.
+ *
+ * A career break is not an entity in any Rest.li resource: it has no URN type,
+ * no finder, and no slot in the `FullProfileWithEntities` decoration (verified
+ * against a profile that has one — see docs/endpoint-map.md). It exists only
+ * in LinkedIn's server-driven-UI response, as rendered text.
+ *
+ * Two things this call does differently, both required:
+ *   - It's GraphQL with a persisted query id, not a Rest.li finder. The id is
+ *     versioned like `decorationId` and configurable via CAREER_BREAK_QUERY_ID.
+ *   - It asks for plain `application/json`. With the normalized+json Accept
+ *     header every other call uses, LinkedIn returns HTTP 500 — its own
+ *     serializer fails on this query's response.
+ *
+ * `variables` is Rest.li-style and must NOT be URL-encoded as a whole (the
+ * parens and colons are syntax), so it's appended to the query string
+ * directly rather than through URLSearchParams.
+ *
+ * @param {string} profileUrn  the subject's `urn:li:fsd_profile:…`
+ * @returns {Promise<object>} the GraphQL response
+ */
+export function fetchExperienceComponents(profileUrn) {
+  const variables = `(profileUrn:${encodeURIComponent(profileUrn)},sectionType:experience)`;
+  const url = new URL(
+    `${VOYAGER}/graphql?queryId=${config.careerBreakQueryId}&variables=${variables}`,
+  );
+  return voyagerGet(url, { accept: 'application/json' });
 }

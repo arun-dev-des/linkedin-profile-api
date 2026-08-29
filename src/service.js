@@ -2,8 +2,14 @@ import { readFileSync } from 'node:fs';
 
 import { config } from './config.js';
 import { TtlCache } from './cache.js';
-import { fetchProfileRaw, fetchProfilePositions, fetchProfileSkills } from './linkedin/client.js';
 import {
+  fetchExperienceComponents,
+  fetchProfileRaw,
+  fetchProfilePositions,
+  fetchProfileSkills,
+} from './linkedin/client.js';
+import {
+  extractCareerBreaks,
   extractFullExperience,
   extractSkillNames,
   normalizeProfile,
@@ -65,12 +71,34 @@ async function completeExperience(profile, partial, profileUrn, enrichmentByUrn)
 }
 
 /**
+ * Career breaks live only in the server-driven-UI GraphQL response, never in
+ * the entity graph the rest of this service reads (see docs/endpoint-map.md),
+ * so they cost one extra request on every lookup.
+ *
+ * Strictly best-effort, and deliberately so: this call depends on a persisted
+ * GraphQL query id that LinkedIn versions and retires. When it breaks,
+ * `careerBreaks` goes empty and every entity-derived field is unaffected —
+ * a lookup must never fail because the SDUI side did.
+ */
+async function addCareerBreaks(profile, profileUrn) {
+  profile.careerBreaks = [];
+  if (!profileUrn) return;
+  try {
+    profile.careerBreaks = extractCareerBreaks(await fetchExperienceComponents(profileUrn));
+  } catch (err) {
+    console.warn(`career-break lookup failed for ${profileUrn}: ${err.code ?? err.message}`);
+  }
+}
+
+/**
  * Fetches and normalizes one profile, serving from cache when warm.
+ *
+ * Always costs one extra request beyond the main call, for career breaks.
  *
  * @param {string} publicId
  * @param {object} [opts]
  * @param {boolean} [opts.full]  also fetch complete skills and experience
- *   lists — up to two extra upstream requests, each only when the main call
+ *   lists — up to two further upstream requests, each only when the main call
  *   capped that section
  * @returns {Promise<object>} the API response envelope
  */
@@ -83,12 +111,17 @@ export async function getProfile(publicId, { full = false } = {}) {
   cache.set(`raw|${publicId}`, raw);
   const { profile, partial, profileUrn, experienceEnrichment } = normalizeProfile(raw);
 
-  if (full) {
-    await Promise.all([
-      completeSkills(profile, partial, profileUrn),
-      completeExperience(profile, partial, profileUrn, experienceEnrichment),
-    ]);
-  }
+  await Promise.all([
+    // Always — career breaks aren't a "completion", they're a section the
+    // entity graph simply doesn't carry.
+    addCareerBreaks(profile, profileUrn),
+    ...(full
+      ? [
+          completeSkills(profile, partial, profileUrn),
+          completeExperience(profile, partial, profileUrn, experienceEnrichment),
+        ]
+      : []),
+  ]);
 
   cache.set(key, { profile, partial });
   return envelope(profile, { partial });

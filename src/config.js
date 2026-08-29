@@ -14,6 +14,14 @@ export const config = {
     process.env.DECORATION_ID ??
     'com.linkedin.voyager.dash.deco.identity.profile.FullProfileWithEntities-107',
 
+  // Career breaks exist only in LinkedIn's server-driven-UI GraphQL response,
+  // not in any Rest.li resource — see docs/endpoint-map.md. Persisted GraphQL
+  // queries are versioned exactly like decorationId; this hash ships in the
+  // Android app and will eventually be retired.
+  careerBreakQueryId:
+    process.env.CAREER_BREAK_QUERY_ID ??
+    'voyagerIdentityDashProfileComponents.4d8c0decb1483bab947f7bbaba1c3107',
+
   userAgent:
     process.env.LI_USER_AGENT ??
     'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 ' +

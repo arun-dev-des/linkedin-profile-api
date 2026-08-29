@@ -718,6 +718,20 @@
               : '')
           : '';
 
+        const careerBreaks = (p.careerBreaks ?? []).length
+          ? (p.careerBreaks ?? [])
+              .map((b) =>
+                entry({
+                  title: b.type || 'Career Break',
+                  sub: 'Career Break',
+                  dates: [dateSpan(b.startDate, b.endDate, b.current), b.location]
+                    .filter(Boolean)
+                    .join('  ·  '),
+                }),
+              )
+              .join('')
+          : '';
+
         const volunteer = (p.volunteerExperience ?? []).length
           ? (p.volunteerExperience ?? [])
               .map((v) =>
@@ -780,6 +794,7 @@
             </div>
             ${block('About', p.about ? `<p class="about">${esc(p.about)}</p>` : '')}
             ${block('Experience', experience)}
+            ${block('Career Breaks', careerBreaks)}
             ${block('Education', education)}
             ${block('Skills', skills)}
             ${block('Certifications', certs)}
