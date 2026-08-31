@@ -78,9 +78,12 @@ Both must come from the same session.
 
 ## API documentation
 
-Base URL: `http://localhost:3000` in development, or the live deployment —
-`https://linkedin-profile-api-production-3c84.up.railway.app`. Every example
-below works against either; swap the host.
+Base URL — every example below works against either; swap the host:
+
+```
+http://localhost:3000                                         # local dev
+https://linkedin-profile-api-production-3c84.up.railway.app    # live deployment
+```
 
 ### `GET /profile`
 
@@ -114,16 +117,20 @@ which you got). `full=1` and the default are cached separately.
 > actually has. Every cap is reported honestly via `meta.partial`, whenever
 > LinkedIn's own `paging.total` exceeds what was returned.
 >
-> `?full=1` spends one extra upstream request *per capped section* — in
-> parallel, only for sections actually capped — to complete **skills** and
-> **experience** (LinkedIn honors `count=100` on both finders: a rich profile
-> capped at 10 position groups returns all of them this way). Completed
-> experience entries carry `companyLogo`/`companyUrl`/`employmentType` only
-> for roles the main call had already resolved.
+> `?full=1` spends one extra upstream request *per capped section*, in
+> parallel, only for sections actually capped:
+> `profileSkills?q=viewee&count=100` completes **skills**,
+> `profilePositions?q=viewee&count=100` completes **experience** (LinkedIn
+> honors `count=100` on both finders: a rich profile capped at 10 position
+> groups returns all of them this way). A profile under both caps makes
+> **zero** extra requests even with `?full=1` — there's nothing to complete.
+> Completed experience entries carry
+> `companyLogo`/`companyUrl`/`employmentType` only for roles the main call had
+> already resolved.
 >
-> **`featured` stays capped even with `?full=1`** — its endpoint caps at 3
-> regardless of `count`, verified live, so there's no bigger request that
-> would help. `meta.partial.featured` at least tells you when it's capped.
+> **`featured` stays capped even with `?full=1`** — no completion endpoint
+> exists for it; `profileTreasuryMedia` caps at 3 regardless of `count`,
+> verified live. `meta.partial.featured` at least tells you when it's capped.
 > Full request-by-request breakdown in
 > [`docs/endpoint-map.md`](docs/endpoint-map.md).
 
