@@ -29,6 +29,12 @@ export const config = {
 
   port: Number(process.env.PORT ?? 3000),
 
+  // The showcase site is deployed separately (Vercel). When set, the API host's
+  // "/" redirects there instead of serving the legacy single-file UI, which
+  // stays reachable at /index.html. Set to an empty string to keep "/" local.
+  showcaseUrl:
+    process.env.SHOWCASE_URL ?? 'https://linkedin-profile-api-phi.vercel.app/',
+
   // Successful lookups are cached briefly so a reviewer refreshing the page
   // doesn't burn the LinkedIn session's rate limit.
   cacheTtlMs: Number(process.env.CACHE_TTL_MS ?? 60 * 60 * 1000),
