@@ -547,9 +547,71 @@ LinkedIn's apps are backed by an internal API known as **Voyager**
 called `identityDashProfiles`. The goal was to confirm that a **specific, stable,
 first-party** way of calling that resource exists — not a fragile side path.
 
-Two independent sources were checked (August 2026).
+### The story
 
-### 1. The LinkedIn website
+The first working script came from asking an LLM to write one. It failed to
+run. Told it that, and it came back with a different endpoint path and a
+different `decorationId` — and that version worked, returning a real raw
+response.
+
+That was the start of the problem, not the end of it. A response coming back
+doesn't mean the URL is genuine, stable, or first-party — an LLM can hand
+back something that happens to resolve today and quietly breaks next week,
+or that was never a real LinkedIn client pattern to begin with, just a
+plausible-looking guess that got lucky once. There was no way to trust it
+without verifying where it actually came from, independently of what the LLM
+said.
+
+The first check was the browser itself: log into LinkedIn for real, open
+DevTools, load a profile and its full experience list, and watch the Network
+tab for a `voyager/api` call that matched what the script was hitting.
+There wasn't one — loading a profile makes **zero** such calls (see [the
+website check](#1-the-website-check) below for exactly what that showed).
+That null result was itself the answer: LinkedIn's website doesn't call this
+resource from the client anymore, so no browser capture could ever confirm
+or deny the script's URL either way. It was a dead end, and the only
+direction left to go.
+
+With the browser ruled out, the only independent source left was LinkedIn's
+own **Android app**. Downloaded the APK, unzipped it, and grepped the
+compiled code for the exact names the script was using —
+`identityDashProfilesByMemberIdentity`, `FullProfileWithEntities-107`, the
+whole `decorationId` mechanism (full walkthrough in [the Android app
+check](#2-the-android-app-check) below). They were there, verbatim — not
+invented, not a coincidence, sitting inside LinkedIn's own shipped client.
+That's the point where `decorationId` stopped being "a value an LLM gave me"
+and became a real, versioned concept the Android app itself depends on.
+
+That confirmed the one call this project actually makes. But once it was
+returning real data, two more gaps showed up, and both got closed the same
+way — back to the APK, not back to the LLM:
+
+- **Skills and experience came back capped** at 20 and 10 position groups,
+  no matter how much the profile actually had. Rather than guess at a fix,
+  the same APK was grepped again, this time for sibling finders on the same
+  resource, and each candidate was live-tested. `profileSkills?q=viewee` and
+  `profilePositions?q=viewee` (both with `count=100`) were real and both
+  honored the higher count — those became the two completion calls behind
+  `?full=1`, detailed in the [`?full=1` callout](README.md#get-profile) above and in
+  [`docs/endpoint-map.md`](docs/endpoint-map.md).
+- **Career breaks weren't in the profile data at all** — not capped, just
+  absent. The entity graph has no `CareerBreak` type to grep for, so the
+  resource-sibling approach didn't apply; the APK does list career break as
+  a real profile section, just not one backed by a Rest.li resource, which
+  is what sent the search to LinkedIn's GraphQL side instead — a persisted
+  query, also confirmed against the same APK, that renders the section as
+  display text rather than structured data. That trail, and the one
+  non-obvious header it takes to get a usable response out of it, is written
+  up in full in the [career-breaks callout](README.md#get-profile) above and
+  [`docs/endpoint-map.md`](docs/endpoint-map.md#career-breaks-the-sdui-exception)
+  rather than repeated here.
+
+### How it was verified
+
+Two independent sources, checked August 2026. The first came up empty; the
+second is what actually confirmed everything above.
+
+### 1. The website check
 
 Inspected with Chrome DevTools while loading a profile and its full experience
 list. **Reproduce:** log in, open a profile, DevTools → Network, filter `voyager`,
@@ -558,16 +620,20 @@ reload, then open `…/in/<id>/details/experience/`.
 - LinkedIn's website now uses a **server-driven UI** — pages are rendered on
   LinkedIn's servers and delivered as finished HTML. The browser makes **no
   `voyager/api` call for profile content**; the data never reaches the client as
-  JSON.
+  JSON. This is the dead end described in the story above — confirmed, not
+  assumed.
 - The one profile-identity request the browser still makes is a GraphQL gateway
   call whose response is a two-field stub, typed
   `com.linkedin.voyager.dash.identity.profile.Profile` — the **same backend
-  resource** this project calls, via a different transport.
+  resource** this project calls, via a different transport. Not enough to
+  confirm the full request on its own, but a second data point pointing the
+  same direction as what the APK later confirmed outright.
 
-So the website confirms the resource is current but no longer exposes it as a
-usable client API. A direct call is the only non-scraping option.
+So the website rules out browser capture as a source, but doesn't rule out
+the resource itself — it just means a direct call is the only
+non-scraping option left to verify.
 
-### 2. The LinkedIn Android app
+### 2. The Android app check
 
 `com.linkedin.android` version 4.1.1239 — APK unpacked, compiled code searched
 for string constants. **Reproduce:**
@@ -593,6 +659,12 @@ Present in the app, verbatim:
 over a Rest.li binding with a `decorationId`. Calling it via `q=memberIdentity`
 with a `FullProfileWithEntities` decoration is a genuine, current first-party
 LinkedIn client pattern.
+
+The same grep-then-live-test pass, repeated later against sibling strings
+in the same APK, is also what turned up `profileSkills`/`profilePositions`
+(the `?full=1` completion calls) and the persisted GraphQL query behind
+career breaks — none of those three needed a second trip to the website
+check, since the website had already been ruled out as a source.
 
 ### Provenance → code
 

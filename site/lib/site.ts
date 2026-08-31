@@ -7,9 +7,9 @@ export const BLOB = `${REPO}/blob/main`;
 export const NAV: { href: string; label: string; icon: string; group?: string }[] = [
   { href: '/', label: 'Try it', icon: 'zap' },
   { href: '/approach', label: 'Approach', icon: 'compass', group: 'Docs' },
-  { href: '/apk-provenance', label: 'Provenance', icon: 'shield-check', group: 'Docs' },
   { href: '/api', label: 'API reference', icon: 'braces', group: 'Docs' },
   { href: '/endpoint-map', label: 'Endpoints', icon: 'waypoints', group: 'Docs' },
+  { href: '/apk-provenance', label: 'Provenance', icon: 'shield-check', group: 'Docs' },
 ];
 
 /**
