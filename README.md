@@ -19,7 +19,7 @@ Rest.li resource carries (see [Known limitations](#known-limitations)).
   [the app](https://linkedin-profile-api-phi.vercel.app/) ·
   [`/profile/sample`](https://linkedin-profile-api-production-3c84.up.railway.app/profile/sample)
   (a real cached response, no credentials needed) ·
-  [`/profile?url=…iamarun4official`](https://linkedin-profile-api-production-3c84.up.railway.app/profile?url=https://www.linkedin.com/in/iamarun4official/)
+  [`/profile?url=…williamhgates`](https://linkedin-profile-api-production-3c84.up.railway.app/profile?url=https://www.linkedin.com/in/williamhgates/)
   (live)
 
 ---
@@ -85,8 +85,8 @@ Fetch and normalize a LinkedIn profile.
 | `full` | no | `full=1` also fetches the **complete skills and experience lists**. The main call caps skills at 20 and experience at 10 position groups; with `full=1` the service spends one extra upstream request *per capped section* (only when that section's cap was actually hit, run in parallel) and the matching `meta.partial` key disappears. Off by default — see [Known limitations](#known-limitations) and [`docs/endpoint-map.md`](docs/endpoint-map.md). |
 
 ```bash
-curl 'http://localhost:3000/profile?url=https://www.linkedin.com/in/iamarun4official/'
-curl 'http://localhost:3000/profile?url=https://www.linkedin.com/in/iamarun4official/&full=1'
+curl 'http://localhost:3000/profile?url=https://www.linkedin.com/in/williamhgates/'
+curl 'http://localhost:3000/profile?url=https://www.linkedin.com/in/williamhgates/&full=1'
 ```
 
 Successful responses are cached in-memory for ~1 hour (`meta.cached` tells you
@@ -172,53 +172,53 @@ of ~100 cross-referenced entities; this is the flattened, cleaned view.
 ```json
 {
   "profile": {
-    "publicId": "iamarun4official",
-    "profileUrn": "urn:li:fsd_profile:ACoAAB0H...",
-    "profileUrl": "https://www.linkedin.com/in/iamarun4official/",
-    "name": "Arunkumar Alagarsamy",
-    "firstName": "Arunkumar",
-    "lastName": "Alagarsamy",
-    "headline": "Product Designer · Design Engineer · AI Builder",
-    "location": "Bengaluru, Karnataka, India",
-    "countryCode": "IN",
-    "industry": "Information Technology & Services",
-    "about": "Extensively worked in both B2B & B2C products...",
+    "publicId": "reidhoffman",
+    "profileUrn": "urn:li:fsd_profile:ACoAAAAABL0B...",
+    "profileUrl": "https://www.linkedin.com/in/reidhoffman/",
+    "name": "Reid Hoffman",
+    "firstName": "Reid",
+    "lastName": "Hoffman",
+    "headline": "Co-Founder, LinkedIn, Manas AI & Inflection AI. Founding Team, PayPal...",
+    "location": "United States",
+    "countryCode": "US",
+    "industry": "Venture Capital & Private Equity",
+    "about": "My current priority is investing in and building with AI...",
     "pronouns": "HE_HIM",
-    "badges": { "premium": true, "influencer": false, "creator": false },
+    "badges": { "premium": true, "influencer": true, "creator": true },
     "images": {
       "profilePicture": "https://media.licdn.com/dms/image/v2/...",
       "backgroundImage": "https://media.licdn.com/dms/image/v2/..."
     },
     "experience": [
       {
-        "title": "Product Designer",
-        "company": "Applix",
-        "companyUrl": "https://www.linkedin.com/company/applix/",
-        "companyLogo": null,
-        "employmentType": "Full-time",
-        "location": "Bengaluru",
-        "startDate": "2024",
-        "endDate": "2025",
-        "current": false,
+        "title": "Partner",
+        "company": "Greylock",
+        "companyUrl": "https://www.linkedin.com/company/greylock-partners/",
+        "companyLogo": "https://media.licdn.com/dms/image/v2/...",
+        "employmentType": "Part-time",
+        "location": "Seattle, WA",
+        "startDate": "2009-11",
+        "endDate": null,
+        "current": true,
         "description": "..."
       }
     ],
     "education": [
       {
-        "school": "CARE School of Engineering",
-        "schoolUrl": null,
+        "school": "Stanford University",
+        "schoolUrl": "https://www.linkedin.com/school/stanford-university/",
         "schoolLogo": "https://media.licdn.com/dms/image/v2/...",
-        "degree": "Bachelor of Engineering (B.E.)",
-        "fieldOfStudy": "Computer Science",
-        "startDate": "2011",
-        "endDate": "2015",
+        "degree": "B.S.",
+        "fieldOfStudy": "Symbolic Systems",
+        "startDate": "1985",
+        "endDate": "1990",
         "current": false,
         "grade": null,
-        "activities": null,
+        "activities": "Marshall Scholar, Dinkelspiel Award, Golden Grant...",
         "description": null
       }
     ],
-    "skills": ["Design Systems", "Figma (Software)", "React.js"],
+    "skills": ["Entrepreneurship", "Venture Capital", "Product Management"],
     "certifications": [
       {
         "name": "Introduction to Modern Application Development",
@@ -269,12 +269,12 @@ of ~100 cross-referenced entities; this is the flattened, cleaned view.
     ],
     "careerBreaks": [
       {
-        "type": "Professional development",
-        "startDate": "2025-07",
-        "endDate": null,
-        "current": true,
-        "location": "Greater Bengaluru Area",
-        "description": "Built and shipped two products independently..."
+        "type": "Personal goal pursuit",
+        "startDate": "2025-02",
+        "endDate": "2025-06",
+        "current": false,
+        "location": null,
+        "description": "Took time out to travel and train..."
       }
     ]
   },
@@ -283,7 +283,7 @@ of ~100 cross-referenced entities; this is the flattened, cleaned view.
     "cached": false,
     "source": "linkedin-voyager",
     "partial": {
-      "skills": { "returned": 20, "total": 31 },
+      "skills": { "returned": 20, "total": 47 },
       "experience": { "returnedGroups": 10, "totalGroups": 32 },
       "featured": { "returned": 3, "total": 10 }
     }

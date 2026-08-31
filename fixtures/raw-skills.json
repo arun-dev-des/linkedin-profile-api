@@ -1,294 +1,438 @@
 {
   "data": {
-    "entityUrn": "urn:li:collectionResponse:yfWKFY/3FDoOFQkEmBN8PyCZ0WKzbwvjyDf7nyfuhAg=",
+    "entityUrn": "urn:li:collectionResponse:Bw0woWLxqamCKlmS8jC0bYkDdaGtvb9I8GFrW+64sR4=",
     "paging": {
       "count": 100,
       "start": 0,
-      "total": 31,
+      "total": 47,
       "links": []
     },
     "*elements": [
-      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,977647385)",
-      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,977647380)",
-      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,977647381)",
-      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,977647382)",
-      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,977647383)",
-      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,977647384)",
-      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,977647374)",
-      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,977647375)",
-      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,977647376)",
-      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,977647377)",
-      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,977647378)",
-      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,977647379)",
-      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,1)",
-      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,11)",
-      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,9)",
-      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,10)",
-      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,8)",
-      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,12)",
-      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,2)",
-      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,3)",
-      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,4)",
-      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,5)",
-      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,1140112977)",
-      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,6)",
-      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,7)",
-      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,13)",
-      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,14)",
-      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,15)",
-      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,16)",
-      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,17)",
-      "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,18)"
+      "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,1)",
+      "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,2)",
+      "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,3)",
+      "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,76)",
+      "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,77)",
+      "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,78)",
+      "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,79)",
+      "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,80)",
+      "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,81)",
+      "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,82)",
+      "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,83)",
+      "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,84)",
+      "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,85)",
+      "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,86)",
+      "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,87)",
+      "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,88)",
+      "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,89)",
+      "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,90)",
+      "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,91)",
+      "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,92)",
+      "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,93)",
+      "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,94)",
+      "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,95)",
+      "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,96)",
+      "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,97)",
+      "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,98)",
+      "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,99)",
+      "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,100)",
+      "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,101)",
+      "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,102)",
+      "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,103)",
+      "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,104)",
+      "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,105)",
+      "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,106)",
+      "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,107)",
+      "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,108)",
+      "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,109)",
+      "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,110)",
+      "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,111)",
+      "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,112)",
+      "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,113)",
+      "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,114)",
+      "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,115)",
+      "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,116)",
+      "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,117)",
+      "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,118)",
+      "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,119)"
     ],
     "$type": "com.linkedin.restli.common.CollectionResponse"
   },
   "included": [
     {
       "multiLocaleName": {
-        "en_US": "Python (Programming Language)"
+        "en_US": "Career Development"
       },
-      "name": "Python (Programming Language)",
-      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,18)",
+      "name": "Career Development",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,107)",
       "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
     },
     {
       "multiLocaleName": {
-        "en_US": "Design Systems"
+        "en_US": "Venture Philanthropy"
       },
-      "name": "Design Systems",
-      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,977647375)",
+      "name": "Venture Philanthropy",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,115)",
       "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
     },
     {
       "multiLocaleName": {
-        "en_US": "Graphic Design"
+        "en_US": "Innovation"
       },
-      "name": "Graphic Design",
-      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,8)",
+      "name": "Innovation",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,105)",
       "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
     },
     {
       "multiLocaleName": {
-        "en_US": "Typography"
+        "en_US": "Catalyst"
       },
-      "name": "Typography",
-      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,977647385)",
+      "name": "Catalyst",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,117)",
       "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
     },
     {
       "multiLocaleName": {
-        "en_US": "Product Design"
+        "en_US": "Business Strategy"
       },
-      "name": "Product Design",
-      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,16)",
+      "name": "Business Strategy",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,81)",
       "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
     },
     {
       "multiLocaleName": {
-        "en_US": "Interaction Design"
+        "en_US": "Product Marketing"
       },
-      "name": "Interaction Design",
-      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,977647383)",
+      "name": "Product Marketing",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,93)",
       "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
     },
     {
       "multiLocaleName": {
-        "en_US": "Usability"
+        "en_US": "Business Modeling"
       },
-      "name": "Usability",
-      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,14)",
+      "name": "Business Modeling",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,103)",
       "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
     },
     {
       "multiLocaleName": {
-        "en_US": "Javascript"
+        "en_US": "Entrepreneur"
       },
-      "name": "Javascript",
-      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,4)",
+      "name": "Entrepreneur",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,111)",
       "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
     },
     {
       "multiLocaleName": {
-        "en_US": "Jupyter"
+        "en_US": "Management"
       },
-      "name": "Jupyter",
-      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,977647381)",
+      "name": "Management",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,91)",
       "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
     },
     {
       "multiLocaleName": {
-        "en_US": "Web Design"
+        "en_US": "Talent Management"
       },
-      "name": "Web Design",
-      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,12)",
+      "name": "Talent Management",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,101)",
       "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
     },
     {
       "multiLocaleName": {
-        "en_US": "Wireframing"
+        "en_US": "LinkedIn"
       },
-      "name": "Wireframing",
-      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,6)",
+      "name": "LinkedIn",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,113)",
       "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
     },
     {
       "multiLocaleName": {
-        "en_US": "Illustrator"
+        "en_US": "Mobile Devices"
       },
-      "name": "Illustrator",
-      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,10)",
+      "name": "Mobile Devices",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,85)",
       "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
     },
     {
       "multiLocaleName": {
-        "en_US": "HTML"
+        "en_US": "Competitive Analysis"
       },
-      "name": "HTML",
-      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,2)",
+      "name": "Competitive Analysis",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,97)",
       "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
     },
     {
       "multiLocaleName": {
-        "en_US": "React.js"
+        "en_US": "Business Development"
       },
-      "name": "React.js",
-      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,977647379)",
+      "name": "Business Development",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,83)",
       "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
     },
     {
       "multiLocaleName": {
-        "en_US": "Framer"
+        "en_US": "Investments"
       },
-      "name": "Framer",
-      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,977647377)",
+      "name": "Investments",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,95)",
       "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
     },
     {
       "multiLocaleName": {
-        "en_US": "Claude Code"
+        "en_US": "Angel Investing"
       },
-      "name": "Claude Code",
-      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,977647376)",
+      "name": "Angel Investing",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,89)",
       "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
     },
     {
       "multiLocaleName": {
-        "en_US": "Prototyping"
+        "en_US": "Product Management"
       },
-      "name": "Prototyping",
-      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,7)",
+      "name": "Product Management",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,79)",
       "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
     },
     {
       "multiLocaleName": {
-        "en_US": "Adobe Photoshop"
+        "en_US": "Technology Strategy"
       },
-      "name": "Adobe Photoshop",
-      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,1140112977)",
+      "name": "Technology Strategy",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,119)",
       "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
     },
     {
       "multiLocaleName": {
-        "en_US": "Figma (Software)"
+        "en_US": "Viral Marketing"
       },
-      "name": "Figma (Software)",
-      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,977647374)",
+      "name": "Viral Marketing",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,87)",
       "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
     },
     {
       "multiLocaleName": {
-        "en_US": "Photoshop"
+        "en_US": "Entrepreneurship"
       },
-      "name": "Photoshop",
-      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,9)",
+      "name": "Entrepreneurship",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,77)",
       "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
     },
     {
       "multiLocaleName": {
-        "en_US": "User Interface Design"
+        "en_US": "Executive Management"
       },
-      "name": "User Interface Design",
-      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,977647384)",
+      "name": "Executive Management",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,99)",
       "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
     },
     {
       "multiLocaleName": {
-        "en_US": "web application"
+        "en_US": "Product"
       },
-      "name": "web application",
-      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,17)",
+      "name": "Product",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,109)",
       "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
     },
     {
       "multiLocaleName": {
-        "en_US": "CSS"
+        "en_US": "Early-Stage Startups"
       },
-      "name": "CSS",
-      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,3)",
+      "name": "Early-Stage Startups",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,3)",
       "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
     },
     {
       "multiLocaleName": {
-        "en_US": "Pandas (Software)"
+        "en_US": "CEOs"
       },
-      "name": "Pandas (Software)",
-      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,977647382)",
+      "name": "CEOs",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,1)",
       "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
     },
     {
       "multiLocaleName": {
-        "en_US": "User Experience"
+        "en_US": "Strategic Thinking"
       },
-      "name": "User Experience",
-      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,15)",
+      "name": "Strategic Thinking",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,106)",
       "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
     },
     {
       "multiLocaleName": {
-        "en_US": "Visual Design"
+        "en_US": "Internet Business Strategy"
       },
-      "name": "Visual Design",
-      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,5)",
+      "name": "Internet Business Strategy",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,116)",
       "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
     },
     {
       "multiLocaleName": {
-        "en_US": "Next.js"
+        "en_US": "Web 2.0"
       },
-      "name": "Next.js",
-      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,977647380)",
+      "name": "Web 2.0",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,104)",
       "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
     },
     {
       "multiLocaleName": {
-        "en_US": "User Testing"
+        "en_US": "Mobile"
       },
-      "name": "User Testing",
-      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,13)",
+      "name": "Mobile",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,118)",
       "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
     },
     {
       "multiLocaleName": {
-        "en_US": "Sketch App"
+        "en_US": "Consumer Internet"
       },
-      "name": "Sketch App",
-      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,11)",
+      "name": "Consumer Internet",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,92)",
       "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
     },
     {
       "multiLocaleName": {
-        "en_US": "UI/UX"
+        "en_US": "Brand Development"
       },
-      "name": "UI/UX",
-      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,1)",
+      "name": "Brand Development",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,102)",
       "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
     },
     {
       "multiLocaleName": {
-        "en_US": "TypeScript"
+        "en_US": "Board Governance"
       },
-      "name": "TypeScript",
-      "entityUrn": "urn:li:fsd_skill:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,977647378)",
+      "name": "Board Governance",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,112)",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
+    },
+    {
+      "multiLocaleName": {
+        "en_US": "SaaS"
+      },
+      "name": "SaaS",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,82)",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
+    },
+    {
+      "multiLocaleName": {
+        "en_US": "Product Innovation"
+      },
+      "name": "Product Innovation",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,90)",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
+    },
+    {
+      "multiLocaleName": {
+        "en_US": "Fundraising"
+      },
+      "name": "Fundraising",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,100)",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
+    },
+    {
+      "multiLocaleName": {
+        "en_US": "Mentoring"
+      },
+      "name": "Mentoring",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,114)",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
+    },
+    {
+      "multiLocaleName": {
+        "en_US": "Venture Capital"
+      },
+      "name": "Venture Capital",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,80)",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
+    },
+    {
+      "multiLocaleName": {
+        "en_US": "Internet"
+      },
+      "name": "Internet",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,96)",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
+    },
+    {
+      "multiLocaleName": {
+        "en_US": "Leadership"
+      },
+      "name": "Leadership",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,86)",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
+    },
+    {
+      "multiLocaleName": {
+        "en_US": "Software Development"
+      },
+      "name": "Software Development",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,94)",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
+    },
+    {
+      "multiLocaleName": {
+        "en_US": "Social Media"
+      },
+      "name": "Social Media",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,84)",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
+    },
+    {
+      "multiLocaleName": {
+        "en_US": "Strategy"
+      },
+      "name": "Strategy",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,78)",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
+    },
+    {
+      "multiLocaleName": {
+        "en_US": "Start-ups"
+      },
+      "name": "Start-ups",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,76)",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
+    },
+    {
+      "multiLocaleName": {
+        "en_US": "E-commerce"
+      },
+      "name": "E-commerce",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,98)",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
+    },
+    {
+      "multiLocaleName": {
+        "en_US": "Board of Directors"
+      },
+      "name": "Board of Directors",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,108)",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
+    },
+    {
+      "multiLocaleName": {
+        "en_US": "Product Development"
+      },
+      "name": "Product Development",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,88)",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
+    },
+    {
+      "multiLocaleName": {
+        "en_US": "Product Strategy"
+      },
+      "name": "Product Strategy",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,110)",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
+    },
+    {
+      "multiLocaleName": {
+        "en_US": "Founding"
+      },
+      "name": "Founding",
+      "entityUrn": "urn:li:fsd_skill:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,2)",
       "$type": "com.linkedin.voyager.dash.identity.profile.Skill"
     }
   ]

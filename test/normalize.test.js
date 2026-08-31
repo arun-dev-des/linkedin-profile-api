@@ -11,24 +11,24 @@ const { profile, partial } = normalizeProfile(payload);
 /* ------------------------------------------------------------ identity */
 
 test('extracts identity fields', () => {
-  assert.equal(profile.publicId, 'iamarun4official');
-  assert.equal(profile.name, 'Arunkumar Alagarsamy');
-  assert.equal(profile.firstName, 'Arunkumar');
-  assert.equal(profile.lastName, 'Alagarsamy');
-  assert.equal(profile.profileUrl, 'https://www.linkedin.com/in/iamarun4official/');
-  assert.match(profile.headline, /Product Designer/);
+  assert.equal(profile.publicId, 'reidhoffman');
+  assert.equal(profile.name, 'Reid Hoffman');
+  assert.equal(profile.firstName, 'Reid');
+  assert.equal(profile.lastName, 'Hoffman');
+  assert.equal(profile.profileUrl, 'https://www.linkedin.com/in/reidhoffman/');
+  assert.match(profile.headline, /Co-Founder, LinkedIn/);
   assert.ok(profile.about?.length > 0, 'about should be populated');
 });
 
 test('resolves location through the Geo entity', () => {
   // Profile.locationName is null in the payload — this only passes if the
   // geoLocation["*geo"] pointer was followed.
-  assert.equal(profile.location, 'Bengaluru, Karnataka, India');
-  assert.equal(profile.countryCode, 'IN');
+  assert.equal(profile.location, 'United States');
+  assert.equal(profile.countryCode, 'US');
 });
 
 test('resolves industry from industryUrn', () => {
-  assert.equal(profile.industry, 'Information Technology & Services');
+  assert.equal(profile.industry, 'Venture Capital & Private Equity');
 });
 
 /* -------------------------------------------------------------- images */
@@ -54,8 +54,9 @@ test('flattens position groups into individual roles', () => {
 });
 
 test('sorts experience: current roles first, then newest start date', () => {
-  // This fixture has no current roles, so ordering reduces to newest-start-first.
-  // The current-first tie-break is exercised by the synthetic case below.
+  // Every role in this fixture is current (no endDate) — ordering reduces to
+  // newest-start-first. The current-vs-ended tie-break is exercised by the
+  // synthetic case below.
   const keys = profile.experience.map((r) => Number(r.startDate?.slice(0, 4) ?? 0));
   assert.deepEqual(keys, [...keys].sort((a, b) => b - a));
 });
@@ -122,71 +123,122 @@ test('reports position-group truncation honestly, like skills', () => {
   assert.deepEqual(partial.experience, { returnedGroups: 1, totalGroups: 32 });
 });
 
-test('does not flag experience as partial when paging.total matches what was returned', () => {
-  // The committed fixture's groups collection isn't capped (10 of 10).
-  assert.equal(partial.experience, undefined);
+test('reports experience truncation honestly on a genuinely capped profile', () => {
+  // The committed fixture's groups collection IS capped — 10 of 32 groups
+  // (a rich, decades-long career like this one hits LinkedIn's own cap).
+  assert.deepEqual(partial.experience, { returnedGroups: 10, totalGroups: 32 });
 });
 
-test('resolves company metadata, tolerating a missing logo', () => {
-  const applix = profile.experience.find((r) => r.company === 'Applix');
-  assert.equal(applix.companyUrl, 'https://www.linkedin.com/company/applix/');
-  assert.equal(applix.companyLogo, null, 'Applix has no logo in the payload');
-  assert.equal(applix.employmentType, 'Full-time');
+test('resolves company metadata from a real position', () => {
+  const inflection = profile.experience.find((r) => r.company === 'Inflection AI');
+  assert.match(inflection.companyUrl, /^https:\/\/www\.linkedin\.com\/company\//);
+  assert.match(inflection.companyLogo, /^https:\/\/media\.licdn\.com\//);
+  assert.equal(inflection.employmentType, 'Part-time');
+});
 
-  const withLogo = profile.experience.find((r) => r.company === 'Uptown Ideas');
-  assert.match(withLogo.companyLogo, /^https:\/\/media\.licdn\.com\//);
+test('tolerates a company with no logo in the payload', () => {
+  // Synthetic — every real role in the committed fixture happens to have a
+  // resolved logo, so the "missing logo" branch needs a constructed case.
+  const { profile: p } = normalizeProfile({
+    data: { '*elements': ['urn:li:fsd_profile:X'] },
+    included: [
+      {
+        entityUrn: 'urn:li:fsd_profile:X',
+        firstName: 'A',
+        lastName: 'B',
+        '*profilePositionGroups': 'urn:li:collectionResponse:G',
+      },
+      { entityUrn: 'urn:li:collectionResponse:G', '*elements': ['urn:li:g:1'] },
+      {
+        entityUrn: 'urn:li:g:1',
+        '*profilePositionInPositionGroup': 'urn:li:collectionResponse:P',
+        '*company': 'urn:li:fsd_company:1',
+      },
+      { entityUrn: 'urn:li:collectionResponse:P', '*elements': ['urn:li:p:1'] },
+      { entityUrn: 'urn:li:p:1', title: 'Role', companyName: 'NoLogo Co' },
+      {
+        entityUrn: 'urn:li:fsd_company:1',
+        name: 'NoLogo Co',
+        url: 'https://www.linkedin.com/company/nologo/',
+      },
+    ],
+  });
+  assert.equal(p.experience[0].companyLogo, null, 'a company with no logo field must normalize to null');
+  assert.equal(p.experience[0].companyUrl, 'https://www.linkedin.com/company/nologo/');
 });
 
 test('formats year-only and month-precision date ranges', () => {
-  const applix = profile.experience.find((r) => r.company === 'Applix');
-  assert.equal(applix.startDate, '2024');
-  assert.equal(applix.endDate, '2025');
+  // Year-only precision is common on older/honorary entries — education
+  // carries a clean real example; experience (below) covers month precision.
+  const stanford = profile.education.find((e) => e.school === 'Stanford University');
+  assert.equal(stanford.startDate, '1985');
+  assert.equal(stanford.endDate, '1990');
 
-  const uptown = profile.experience.find((r) => r.title === 'Graphic Designer');
-  assert.equal(uptown.startDate, '2015-10');
-  assert.equal(uptown.endDate, '2016-10');
+  const greylock = profile.experience.find((r) => r.company === 'Greylock');
+  assert.equal(greylock.startDate, '2009-11');
+  assert.equal(greylock.endDate, null);
 });
 
-test('marks no role as current when every position has an end date', () => {
+test('marks every role as current when none has an end date', () => {
+  // This fixture's subject is still active in every listed role.
   assert.equal(
-    profile.experience.some((r) => r.current),
-    false,
+    profile.experience.every((r) => r.current),
+    true,
   );
 });
 
 test('keeps descriptions where present and nulls them where absent', () => {
-  const described = profile.experience.filter((r) => r.description !== null);
-  assert.ok(described.length > 0, 'some roles carry a description');
+  // Every experience entry in this fixture happens to carry a description;
+  // education has the present/absent mix instead — same formatting path.
+  const described = profile.education.filter((e) => e.description !== null);
+  assert.ok(described.length > 0, 'some entries carry a description');
   assert.ok(
-    described.length < profile.experience.length,
-    'roles without a description key should normalize to null, not throw',
+    described.length < profile.education.length,
+    'entries without a description key should normalize to null, not throw',
   );
 });
 
 /* ----------------------------------------------------------- education */
 
-test('parses education and filters the placeholder school name', () => {
-  assert.equal(profile.education.length, 2);
+test('parses education from real entries', () => {
+  assert.equal(profile.education.length, 6);
 
-  const care = profile.education.find((e) => e.school === 'CARE School of Engineering');
-  assert.equal(care.degree, 'Bachelor of Engineering (B.E.)');
-  assert.equal(care.fieldOfStudy, 'Computer Science');
-  assert.equal(care.startDate, '2011');
-  assert.equal(care.endDate, '2015');
+  const stanford = profile.education.find((e) => e.school === 'Stanford University');
+  assert.equal(stanford.degree, 'B.S.');
+  assert.equal(stanford.fieldOfStudy, 'Symbolic Systems');
 
-  // The second entry has schoolName "invalid562524" and a null dateRange.
-  for (const entry of profile.education) {
-    assert.doesNotMatch(entry.school ?? '', /^invalid\d+$/);
-  }
+  const oxford = profile.education.find((e) => e.school === 'Oxford University');
+  assert.equal(oxford.degree, 'M.St.');
+  assert.equal(oxford.startDate, '1990-09');
+  assert.equal(oxford.endDate, '1993-06');
+});
+
+test('filters a placeholder school name like "invalid562524"', () => {
+  // Synthetic — this fixture's subject has no placeholder-named school, so
+  // the filter itself is exercised directly rather than left unverified.
+  const { profile: p } = normalizeProfile({
+    data: { '*elements': ['urn:li:fsd_profile:X'] },
+    included: [
+      {
+        entityUrn: 'urn:li:fsd_profile:X',
+        firstName: 'A',
+        lastName: 'B',
+        '*profileEducations': 'urn:li:collectionResponse:E',
+      },
+      { entityUrn: 'urn:li:collectionResponse:E', '*elements': ['urn:li:e:1'], paging: { total: 1 } },
+      { entityUrn: 'urn:li:e:1', schoolName: 'invalid562524' },
+    ],
+  });
+  assert.equal(p.education[0].school, null);
 });
 
 /* ------------------------------ skills, certifications, languages, featured */
 
 test('returns skills and reports the truncation honestly', () => {
   assert.equal(profile.skills.length, 20);
-  assert.ok(profile.skills.includes('Design Systems'));
-  // LinkedIn's projection caps this at 20 of 31.
-  assert.deepEqual(partial.skills, { returned: 20, total: 31 });
+  assert.ok(profile.skills.includes('Entrepreneurship'));
+  // LinkedIn's projection caps this at 20 of 47.
+  assert.deepEqual(partial.skills, { returned: 20, total: 47 });
 });
 
 test('exposes the root profile URN for follow-up calls', () => {
@@ -194,13 +246,43 @@ test('exposes the root profile URN for follow-up calls', () => {
   assert.match(profileUrn, /^urn:li:fsd_profile:/);
 });
 
-test('parses certifications', () => {
-  assert.equal(profile.certifications.length, 1);
-  const [cert] = profile.certifications;
-  assert.equal(cert.name, 'Introduction to Modern Application Development');
-  assert.equal(cert.authority, 'NPTEL');
-  assert.equal(cert.startDate, '2016-09');
-  assert.equal(cert.endDate, '2016-10');
+test('returns an empty array when a profile has no certifications', () => {
+  // This fixture's subject genuinely has none listed.
+  assert.deepEqual(profile.certifications, []);
+});
+
+test('parses a certification', () => {
+  // Synthetic — exercises the parsing path itself, since the committed
+  // fixture has no certifications to draw a real example from.
+  const { profile: p } = normalizeProfile({
+    data: { '*elements': ['urn:li:fsd_profile:X'] },
+    included: [
+      {
+        entityUrn: 'urn:li:fsd_profile:X',
+        firstName: 'A',
+        lastName: 'B',
+        '*profileCertifications': 'urn:li:collectionResponse:C',
+      },
+      { entityUrn: 'urn:li:collectionResponse:C', '*elements': ['urn:li:c:1'], paging: { total: 1 } },
+      {
+        entityUrn: 'urn:li:c:1',
+        name: 'Introduction to Modern Application Development',
+        authority: 'NPTEL',
+        dateRange: { start: { year: 2016, month: 9 }, end: { year: 2016, month: 10 } },
+      },
+    ],
+  });
+  assert.deepEqual(p.certifications, [
+    {
+      name: 'Introduction to Modern Application Development',
+      authority: 'NPTEL',
+      licenseNumber: null,
+      url: null,
+      startDate: '2016-09',
+      endDate: '2016-10',
+      current: false,
+    },
+  ]);
 });
 
 test('returns an empty array for genuinely empty sections', () => {
@@ -211,8 +293,8 @@ test('returns an empty array for genuinely empty sections', () => {
 test('parses featured links', () => {
   assert.equal(profile.featured.length, 3);
   assert.ok(profile.featured.every((f) => f.url?.startsWith('http')));
-  // The committed fixture's treasury-media collection isn't capped (3 of 3).
-  assert.equal(partial.featured, undefined);
+  // The committed fixture's treasury-media collection IS capped (3 of 10).
+  assert.deepEqual(partial.featured, { returned: 3, total: 10 });
 });
 
 test('reports featured/treasury-media truncation honestly, like skills', () => {
@@ -238,12 +320,43 @@ test('reports featured/treasury-media truncation honestly, like skills', () => {
 
 /* ------------------------------ volunteer experience, honors, publications */
 
-test('returns an empty array for volunteer experience, honors and publications when absent', () => {
-  // This profile has none of the three listed — must be [], never null or a
-  // throw, and never silently dropped from the profile object either.
-  assert.deepEqual(profile.volunteerExperience, []);
-  assert.deepEqual(profile.honors, []);
-  assert.deepEqual(profile.publications, []);
+test('parses volunteer experience from real entries', () => {
+  assert.equal(profile.volunteerExperience.length, 14);
+  const opportunity = profile.volunteerExperience.find((v) => v.company === 'Opportunity@Work');
+  assert.equal(opportunity.role, 'Chair, Board of Directors');
+  assert.equal(opportunity.cause, 'ECONOMIC_EMPOWERMENT');
+  assert.match(opportunity.companyUrl, /^https:\/\/www\.linkedin\.com\/company\//);
+});
+
+test('parses honors from real entries', () => {
+  assert.equal(profile.honors.length, 9);
+  const sigillum = profile.honors.find((h) => h.title === 'Sigillum Magnum');
+  assert.equal(sigillum.issuer, 'University of Bologna');
+  assert.equal(sigillum.issuedOn, '2023-09');
+});
+
+test('parses publications and resolves real co-authors', () => {
+  assert.equal(profile.publications.length, 6);
+  const superagency = profile.publications.find((p) => p.name === 'Superagency');
+  assert.equal(superagency.publisher, 'Authors Equity');
+  assert.equal(superagency.publishedOn, '2025-01');
+  assert.deepEqual(superagency.authors, [
+    { name: 'Reid Hoffman', profileUrl: 'https://www.linkedin.com/in/reidhoffman/' },
+    { name: 'Greg Beato', profileUrl: 'https://www.linkedin.com/in/gregbeato/' },
+  ]);
+});
+
+test('returns an empty array for volunteer experience, honors and publications when absent from the payload', () => {
+  // Synthetic — the committed fixture's subject has all three populated
+  // (covered above with real data), so the "none of them present" shape is
+  // exercised directly here instead.
+  const { profile: p } = normalizeProfile({
+    data: { '*elements': ['urn:li:fsd_profile:X'] },
+    included: [{ entityUrn: 'urn:li:fsd_profile:X', firstName: 'A', lastName: 'B' }],
+  });
+  assert.deepEqual(p.volunteerExperience, []);
+  assert.deepEqual(p.honors, []);
+  assert.deepEqual(p.publications, []);
 });
 
 test('parses volunteer experience, resolving the company like an employer', () => {
@@ -375,15 +488,15 @@ test('reports honors truncation honestly, like every other capped section', () =
 /* --------------------------------------------------------- URL parsing */
 
 test('parses profile URLs in the shapes users actually paste', () => {
-  const expected = 'iamarun4official';
+  const expected = 'reidhoffman';
   for (const input of [
-    'https://www.linkedin.com/in/iamarun4official/',
-    'https://www.linkedin.com/in/iamarun4official',
-    'http://linkedin.com/in/iamarun4official/',
-    'linkedin.com/in/iamarun4official',
-    'https://in.linkedin.com/in/iamarun4official/',
-    'https://www.linkedin.com/in/iamarun4official/details/experience/',
-    'https://www.linkedin.com/in/iamarun4official/?originalSubdomain=in',
+    'https://www.linkedin.com/in/reidhoffman/',
+    'https://www.linkedin.com/in/reidhoffman',
+    'http://linkedin.com/in/reidhoffman/',
+    'linkedin.com/in/reidhoffman',
+    'https://in.linkedin.com/in/reidhoffman/',
+    'https://www.linkedin.com/in/reidhoffman/details/experience/',
+    'https://www.linkedin.com/in/reidhoffman/?originalSubdomain=in',
   ]) {
     assert.equal(parseProfileUrl(input), expected, `failed on: ${input}`);
   }
@@ -416,9 +529,9 @@ test('strips LinkedIn-internal fields from the output', () => {
 });
 
 test('exposes the profile badges as booleans, never null', () => {
-  // The fixture profile is premium but neither an influencer nor a creator —
-  // absent flags must normalize to false, not null or undefined.
-  assert.deepEqual(profile.badges, { premium: true, influencer: false, creator: false });
+  // The fixture profile is premium, an influencer, and a creator — all three
+  // flags true, unlike a bare/default profile.
+  assert.deepEqual(profile.badges, { premium: true, influencer: true, creator: true });
 
   // A payload with no flags at all must still produce all three as false.
   const { profile: bare } = normalizeProfile({

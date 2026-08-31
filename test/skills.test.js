@@ -13,7 +13,7 @@ const profilePayload = JSON.parse(
 
 test('extractSkillNames returns the complete list from a profileSkills response', () => {
   const names = extractSkillNames(skillsPayload);
-  assert.equal(names.length, 31, 'the dedicated finder returns all 31, not the 20 cap');
+  assert.equal(names.length, 47, 'the dedicated finder returns all 47, not the 20 cap');
   assert.equal(names.length, skillsPayload.data.paging.total);
   assert.ok(names.every((n) => typeof n === 'string' && n.length > 0));
 });

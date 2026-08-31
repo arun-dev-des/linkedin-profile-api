@@ -24,7 +24,7 @@ test('mergeSkillsCompletion repoints *profileSkills at the complete list', () =>
   const merged = mergeSkillsCompletion(profilePayload, skillsPayload);
   const { profile, partial } = normalizeProfile(merged);
 
-  assert.equal(profile.skills.length, 31, 'was capped at 20; the completion call has 31');
+  assert.equal(profile.skills.length, 47, 'was capped at 20; the completion call has 47');
   assert.equal(partial.skills, undefined, 'no longer capped, so no partial marker');
 });
 
