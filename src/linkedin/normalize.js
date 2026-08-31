@@ -357,6 +357,82 @@ export function extractFullExperience(payload, enrichmentByUrn = new Map()) {
   );
 }
 
+/* -------------------------------------------------- /profile/raw?full=1 */
+
+/**
+ * Merges a `profileSkills?q=viewee` completion response into a raw Voyager
+ * payload, so `/profile/raw?full=1` shows the same complete list `?full=1`
+ * gives the normalized profile — repoints the profile's `*profileSkills`
+ * collection at every skill instead of the main call's 20-capped
+ * `*elements`, and folds any newly-seen Skill entities into `included[]`.
+ * A no-op if the collection isn't found or isn't actually capped.
+ *
+ * Pure, like the rest of this file: takes two already-fetched payloads,
+ * returns a new one.
+ *
+ * @param {object} payload  raw Voyager response: { data, included }
+ * @param {object} skillsPayload  raw response from fetchProfileSkills()
+ * @returns {object} a new { data, included } payload
+ */
+export function mergeSkillsCompletion(payload, skillsPayload) {
+  const index = buildIndex(payload);
+  const rootUrn = payload?.data?.['*elements']?.[0];
+  const profile = resolve(index, rootUrn);
+  const skillsUrn = profile?.['*profileSkills'];
+  const collection = resolve(index, skillsUrn);
+  if (!collection) return payload;
+
+  const orderedUrns = skillsPayload?.data?.['*elements'] ?? [];
+  const cappedCount = collection['*elements']?.length ?? 0;
+  if (orderedUrns.length === 0 || orderedUrns.length <= cappedCount) return payload;
+
+  const extraEntities = (skillsPayload.included ?? []).filter(
+    (e) => e?.entityUrn && !index.has(e.entityUrn),
+  );
+
+  return {
+    ...payload,
+    included: [
+      ...payload.included.map((e) =>
+        e.entityUrn === skillsUrn
+          ? { ...e, '*elements': orderedUrns, paging: { ...e.paging, total: orderedUrns.length } }
+          : e,
+      ),
+      ...extraEntities,
+    ],
+  };
+}
+
+/**
+ * Merges a `profilePositions?q=viewee` completion response into a raw
+ * Voyager payload — used by `/profile/raw?full=1` when the main call capped
+ * `*profilePositionGroups`.
+ *
+ * Unlike `mergeSkillsCompletion`, this can't repoint the existing
+ * group/position structure: the finder returns a flat list of individual
+ * roles with bare `companyUrn`/`employmentTypeUrn` (no resolved
+ * `Company`/`EmploymentType` entities — see `fetchProfilePositions`), not the
+ * nested `PositionGroup` shape the main call's decoration returns.
+ * Reconstructing that nesting here would mean inventing group data LinkedIn
+ * never actually sent for this call. So newly-seen roles are only added to
+ * `included[]` — reachable by searching the Resolver — without being wired
+ * into `*profilePositionGroups`.
+ *
+ * @param {object} payload  raw Voyager response: { data, included }
+ * @param {object} positionsPayload  raw response from fetchProfilePositions()
+ * @returns {object} a new { data, included } payload
+ */
+export function mergePositionsCompletion(payload, positionsPayload) {
+  if (!Array.isArray(payload?.included)) return payload;
+
+  const index = buildIndex(payload);
+  const extraEntities = (positionsPayload?.included ?? []).filter(
+    (e) => e?.entityUrn && !index.has(e.entityUrn),
+  );
+  if (extraEntities.length === 0) return payload;
+  return { ...payload, included: [...payload.included, ...extraEntities] };
+}
+
 /* ------------------------------------------------------- career breaks */
 
 const MONTHS = {

@@ -100,6 +100,19 @@ normalization. This is what `src/linkedin/normalize.js` consumes; the "Full JSON
 not normalised" tab in the browser UI renders it. Also `GET /profile/sample/raw`
 for the payload behind `/profile/sample`.
 
+`?full=1` (same flag as `/profile`) merges in the same skills/experience
+completion calls, so this view isn't stuck showing the main call's capped
+lists while `/profile?full=1` shows the complete ones. Skills are merged
+faithfully — the capped `*profileSkills` collection is repointed at every
+skill. Experience only gets newly-seen `Position` entities added to
+`included[]` (searchable in the browser UI's Resolver tab) — the completion
+finder returns a flat list with bare `companyUrn`/`employmentTypeUrn`, not the
+nested `PositionGroup` shape the main call's decoration returns, so
+reconstructing that nesting here would mean inventing group data LinkedIn
+never actually sent for this call. See `mergeSkillsCompletion()` /
+`mergePositionsCompletion()` in
+[`src/linkedin/normalize.js`](src/linkedin/normalize.js).
+
 LinkedIn's own response embeds a little of the *credentialed account's*
 identity in this payload (its connection-degree relationship to people
 referenced on the profile) — irrelevant to the person being looked up, and

@@ -63,6 +63,7 @@ app.get('/api', (req, res) => {
       'GET /profile?url=<linkedin profile url>': 'Fetch and normalize a profile.',
       'GET /profile?url=<…>&full=1': 'Also fetch the complete skills list (one extra upstream request).',
       'GET /profile/raw?url=<…>': 'The unprocessed Voyager payload (data + included[]), before normalization.',
+      'GET /profile/raw?url=<…>&full=1': 'Same, with skills/experience completion entities merged in when the main call capped them.',
       'GET /profile/sample': 'A cached real response. Never calls LinkedIn.',
       'GET /profile/sample/raw': 'The unprocessed payload behind /profile/sample.',
     },
@@ -87,12 +88,15 @@ app.get('/profile/sample', (req, res) => {
   res.json(getSampleProfile());
 });
 
+const truthy = (v) => v === '1' || v === 'true' || v === 'yes' || v === '';
+
 app.get('/profile/raw', async (req, res) => {
   const publicId = parseProfileUrl(req.query.url);
-  res.json(await getProfileRaw(publicId));
+  // ?full=1 merges in the same skills/experience completion calls /profile
+  // makes, so this view isn't stuck showing the main call's capped lists.
+  const full = truthy(req.query.full);
+  res.json(await getProfileRaw(publicId, { full }));
 });
-
-const truthy = (v) => v === '1' || v === 'true' || v === 'yes' || v === '';
 
 app.get('/profile', async (req, res) => {
   const publicId = parseProfileUrl(req.query.url);

@@ -12,6 +12,8 @@ import {
   extractCareerBreaks,
   extractFullExperience,
   extractSkillNames,
+  mergePositionsCompletion,
+  mergeSkillsCompletion,
   normalizeProfile,
   sanitizeRawPayload,
 } from './linkedin/normalize.js';
@@ -135,15 +137,49 @@ export async function getProfile(publicId, { full = false } = {}) {
  * Sanitized before it leaves this function — see `sanitizeRawPayload()` — but
  * the cache stores the true, unsanitized payload (shared with `getProfile()`,
  * which needs the full graph) and is never mutated in place.
+ *
+ * `full: true` merges in the same skills/experience completion calls
+ * `getProfile(id, {full: true})` makes, so this view isn't stuck showing the
+ * main call's capped lists (20 skills, 10 position groups) while the
+ * normalized profile shows the complete ones. Best-effort and cached
+ * separately from the base payload — a completion failure here falls back to
+ * the base (still-capped) raw payload rather than failing the request; see
+ * `mergeSkillsCompletion()`/`mergePositionsCompletion()` for what each merge
+ * can and can't repoint.
  */
-export async function getProfileRaw(publicId) {
-  const key = `raw|${publicId}`;
-  const hit = cache.get(key);
-  if (hit) return sanitizeRawPayload(hit);
+export async function getProfileRaw(publicId, { full = false } = {}) {
+  const baseKey = `raw|${publicId}`;
+  let raw = cache.get(baseKey);
+  if (!raw) {
+    raw = await fetchProfileRaw(publicId);
+    cache.set(baseKey, raw);
+  }
 
-  const raw = await fetchProfileRaw(publicId);
-  cache.set(key, raw);
-  return sanitizeRawPayload(raw);
+  if (!full) return sanitizeRawPayload(raw);
+
+  const fullKey = `raw|${publicId}|full`;
+  const cachedFull = cache.get(fullKey);
+  if (cachedFull) return sanitizeRawPayload(cachedFull);
+
+  const { profileUrn, partial } = normalizeProfile(raw);
+  let merged = raw;
+  if (partial.skills && profileUrn) {
+    try {
+      merged = mergeSkillsCompletion(merged, await fetchProfileSkills(profileUrn));
+    } catch (err) {
+      console.warn(`raw skills completion failed for ${publicId}: ${err.code ?? err.message}`);
+    }
+  }
+  if (partial.experience && profileUrn) {
+    try {
+      merged = mergePositionsCompletion(merged, await fetchProfilePositions(profileUrn));
+    } catch (err) {
+      console.warn(`raw experience completion failed for ${publicId}: ${err.code ?? err.message}`);
+    }
+  }
+
+  cache.set(fullKey, merged);
+  return sanitizeRawPayload(merged);
 }
 
 /**
