@@ -228,7 +228,7 @@
   @apply relative;
 }
 .code-block .copy-btn {
-  @apply absolute top-2.5 right-2.5 rounded-md border border-border bg-card px-2 py-1 text-[11px] font-medium text-muted-foreground opacity-0 transition-opacity hover:text-foreground;
+  @apply absolute top-2.5 right-2.5 cursor-pointer rounded-md border border-border bg-card px-2 py-1 text-[11px] font-medium text-muted-foreground opacity-0 transition-opacity hover:text-foreground;
 }
 .code-block:hover .copy-btn {
   @apply opacity-100;

@@ -167,7 +167,7 @@ function RefChip({
       onClick={onClick}
       disabled={!onClick}
       title={sub}
-      className="border-border bg-card hover:bg-accent/50 flex max-w-full items-center gap-1 rounded-md border px-2 py-1 text-left text-[11px] disabled:opacity-50"
+      className="border-border bg-card hover:bg-accent/50 flex max-w-full cursor-pointer items-center gap-1 rounded-md border px-2 py-1 text-left text-[11px] disabled:cursor-not-allowed disabled:opacity-50"
     >
       <span className="max-w-[150px] truncate font-medium">{label}</span>
       <Icon className="text-muted-foreground size-3 shrink-0" />
@@ -258,7 +258,7 @@ export function EntityResolver({ raw }: { raw: RawPayload }) {
               key={urn}
               type="button"
               onClick={() => goTo(urn)}
-              className="hover:bg-accent/50 flex w-full items-center justify-between gap-2 px-3 py-2 text-left"
+              className="hover:bg-accent/50 flex w-full cursor-pointer items-center justify-between gap-2 px-3 py-2 text-left"
             >
               <span className="min-w-0">
                 <span className="block truncate text-[12.5px] font-medium">
@@ -283,7 +283,7 @@ export function EntityResolver({ raw }: { raw: RawPayload }) {
               <button
                 type="button"
                 onClick={() => goToBreadcrumb(history.length - 1, history)}
-                className="text-muted-foreground hover:text-foreground flex shrink-0 items-center gap-1 pr-1.5 font-medium"
+                className="text-muted-foreground hover:text-foreground flex shrink-0 cursor-pointer items-center gap-1 pr-1.5 font-medium"
               >
                 <ArrowLeft className="size-3.5" />
                 Back
@@ -301,8 +301,8 @@ export function EntityResolver({ raw }: { raw: RawPayload }) {
                       className={cn(
                         'max-w-[110px] truncate',
                         isCurrent
-                          ? 'text-foreground font-medium'
-                          : 'text-muted-foreground hover:text-foreground',
+                          ? 'cursor-default text-foreground font-medium'
+                          : 'cursor-pointer text-muted-foreground hover:text-foreground',
                       )}
                     >
                       {labelForUrn(index, urn)}

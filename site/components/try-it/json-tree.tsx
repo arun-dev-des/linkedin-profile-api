@@ -85,7 +85,7 @@ function Node({
         type="button"
         onClick={() => setOpen((o) => !o)}
         className={cn(
-          'hover:bg-accent/50 -ml-1 flex w-full items-baseline rounded px-1 text-left',
+          'hover:bg-accent/50 -ml-1 flex w-full cursor-pointer items-baseline rounded px-1 text-left',
           highlight === 'used' && HIGHLIGHT_CLASS.used,
         )}
         title={highlight ? HIGHLIGHT_TITLE[highlight] : undefined}

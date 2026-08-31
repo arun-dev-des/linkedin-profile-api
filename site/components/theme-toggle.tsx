@@ -16,7 +16,7 @@ export function ThemeToggle() {
       type="button"
       onClick={() => setTheme(dark ? 'light' : 'dark')}
       aria-label="Toggle theme"
-      className="text-muted-foreground hover:bg-accent hover:text-foreground flex items-center gap-3 rounded-[9px] px-2.5 py-2 text-sm whitespace-nowrap transition-colors"
+      className="text-muted-foreground hover:bg-accent hover:text-foreground flex cursor-pointer items-center gap-3 rounded-[9px] px-2.5 py-2 text-sm whitespace-nowrap transition-colors"
     >
       {mounted && dark ? (
         <Sun className="size-[19px] shrink-0" strokeWidth={1.75} />
