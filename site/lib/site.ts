@@ -12,30 +12,41 @@ export const NAV: { href: string; label: string; icon: string; group?: string }[
   { href: '/api', label: 'API reference', icon: 'braces', group: 'Docs' },
 ];
 
-/** Quick-pick profiles for the Try-it search. */
-export const PRESETS: { id: string; name: string; note: string; url: string }[] = [
-  {
-    id: 'iamarun4official',
-    name: 'Arunkumar Alagarsamy',
-    note: 'this submission',
-    url: 'https://www.linkedin.com/in/iamarun4official/',
-  },
+/**
+ * Quick-pick profiles for the Try-it search. `sample: true` marks the one
+ * preset that loads from `/profile/sample` — the committed fixture, served
+ * with zero LinkedIn calls — instead of a live `/profile?url=…` lookup.
+ */
+export const PRESETS: { id: string; name: string; note: string; url: string; sample?: boolean }[] = [
   {
     id: 'reidhoffman',
     name: 'Reid Hoffman',
-    note: 'LinkedIn co-founder · rich profile',
+    note: 'LinkedIn co-founder · cached, no LinkedIn call',
     url: 'https://www.linkedin.com/in/reidhoffman/',
+    sample: true,
+  },
+  {
+    id: 'williamhgates',
+    name: 'Bill Gates',
+    note: 'Microsoft co-founder · live fetch',
+    url: 'https://www.linkedin.com/in/williamhgates/',
   },
   {
     id: 'padamkataria',
     name: 'Padam Kataria',
-    note: 'Tross co-founder',
+    note: 'Tross co-founder · live fetch',
     url: 'https://www.linkedin.com/in/padamkataria/',
   },
   {
     id: 'meetcshah19',
     name: 'Meet Shah',
-    note: 'Tross co-founder',
+    note: 'Tross co-founder · live fetch',
     url: 'https://www.linkedin.com/in/meetcshah19/',
+  },
+  {
+    id: 'iamarun4official',
+    name: 'Arunkumar Alagarsamy',
+    note: 'this submission · live fetch',
+    url: 'https://www.linkedin.com/in/iamarun4official/',
   },
 ];

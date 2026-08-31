@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 
 import { normalizeProfile, sanitizeRawPayload } from '../src/linkedin/normalize.js';
 
-const ownFixture = JSON.parse(
+const fixture = JSON.parse(
   readFileSync(new URL('../fixtures/raw-profile.json', import.meta.url)),
 );
 
@@ -111,14 +111,23 @@ test('keeps an entity reached through a legitimate content pointer, even if it a
   ]);
 });
 
-test('is a no-op on a payload with nothing to strip (the committed self-lookup fixture)', () => {
-  const clean = sanitizeRawPayload(ownFixture);
-  assert.equal(clean.included.length, ownFixture.included.length);
+test('strips the credentialed account\'s own leaked identity from a real third-party capture', () => {
+  // Unlike a self-lookup, this fixture was captured by one account (the
+  // server operator's) viewing a *different* person's profile — the shape
+  // this whole service exists for — so the viewer's own identity really is
+  // reachable via *memberRelationship, and sanitizing measurably shrinks
+  // included[].
+  const clean = sanitizeRawPayload(fixture);
+  assert.ok(clean.included.length < fixture.included.length, 'sanitizing should have dropped entities');
+  // An entity can legitimately keep its own *memberRelationship *pointer*
+  // after sanitizing (see the "legitimate content pointer" test below) — what
+  // must be gone is any trace of the credentialed account's own identity.
+  assert.equal(JSON.stringify(clean).toLowerCase().includes('arun'), false);
 });
 
 test('never changes what normalizeProfile() produces', () => {
-  const before = normalizeProfile(ownFixture).profile;
-  const after = normalizeProfile(sanitizeRawPayload(ownFixture)).profile;
+  const before = normalizeProfile(fixture).profile;
+  const after = normalizeProfile(sanitizeRawPayload(fixture)).profile;
   assert.deepEqual(before, after);
 });
 

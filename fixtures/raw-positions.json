@@ -1,68 +1,208 @@
 {
   "data": {
-    "entityUrn": "urn:li:collectionResponse:rXmHhxshNkyocsiXjJX9E1uOIcPxU2XNA+D23DBb35k=",
+    "entityUrn": "urn:li:collectionResponse:3q6COhB6c5ZvYHMv/q357Go5ltiCaAaAaffubhF2gLM=",
     "paging": {
       "count": 100,
       "start": 0,
-      "total": 10,
+      "total": 33,
       "links": []
     },
     "*elements": [
-      "urn:li:fsd_profilePosition:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,2591921949)",
-      "urn:li:fsd_profilePosition:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,2214703044)",
-      "urn:li:fsd_profilePosition:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,1917708595)",
-      "urn:li:fsd_profilePosition:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,1538942031)",
-      "urn:li:fsd_profilePosition:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,1316863168)",
-      "urn:li:fsd_profilePosition:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,1042793885)",
-      "urn:li:fsd_profilePosition:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,1024815607)",
-      "urn:li:fsd_profilePosition:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,889255939)",
-      "urn:li:fsd_profilePosition:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,814904292)",
-      "urn:li:fsd_profilePosition:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,981808677)"
+      "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,2564122178)",
+      "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,1932435486)",
+      "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,94771883)",
+      "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,2296367487)",
+      "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,950442023)",
+      "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,1316791571)",
+      "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,2827885200)",
+      "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,1146326643)",
+      "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,1146328438)",
+      "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,954118225)",
+      "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,2673314571)",
+      "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,2594501529)",
+      "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,1760571153)",
+      "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,2594506169)",
+      "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,1144902970)",
+      "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,985000990)",
+      "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,1851776406)",
+      "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,985000994)",
+      "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,1715955880)",
+      "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,2072050166)",
+      "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,565398344)",
+      "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,408693230)",
+      "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,357226376)",
+      "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,79278458)",
+      "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,357225839)",
+      "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,57687386)",
+      "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,10249)",
+      "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,2052028)",
+      "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,10230)",
+      "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,10250)",
+      "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,10228)",
+      "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,10241)",
+      "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,10243)"
     ],
     "$type": "com.linkedin.restli.common.CollectionResponse"
   },
   "included": [
     {
       "shouldShowSourceOfHireBadge": false,
-      "locationName": "Bengaluru",
+      "locationName": "Palo Alto, CA",
       "multiLocaleTitle": {
-        "en_US": "Product Designer"
+        "en_US": "Board Member"
       },
       "dateRange": {
         "start": {
           "month": 8,
-          "year": 2024,
-          "$type": "com.linkedin.common.Date"
-        },
-        "end": {
-          "month": 8,
-          "year": 2025,
+          "year": 2017,
           "$type": "com.linkedin.common.Date"
         },
         "$type": "com.linkedin.common.DateRange"
       },
       "multiLocaleCompanyName": {
-        "en_US": "Applix"
+        "en_US": "NAUTO"
       },
-      "geoUrn": "urn:li:fsd_geo:105214831",
-      "companyName": "Applix",
-      "description": "● Worked closely with CEO and stakeholders weekly to map workflow pain, turned it directly into designs ● Designed data-intensive dashboards for enterprise workflow automation, working directly with founders and engineers ● Crafted product demos for enterprise customer pitch",
-      "title": "Product Designer",
-      "companyUrn": "urn:li:fsd_company:91623374",
+      "geoUrn": null,
+      "companyName": "NAUTO",
+      "description": "Nauto develops AI-powered driver and fleet safety systems to reduce collisions and improve driving behavior. By leveraging real-time insights, it enhances operational efficiency for businesses and supports safer roads for all.\n\nBacking Nauto is an opportunity to leverage AI to make the roads safer while driving value for thousands of businesses.",
+      "title": "Board Member",
+      "companyUrn": "urn:li:fsd_company:10023541",
       "$type": "com.linkedin.voyager.dash.identity.profile.Position",
       "regionUrn": null,
-      "employmentTypeUrn": "urn:li:fsd_employmentType:12",
-      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,2591921949)",
-      "geoLocationName": "Bengaluru",
+      "employmentTypeUrn": "urn:li:fsd_employmentType:11",
+      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,1146326643)",
+      "geoLocationName": "Palo Alto, CA",
       "multiLocaleGeoLocationName": {
-        "en_US": "Bengaluru"
+        "en_US": "Palo Alto, CA"
       },
       "hasSkillAssociations": false,
       "multiLocaleDescription": {
-        "en_US": "● Worked closely with CEO and stakeholders weekly to map workflow pain, turned it directly into designs ● Designed data-intensive dashboards for enterprise workflow automation, working directly with founders and engineers ● Crafted product demos for enterprise customer pitch"
+        "en_US": "Nauto develops AI-powered driver and fleet safety systems to reduce collisions and improve driving behavior. By leveraging real-time insights, it enhances operational efficiency for businesses and supports safer roads for all.\n\nBacking Nauto is an opportunity to leverage AI to make the roads safer while driving value for thousands of businesses."
       },
       "multiLocaleLocationName": {
-        "en_US": "Bengaluru"
+        "en_US": "Palo Alto, CA"
+      },
+      "sourceOfHireType": null
+    },
+    {
+      "shouldShowSourceOfHireBadge": false,
+      "locationName": "Palo Alto, CA",
+      "multiLocaleTitle": {
+        "en_US": "Board Observer"
+      },
+      "dateRange": {
+        "start": {
+          "month": 7,
+          "year": 2014,
+          "$type": "com.linkedin.common.Date"
+        },
+        "end": {
+          "month": 10,
+          "year": 2021,
+          "$type": "com.linkedin.common.Date"
+        },
+        "$type": "com.linkedin.common.DateRange"
+      },
+      "multiLocaleCompanyName": {
+        "en_US": "Xapo Bank"
+      },
+      "geoUrn": null,
+      "companyName": "Xapo Bank",
+      "description": "Xapo combines the convenience of an everyday bitcoin wallet with the security of a deep cold storage vault. By bringing together convenience that bitcoin users want everyday with the security they require for saving, Xapo is the most secure, reliable, and easy way to manage and store your bitcoin.",
+      "title": "Board Observer",
+      "companyUrn": "urn:li:fsd_company:77000399",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Position",
+      "regionUrn": null,
+      "employmentTypeUrn": "urn:li:fsd_employmentType:11",
+      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,565398344)",
+      "geoLocationName": "Palo Alto, CA",
+      "multiLocaleGeoLocationName": {
+        "en_US": "Palo Alto, CA"
+      },
+      "hasSkillAssociations": false,
+      "multiLocaleDescription": {
+        "en_US": "Xapo combines the convenience of an everyday bitcoin wallet with the security of a deep cold storage vault. By bringing together convenience that bitcoin users want everyday with the security they require for saving, Xapo is the most secure, reliable, and easy way to manage and store your bitcoin."
+      },
+      "multiLocaleLocationName": {
+        "en_US": "Palo Alto, CA"
+      },
+      "sourceOfHireType": null
+    },
+    {
+      "shouldShowSourceOfHireBadge": false,
+      "locationName": "London Area, United Kingdom",
+      "multiLocaleTitle": {
+        "en_US": "Board Member"
+      },
+      "dateRange": {
+        "start": {
+          "month": 9,
+          "year": 2017,
+          "$type": "com.linkedin.common.Date"
+        },
+        "$type": "com.linkedin.common.DateRange"
+      },
+      "multiLocaleCompanyName": {
+        "en_US": "Entrepreneur First"
+      },
+      "geoUrn": "urn:li:fsd_geo:90009496",
+      "companyName": "Entrepreneur First",
+      "description": "Entrepreneur First identifies founders with extraordinary futures before anyone else, embedding them in a community of ambitious peers and giving them the tools they need to succeed, fast. We back them before they have a company, a team, even before they have an idea, based purely on talent.\n\nServing on Entrepreneur First’s board has allowed me to play a small role in fostering entrepreneurship by investing in individuals and giving more exceptional leaders access to capital.",
+      "title": "Board Member",
+      "companyUrn": "urn:li:fsd_company:2340783",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Position",
+      "regionUrn": null,
+      "employmentTypeUrn": "urn:li:fsd_employmentType:11",
+      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,1146328438)",
+      "geoLocationName": "London Area, United Kingdom",
+      "multiLocaleGeoLocationName": {
+        "en_US": "London Area, United Kingdom"
+      },
+      "hasSkillAssociations": false,
+      "multiLocaleDescription": {
+        "en_US": "Entrepreneur First identifies founders with extraordinary futures before anyone else, embedding them in a community of ambitious peers and giving them the tools they need to succeed, fast. We back them before they have a company, a team, even before they have an idea, based purely on talent.\n\nServing on Entrepreneur First’s board has allowed me to play a small role in fostering entrepreneurship by investing in individuals and giving more exceptional leaders access to capital."
+      },
+      "multiLocaleLocationName": {
+        "en_US": "London Area, United Kingdom"
+      },
+      "sourceOfHireType": null
+    },
+    {
+      "shouldShowSourceOfHireBadge": false,
+      "locationName": "Seattle, WA",
+      "multiLocaleTitle": {
+        "en_US": "Chair"
+      },
+      "dateRange": {
+        "start": {
+          "month": 8,
+          "year": 2017,
+          "$type": "com.linkedin.common.Date"
+        },
+        "$type": "com.linkedin.common.DateRange"
+      },
+      "multiLocaleCompanyName": {
+        "en_US": "Village Global"
+      },
+      "geoUrn": "urn:li:fsd_geo:104116203",
+      "companyName": "Village Global",
+      "description": "Village Global is a network-native VC firm backed by tech industry luminaries. When you join a Village, seed capital is just the beginning. Village helps you go faster with an incredible founder community, expert advice, and game-changing introductions.\n\nAs the Chairman of Village since 2017, I have supported the community as we’ve built a network of experienced founders and advisors who are democratizing access to startup wisdom.",
+      "title": "Chair",
+      "companyUrn": "urn:li:fsd_company:18265228",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Position",
+      "regionUrn": null,
+      "employmentTypeUrn": "urn:li:fsd_employmentType:11",
+      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,2296367487)",
+      "geoLocationName": "Seattle, WA",
+      "multiLocaleGeoLocationName": {
+        "en_US": "Seattle, WA"
+      },
+      "hasSkillAssociations": false,
+      "multiLocaleDescription": {
+        "en_US": "Village Global is a network-native VC firm backed by tech industry luminaries. When you join a Village, seed capital is just the beginning. Village helps you go faster with an incredible founder community, expert advice, and game-changing introductions.\n\nAs the Chairman of Village since 2017, I have supported the community as we’ve built a network of experienced founders and advisors who are democratizing access to startup wisdom."
+      },
+      "multiLocaleLocationName": {
+        "en_US": "Seattle, WA"
       },
       "sourceOfHireType": null
     },
@@ -70,378 +210,1180 @@
       "shouldShowSourceOfHireBadge": false,
       "locationName": null,
       "multiLocaleTitle": {
-        "en_US": "UX Designer - Intern"
+        "en_US": "Director of Product Management and Development"
       },
       "dateRange": {
         "start": {
-          "month": 11,
-          "year": 2016,
+          "month": 2,
+          "year": 1996,
           "$type": "com.linkedin.common.Date"
         },
         "end": {
-          "month": 1,
-          "year": 2017,
+          "month": 7,
+          "year": 1997,
           "$type": "com.linkedin.common.Date"
         },
         "$type": "com.linkedin.common.DateRange"
       },
       "multiLocaleCompanyName": {
-        "en_US": "FULL Creative"
+        "en_US": "Fujitsu Software Corporation"
       },
       "geoUrn": null,
-      "companyName": "FULL Creative",
-      "description": null,
-      "title": "UX Designer - Intern",
-      "companyUrn": "urn:li:fsd_company:2942058",
+      "companyName": "Fujitsu Software Corporation",
+      "description": "I was the General Manager and product manager for WorldsAway, one of the earliest successful virtual worlds. Migrated WorldsAway from Client-Server architecture on CompuServe to deploy on the Web.",
+      "title": "Director of Product Management and Development",
+      "companyUrn": "urn:li:fsd_company:1374",
       "$type": "com.linkedin.voyager.dash.identity.profile.Position",
       "regionUrn": null,
-      "employmentTypeUrn": null,
-      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,889255939)",
+      "employmentTypeUrn": "urn:li:fsd_employmentType:12",
+      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,10241)",
       "geoLocationName": null,
       "multiLocaleGeoLocationName": null,
       "hasSkillAssociations": false,
-      "multiLocaleDescription": null,
+      "multiLocaleDescription": {
+        "en_US": "I was the General Manager and product manager for WorldsAway, one of the earliest successful virtual worlds. Migrated WorldsAway from Client-Server architecture on CompuServe to deploy on the Web."
+      },
       "multiLocaleLocationName": null,
       "sourceOfHireType": null
     },
     {
       "shouldShowSourceOfHireBadge": false,
-      "locationName": "Chennai, India",
+      "locationName": "Palo Alto, CA",
       "multiLocaleTitle": {
-        "en_US": "Graphic Designer"
+        "en_US": "Co-Founder and founding CEO"
       },
       "dateRange": {
         "start": {
-          "month": 10,
-          "year": 2015,
+          "month": 5,
+          "year": 2003,
           "$type": "com.linkedin.common.Date"
         },
         "end": {
-          "month": 10,
+          "month": 12,
           "year": 2016,
           "$type": "com.linkedin.common.Date"
         },
         "$type": "com.linkedin.common.DateRange"
       },
       "multiLocaleCompanyName": {
-        "en_US": "Uptown Ideas"
+        "en_US": "LinkedIn"
       },
-      "geoUrn": null,
-      "companyName": "Uptown Ideas",
-      "description": null,
-      "title": "Graphic Designer",
-      "companyUrn": "urn:li:fsd_company:3129783",
-      "$type": "com.linkedin.voyager.dash.identity.profile.Position",
-      "regionUrn": null,
-      "employmentTypeUrn": null,
-      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,814904292)",
-      "geoLocationName": "Chennai, India",
-      "multiLocaleGeoLocationName": {
-        "en_US": "Chennai, India"
-      },
-      "hasSkillAssociations": false,
-      "multiLocaleLocationName": {
-        "en_US": "Chennai, India"
-      },
-      "multiLocaleDescription": null,
-      "sourceOfHireType": null
-    },
-    {
-      "shouldShowSourceOfHireBadge": false,
-      "locationName": "Bengaluru, Karnataka, India",
-      "multiLocaleTitle": {
-        "en_US": "Senior Product Designer"
-      },
-      "dateRange": {
-        "start": {
-          "month": 2,
-          "year": 2022,
-          "$type": "com.linkedin.common.Date"
-        },
-        "end": {
-          "month": 7,
-          "year": 2023,
-          "$type": "com.linkedin.common.Date"
-        },
-        "$type": "com.linkedin.common.DateRange"
-      },
-      "multiLocaleCompanyName": {
-        "en_US": "Tekion Corp"
-      },
-      "geoUrn": "urn:li:fsd_geo:105214831",
-      "companyName": "Tekion Corp",
-      "description": null,
-      "title": "Senior Product Designer",
-      "companyUrn": "urn:li:fsd_company:41315",
+      "geoUrn": "urn:li:fsd_geo:101876708",
+      "companyName": "LinkedIn",
+      "description": "We launched LinkedIn to establish a platform that not only facilitated professional connections but also transformed how people found jobs, connected with others, and shared knowledge. Currently the platform has over one billion monthly active users and helped countless users build their careers and transform their lives. In 2016, Microsoft acquired LinkedIn for $26.2 billion.",
+      "title": "Co-Founder and founding CEO",
+      "companyUrn": "urn:li:fsd_company:1337",
       "$type": "com.linkedin.voyager.dash.identity.profile.Position",
       "regionUrn": null,
       "employmentTypeUrn": "urn:li:fsd_employmentType:12",
-      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,1917708595)",
-      "geoLocationName": "Bengaluru, Karnataka, India",
+      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,79278458)",
+      "geoLocationName": "Palo Alto, CA",
       "multiLocaleGeoLocationName": {
-        "en_US": "Bengaluru, Karnataka, India"
+        "en_US": "Palo Alto, CA"
       },
       "hasSkillAssociations": false,
-      "multiLocaleLocationName": {
-        "en_US": "Bengaluru, Karnataka, India"
+      "multiLocaleDescription": {
+        "en_US": "We launched LinkedIn to establish a platform that not only facilitated professional connections but also transformed how people found jobs, connected with others, and shared knowledge. Currently the platform has over one billion monthly active users and helped countless users build their careers and transform their lives. In 2016, Microsoft acquired LinkedIn for $26.2 billion."
       },
-      "multiLocaleDescription": null,
+      "multiLocaleLocationName": {
+        "en_US": "Palo Alto, CA"
+      },
       "sourceOfHireType": null
     },
     {
       "shouldShowSourceOfHireBadge": false,
-      "locationName": "Bengaluru",
+      "locationName": "Seattle, Washington, United States",
       "multiLocaleTitle": {
-        "en_US": "UX Designer"
+        "en_US": "Advisory Member"
       },
       "dateRange": {
         "start": {
-          "month": 5,
+          "month": 8,
           "year": 2018,
-          "$type": "com.linkedin.common.Date"
-        },
-        "end": {
-          "month": 4,
-          "year": 2019,
           "$type": "com.linkedin.common.Date"
         },
         "$type": "com.linkedin.common.DateRange"
       },
       "multiLocaleCompanyName": {
-        "en_US": "Clip"
+        "en_US": "Reinvent Capital"
       },
-      "geoUrn": "urn:li:fsd_geo:105307040",
-      "companyName": "Clip",
-      "description": "● Designed UX for a vernacular short video platform across 10 Indian languages - 40M installs, 3M DAU. ● Home feed redesign drove 30% uplift in time spent and 8% reduction in uninstalls. Related videos feature drove an additional 20% uplift.",
-      "title": "UX Designer",
-      "companyUrn": "urn:li:fsd_company:11193332",
+      "geoUrn": "urn:li:fsd_geo:104116203",
+      "companyName": "Reinvent Capital",
+      "description": "Reinvent partners with bold leaders of category-defining companies to help them grow and innovate at scale.",
+      "title": "Advisory Member",
+      "companyUrn": "urn:li:fsd_company:71411641",
       "$type": "com.linkedin.voyager.dash.identity.profile.Position",
       "regionUrn": null,
-      "employmentTypeUrn": null,
-      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,1316863168)",
-      "geoLocationName": "Bengaluru",
+      "employmentTypeUrn": "urn:li:fsd_employmentType:11",
+      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,1760571153)",
+      "geoLocationName": "Seattle, Washington, United States",
       "multiLocaleGeoLocationName": {
-        "en_US": "Bengaluru"
+        "en_US": "Seattle, Washington, United States"
       },
       "hasSkillAssociations": false,
       "multiLocaleDescription": {
-        "en_US": "● Designed UX for a vernacular short video platform across 10 Indian languages - 40M installs, 3M DAU. ● Home feed redesign drove 30% uplift in time spent and 8% reduction in uninstalls. Related videos feature drove an additional 20% uplift."
+        "en_US": "Reinvent partners with bold leaders of category-defining companies to help them grow and innovate at scale."
       },
       "multiLocaleLocationName": {
-        "en_US": "Bengaluru"
+        "en_US": "Seattle, Washington, United States"
       },
       "sourceOfHireType": null
     },
     {
       "shouldShowSourceOfHireBadge": false,
-      "locationName": "Bangalore Urban",
+      "locationName": "Palo Alto, CA",
       "multiLocaleTitle": {
-        "en_US": "Product Designer"
+        "en_US": "Board Member"
       },
       "dateRange": {
         "start": {
-          "month": 8,
-          "year": 2022,
+          "month": 10,
+          "year": 2014,
           "$type": "com.linkedin.common.Date"
         },
         "end": {
-          "month": 8,
+          "month": 12,
           "year": 2024,
           "$type": "com.linkedin.common.Date"
         },
         "$type": "com.linkedin.common.DateRange"
       },
       "multiLocaleCompanyName": {
-        "en_US": "Tekion Corp"
+        "en_US": "Coda"
       },
-      "geoUrn": "urn:li:fsd_geo:112376381",
-      "companyName": "Tekion Corp",
-      "description": "● Led UX for Tekion Open API for 3rd party developers to build apps and integrate with Tekion ecosystem ● Designed dashboards and user workflow for enterprise automotive platform at meaningful scale across dealerships",
-      "title": "Product Designer",
-      "companyUrn": "urn:li:fsd_company:41315",
+      "geoUrn": null,
+      "companyName": "Coda",
+      "description": "Coda is a collaboration platform that combines the power of spreadsheets and databases into a flexible, dynamic workspace. Their technology makes it so everyone can work together, in their own way, off a single source of truth.",
+      "title": "Board Member",
+      "companyUrn": "urn:li:fsd_company:18274722",
       "$type": "com.linkedin.voyager.dash.identity.profile.Position",
       "regionUrn": null,
-      "employmentTypeUrn": "urn:li:fsd_employmentType:12",
-      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,2214703044)",
-      "geoLocationName": "Bangalore Urban",
+      "employmentTypeUrn": "urn:li:fsd_employmentType:11",
+      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,1144902970)",
+      "geoLocationName": "Palo Alto, CA",
       "multiLocaleGeoLocationName": {
-        "en_US": "Bangalore Urban"
+        "en_US": "Palo Alto, CA"
       },
       "hasSkillAssociations": false,
       "multiLocaleDescription": {
-        "en_US": "● Led UX for Tekion Open API for 3rd party developers to build apps and integrate with Tekion ecosystem ● Designed dashboards and user workflow for enterprise automotive platform at meaningful scale across dealerships"
+        "en_US": "Coda is a collaboration platform that combines the power of spreadsheets and databases into a flexible, dynamic workspace. Their technology makes it so everyone can work together, in their own way, off a single source of truth."
       },
       "multiLocaleLocationName": {
-        "en_US": "Bangalore Urban"
+        "en_US": "Palo Alto, CA"
       },
       "sourceOfHireType": null
     },
     {
       "shouldShowSourceOfHireBadge": false,
-      "locationName": "Bengaluru Area, India",
+      "locationName": "Palo Alto, California, United States",
       "multiLocaleTitle": {
-        "en_US": "Senior UX Designer"
+        "en_US": "Board Member"
       },
       "dateRange": {
         "start": {
-          "month": 4,
-          "year": 2019,
-          "$type": "com.linkedin.common.Date"
-        },
-        "end": {
-          "month": 9,
-          "year": 2020,
-          "$type": "com.linkedin.common.Date"
-        },
-        "$type": "com.linkedin.common.DateRange"
-      },
-      "multiLocaleCompanyName": {
-        "en_US": "Mech Mocha"
-      },
-      "geoUrn": "urn:li:fsd_geo:90009633",
-      "companyName": "Mech Mocha",
-      "description": null,
-      "title": "Senior UX Designer",
-      "companyUrn": "urn:li:fsd_company:2534181",
-      "$type": "com.linkedin.voyager.dash.identity.profile.Position",
-      "regionUrn": null,
-      "employmentTypeUrn": "urn:li:fsd_employmentType:12",
-      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,1538942031)",
-      "geoLocationName": "Bengaluru Area, India",
-      "multiLocaleGeoLocationName": {
-        "en_US": "Bengaluru Area, India"
-      },
-      "hasSkillAssociations": false,
-      "multiLocaleLocationName": {
-        "en_US": "Bengaluru Area, India"
-      },
-      "multiLocaleDescription": null,
-      "sourceOfHireType": null
-    },
-    {
-      "shouldShowSourceOfHireBadge": false,
-      "locationName": "Bangalore",
-      "multiLocaleTitle": {
-        "en_US": "UX Designer - Intern"
-      },
-      "dateRange": {
-        "start": {
-          "month": 5,
-          "year": 2017,
-          "$type": "com.linkedin.common.Date"
-        },
-        "end": {
-          "month": 7,
-          "year": 2017,
-          "$type": "com.linkedin.common.Date"
-        },
-        "$type": "com.linkedin.common.DateRange"
-      },
-      "multiLocaleCompanyName": {
-        "en_US": "NetBramha Studios ( hiring now! )"
-      },
-      "geoUrn": null,
-      "companyName": "NetBramha Studios ( hiring now! )",
-      "description": null,
-      "title": "UX Designer - Intern",
-      "companyUrn": "urn:li:fsd_company:424566",
-      "$type": "com.linkedin.voyager.dash.identity.profile.Position",
-      "regionUrn": null,
-      "employmentTypeUrn": null,
-      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,1024815607)",
-      "geoLocationName": "Bangalore",
-      "multiLocaleGeoLocationName": {
-        "en_US": "Bangalore"
-      },
-      "hasSkillAssociations": false,
-      "multiLocaleLocationName": {
-        "en_US": "Bangalore"
-      },
-      "multiLocaleDescription": null,
-      "sourceOfHireType": null
-    },
-    {
-      "shouldShowSourceOfHireBadge": false,
-      "locationName": "Bengaluru Area, India",
-      "multiLocaleTitle": {
-        "en_US": "Product Designer"
-      },
-      "dateRange": {
-        "start": {
-          "year": 2017,
-          "$type": "com.linkedin.common.Date"
-        },
-        "end": {
+          "month": 1,
           "year": 2018,
           "$type": "com.linkedin.common.Date"
         },
         "$type": "com.linkedin.common.DateRange"
       },
       "multiLocaleCompanyName": {
-        "en_US": "Hike"
+        "en_US": "Aurora"
       },
-      "geoUrn": "urn:li:fsd_geo:105307040",
-      "companyName": "Hike",
-      "description": "● Designed the Developer Console end-to-end, enabling third-party developers to build and push mini apps inside Hike's platform for 100M+ users.",
-      "title": "Product Designer",
-      "companyUrn": "urn:li:fsd_company:2790400",
+      "geoUrn": "urn:li:fsd_geo:101876708",
+      "companyName": "Aurora",
+      "description": "Aurora is a leading autonomous vehicle technology company, focused on self-driving solutions for freight, delivery, and passenger transport. The Aurora Driver platform integrates hardware, software, and data services to enable safe and efficient transportation.\nAurora is a bet on the transformative potential of autonomous technology to revolutionize logistics and mobility while addressing pressing challenges like safety and efficiency in transportation.",
+      "title": "Board Member",
+      "companyUrn": "urn:li:fsd_company:17973173",
       "$type": "com.linkedin.voyager.dash.identity.profile.Position",
       "regionUrn": null,
-      "employmentTypeUrn": null,
-      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,1042793885)",
-      "geoLocationName": "Bengaluru Area, India",
+      "employmentTypeUrn": "urn:li:fsd_employmentType:11",
+      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,1316791571)",
+      "geoLocationName": "Palo Alto, California, United States",
       "multiLocaleGeoLocationName": {
-        "en_US": "Bengaluru Area, India"
+        "en_US": "Palo Alto, California, United States"
       },
       "hasSkillAssociations": false,
       "multiLocaleDescription": {
-        "en_US": "● Designed the Developer Console end-to-end, enabling third-party developers to build and push mini apps inside Hike's platform for 100M+ users."
+        "en_US": "Aurora is a leading autonomous vehicle technology company, focused on self-driving solutions for freight, delivery, and passenger transport. The Aurora Driver platform integrates hardware, software, and data services to enable safe and efficient transportation.\nAurora is a bet on the transformative potential of autonomous technology to revolutionize logistics and mobility while addressing pressing challenges like safety and efficiency in transportation."
       },
       "multiLocaleLocationName": {
-        "en_US": "Bengaluru Area, India"
+        "en_US": "Palo Alto, California, United States"
       },
       "sourceOfHireType": null
     },
     {
       "shouldShowSourceOfHireBadge": false,
-      "locationName": "Chennai Area, India",
+      "locationName": null,
       "multiLocaleTitle": {
-        "en_US": "Graphic Designer - Intern"
+        "en_US": "Board Member"
       },
       "dateRange": {
         "start": {
-          "month": 7,
-          "year": 2015,
+          "month": 3,
+          "year": 2008,
           "$type": "com.linkedin.common.Date"
         },
         "end": {
-          "month": 9,
-          "year": 2015,
+          "month": 6,
+          "year": 2014,
           "$type": "com.linkedin.common.Date"
         },
         "$type": "com.linkedin.common.DateRange"
       },
       "multiLocaleCompanyName": {
-        "en_US": "Uptown Ideas"
+        "en_US": "Zynga"
       },
-      "geoUrn": "urn:li:fsd_geo:90009647",
-      "companyName": "Uptown Ideas",
-      "description": null,
-      "title": "Graphic Designer - Intern",
-      "companyUrn": "urn:li:fsd_company:3129783",
+      "geoUrn": null,
+      "companyName": "Zynga",
+      "description": "Zynga connects the world through games, and is the developer of prominent titles such as FarmVille and Words with Friends. \n\nI joined Zynga's board in 2008 and played a small role supporting the executive team’s early stage growth. Zynga was acquired by Take-Two Interactive in 2022.",
+      "title": "Board Member",
+      "companyUrn": "urn:li:fsd_company:167907",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Position",
+      "regionUrn": null,
+      "employmentTypeUrn": "urn:li:fsd_employmentType:11",
+      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,57687386)",
+      "geoLocationName": null,
+      "multiLocaleGeoLocationName": null,
+      "hasSkillAssociations": false,
+      "multiLocaleDescription": {
+        "en_US": "Zynga connects the world through games, and is the developer of prominent titles such as FarmVille and Words with Friends. \n\nI joined Zynga's board in 2008 and played a small role supporting the executive team’s early stage growth. Zynga was acquired by Take-Two Interactive in 2022."
+      },
+      "multiLocaleLocationName": null,
+      "sourceOfHireType": null
+    },
+    {
+      "shouldShowSourceOfHireBadge": false,
+      "locationName": null,
+      "multiLocaleTitle": {
+        "en_US": "Co-Founder, Executive Board Chair"
+      },
+      "dateRange": {
+        "start": {
+          "month": 1,
+          "year": 2025,
+          "$type": "com.linkedin.common.Date"
+        },
+        "$type": "com.linkedin.common.DateRange"
+      },
+      "multiLocaleCompanyName": {
+        "en_US": "Manas AI"
+      },
+      "geoUrn": null,
+      "companyName": "Manas AI",
+      "description": "Manas AI leverages proprietary AI, generative computational chemistry, and best in class biology to cut the timeline and costs of traditional therapeutic discovery and transform the treatment of cancer and rare disease.\n\nWhile we're still in the early stages of contemporary AI development, initiatives like Manas AI show how close we already are to advances that can profoundly change the world. Success in our quest will give thousands of oncologists around the world new therapeutics to combat diseases that have shaped human existence since before recorded history, constraining human possibilities and causing immense suffering and loss. The future of medicine has never held more promise.",
+      "title": "Co-Founder, Executive Board Chair",
+      "companyUrn": "urn:li:fsd_company:106067845",
       "$type": "com.linkedin.voyager.dash.identity.profile.Position",
       "regionUrn": null,
       "employmentTypeUrn": null,
-      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAB0HYGIB-tRnwIv_Uwmz8-4uYsbUUbevBOM,981808677)",
-      "geoLocationName": "Chennai Area, India",
+      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,2564122178)",
+      "geoLocationName": null,
+      "multiLocaleGeoLocationName": null,
+      "hasSkillAssociations": false,
+      "multiLocaleDescription": {
+        "en_US": "Manas AI leverages proprietary AI, generative computational chemistry, and best in class biology to cut the timeline and costs of traditional therapeutic discovery and transform the treatment of cancer and rare disease.\n\nWhile we're still in the early stages of contemporary AI development, initiatives like Manas AI show how close we already are to advances that can profoundly change the world. Success in our quest will give thousands of oncologists around the world new therapeutics to combat diseases that have shaped human existence since before recorded history, constraining human possibilities and causing immense suffering and loss. The future of medicine has never held more promise."
+      },
+      "multiLocaleLocationName": null,
+      "sourceOfHireType": null
+    },
+    {
+      "shouldShowSourceOfHireBadge": false,
+      "locationName": null,
+      "multiLocaleTitle": {
+        "en_US": "Member, World Economy Advisory Board "
+      },
+      "dateRange": {
+        "start": {
+          "month": 1,
+          "year": 2026,
+          "$type": "com.linkedin.common.Date"
+        },
+        "$type": "com.linkedin.common.DateRange"
+      },
+      "multiLocaleCompanyName": {
+        "en_US": "SEMAFOR"
+      },
+      "geoUrn": null,
+      "companyName": "SEMAFOR",
+      "description": "Semafor World Economy is dedicated to empowering global decision makers to navigate extraordinary complexity by curating the richest insights, ideas, and diverse perspectives on the new world economy.",
+      "title": "Member, World Economy Advisory Board ",
+      "companyUrn": "urn:li:fsd_company:86322721",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Position",
+      "regionUrn": null,
+      "employmentTypeUrn": null,
+      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,2827885200)",
+      "geoLocationName": null,
+      "multiLocaleGeoLocationName": null,
+      "hasSkillAssociations": false,
+      "multiLocaleDescription": {
+        "en_US": "Semafor World Economy is dedicated to empowering global decision makers to navigate extraordinary complexity by curating the richest insights, ideas, and diverse perspectives on the new world economy."
+      },
+      "multiLocaleLocationName": null,
+      "sourceOfHireType": null
+    },
+    {
+      "shouldShowSourceOfHireBadge": false,
+      "locationName": "Santa Cruz, California, United States",
+      "multiLocaleTitle": {
+        "en_US": "Board Member"
+      },
+      "dateRange": {
+        "start": {
+          "month": 8,
+          "year": 2021,
+          "$type": "com.linkedin.common.Date"
+        },
+        "end": {
+          "month": 6,
+          "year": 2024,
+          "$type": "com.linkedin.common.Date"
+        },
+        "$type": "com.linkedin.common.DateRange"
+      },
+      "multiLocaleCompanyName": {
+        "en_US": "Joby Aviation"
+      },
+      "geoUrn": "urn:li:fsd_geo:101627389",
+      "companyName": "Joby Aviation",
+      "description": "Joby Aviation is an electric vertical takeoff and landing (eVTOL) aircraft company aiming to redefine urban transportation. Its aircraft promise zero-emission, quiet, and efficient air travel.\n\nJoby is a pioneer in the future of sustainable, urban transportation.",
+      "title": "Board Member",
+      "companyUrn": "urn:li:fsd_company:6407329",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Position",
+      "regionUrn": null,
+      "employmentTypeUrn": "urn:li:fsd_employmentType:11",
+      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,1851776406)",
+      "geoLocationName": "Santa Cruz, California, United States",
       "multiLocaleGeoLocationName": {
-        "en_US": "Chennai Area, India"
+        "en_US": "Santa Cruz, California, United States"
+      },
+      "hasSkillAssociations": false,
+      "multiLocaleDescription": {
+        "en_US": "Joby Aviation is an electric vertical takeoff and landing (eVTOL) aircraft company aiming to redefine urban transportation. Its aircraft promise zero-emission, quiet, and efficient air travel.\n\nJoby is a pioneer in the future of sustainable, urban transportation."
+      },
+      "multiLocaleLocationName": {
+        "en_US": "Santa Cruz, California, United States"
+      },
+      "sourceOfHireType": null
+    },
+    {
+      "shouldShowSourceOfHireBadge": false,
+      "locationName": "San Francisco Bay Area",
+      "multiLocaleTitle": {
+        "en_US": "Board Member"
+      },
+      "dateRange": {
+        "start": {
+          "month": 3,
+          "year": 2019,
+          "$type": "com.linkedin.common.Date"
+        },
+        "end": {
+          "month": 2,
+          "year": 2023,
+          "$type": "com.linkedin.common.Date"
+        },
+        "$type": "com.linkedin.common.DateRange"
+      },
+      "multiLocaleCompanyName": {
+        "en_US": "OpenAI"
+      },
+      "geoUrn": "urn:li:fsd_geo:90000084",
+      "companyName": "OpenAI",
+      "description": "OpenAI is creating Beneficial Artificial Intelligence for society, humanity, and industries. OpenAI's mission is to ensure that artificial general intelligence (AGI) benefits all of humanity. \nIn 2015, I was honored to be the earliest investor in OpenAI, and serving on the company’s board during the launch of Chat GPT – which kickstarted the broad AI revolution. In 2023 I stepped down from the company’s board to avoid conflicts of interest, though I still remain dedicated to OpenAI’s growth, and the larger mission to use AI to benefit humanity.",
+      "title": "Board Member",
+      "companyUrn": "urn:li:fsd_company:11130470",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Position",
+      "regionUrn": null,
+      "employmentTypeUrn": "urn:li:fsd_employmentType:11",
+      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,2072050166)",
+      "geoLocationName": "San Francisco Bay Area",
+      "multiLocaleGeoLocationName": {
+        "en_US": "San Francisco Bay Area"
+      },
+      "hasSkillAssociations": false,
+      "multiLocaleDescription": {
+        "en_US": "OpenAI is creating Beneficial Artificial Intelligence for society, humanity, and industries. OpenAI's mission is to ensure that artificial general intelligence (AGI) benefits all of humanity. \nIn 2015, I was honored to be the earliest investor in OpenAI, and serving on the company’s board during the launch of Chat GPT – which kickstarted the broad AI revolution. In 2023 I stepped down from the company’s board to avoid conflicts of interest, though I still remain dedicated to OpenAI’s growth, and the larger mission to use AI to benefit humanity."
+      },
+      "multiLocaleLocationName": {
+        "en_US": "San Francisco Bay Area"
+      },
+      "sourceOfHireType": "REFERRAL"
+    },
+    {
+      "shouldShowSourceOfHireBadge": false,
+      "locationName": "Seattle, WA",
+      "multiLocaleTitle": {
+        "en_US": "Partner"
+      },
+      "dateRange": {
+        "start": {
+          "month": 11,
+          "year": 2009,
+          "$type": "com.linkedin.common.Date"
+        },
+        "$type": "com.linkedin.common.DateRange"
+      },
+      "multiLocaleCompanyName": {
+        "en_US": "Greylock"
+      },
+      "geoUrn": "urn:li:fsd_geo:104116203",
+      "companyName": "Greylock",
+      "description": "Greylock partners with entrepreneurs to build market-transforming companies. Notable Greylock portfolio companies include Linkedin, Airbnb, Facebook, Workday, Roblox, Palo Alto Networks, Dropbox, Pure Storage, Instagram and Discord. \n\nMy primary focus is world-class entrepreneurs with bold new ideas with the possibility of massive scale. I also focus on companies in domains where my product and entrepreneurial experience applies strongly: artificial intelligence, consumer internet, enterprise 2.0, mobile, social gaming, online marketplaces, payments, SAAS, and social networks.",
+      "title": "Partner",
+      "companyUrn": "urn:li:fsd_company:18077",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Position",
+      "regionUrn": null,
+      "employmentTypeUrn": "urn:li:fsd_employmentType:11",
+      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,94771883)",
+      "geoLocationName": "Seattle, WA",
+      "multiLocaleGeoLocationName": {
+        "en_US": "Seattle, WA"
+      },
+      "hasSkillAssociations": false,
+      "multiLocaleDescription": {
+        "en_US": "Greylock partners with entrepreneurs to build market-transforming companies. Notable Greylock portfolio companies include Linkedin, Airbnb, Facebook, Workday, Roblox, Palo Alto Networks, Dropbox, Pure Storage, Instagram and Discord. \n\nMy primary focus is world-class entrepreneurs with bold new ideas with the possibility of massive scale. I also focus on companies in domains where my product and entrepreneurial experience applies strongly: artificial intelligence, consumer internet, enterprise 2.0, mobile, social gaming, online marketplaces, payments, SAAS, and social networks."
+      },
+      "multiLocaleLocationName": {
+        "en_US": "Seattle, WA"
+      },
+      "sourceOfHireType": null
+    },
+    {
+      "shouldShowSourceOfHireBadge": false,
+      "locationName": null,
+      "multiLocaleTitle": {
+        "en_US": "Board Member"
+      },
+      "dateRange": {
+        "start": {
+          "month": 7,
+          "year": 2010,
+          "$type": "com.linkedin.common.Date"
+        },
+        "end": {
+          "month": 10,
+          "year": 2014,
+          "$type": "com.linkedin.common.Date"
+        },
+        "$type": "com.linkedin.common.DateRange"
+      },
+      "multiLocaleCompanyName": {
+        "en_US": "shopkick"
+      },
+      "geoUrn": null,
+      "companyName": "shopkick",
+      "description": "shopkick developed a shopping rewards app that allowed users to earn \"kicks\"—reward points redeemable for gift cards—by engaging in different shopping activities both online and in physical stores. \n\nI served on shopkick’s board until October 2014, when the company was acquired by SK Planet.",
+      "title": "Board Member",
+      "companyUrn": "urn:li:fsd_company:831240",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Position",
+      "regionUrn": null,
+      "employmentTypeUrn": "urn:li:fsd_employmentType:11",
+      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,357225839)",
+      "geoLocationName": null,
+      "multiLocaleGeoLocationName": null,
+      "hasSkillAssociations": false,
+      "multiLocaleDescription": {
+        "en_US": "shopkick developed a shopping rewards app that allowed users to earn \"kicks\"—reward points redeemable for gift cards—by engaging in different shopping activities both online and in physical stores. \n\nI served on shopkick’s board until October 2014, when the company was acquired by SK Planet."
+      },
+      "multiLocaleLocationName": null,
+      "sourceOfHireType": null
+    },
+    {
+      "shouldShowSourceOfHireBadge": false,
+      "locationName": null,
+      "multiLocaleTitle": {
+        "en_US": "Board Member"
+      },
+      "dateRange": {
+        "start": {
+          "month": 4,
+          "year": 2003,
+          "$type": "com.linkedin.common.Date"
+        },
+        "end": {
+          "month": 11,
+          "year": 2010,
+          "$type": "com.linkedin.common.Date"
+        },
+        "$type": "com.linkedin.common.DateRange"
+      },
+      "multiLocaleCompanyName": {
+        "en_US": "Six Apart"
+      },
+      "geoUrn": null,
+      "companyName": "Six Apart",
+      "description": "Six Apart was an early innovator in blogging software, empowering users to create and share online content through platforms like Movable Type and TypePad.\n\nI served on the company’s board until it’s merger with VideoEgg. Shortly after, Six Apart Japan was acquired by Infocom in 2011.",
+      "title": "Board Member",
+      "companyUrn": "urn:li:fsd_company:8772",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Position",
+      "regionUrn": null,
+      "employmentTypeUrn": "urn:li:fsd_employmentType:11",
+      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,10249)",
+      "geoLocationName": null,
+      "multiLocaleGeoLocationName": null,
+      "hasSkillAssociations": false,
+      "multiLocaleDescription": {
+        "en_US": "Six Apart was an early innovator in blogging software, empowering users to create and share online content through platforms like Movable Type and TypePad.\n\nI served on the company’s board until it’s merger with VideoEgg. Shortly after, Six Apart Japan was acquired by Infocom in 2011."
+      },
+      "multiLocaleLocationName": null,
+      "sourceOfHireType": null
+    },
+    {
+      "shouldShowSourceOfHireBadge": false,
+      "locationName": null,
+      "multiLocaleTitle": {
+        "en_US": "Senior User Experience Architect"
+      },
+      "dateRange": {
+        "start": {
+          "month": 4,
+          "year": 1994,
+          "$type": "com.linkedin.common.Date"
+        },
+        "end": {
+          "month": 2,
+          "year": 1996,
+          "$type": "com.linkedin.common.Date"
+        },
+        "$type": "com.linkedin.common.DateRange"
+      },
+      "multiLocaleCompanyName": {
+        "en_US": "Apple Computer"
+      },
+      "geoUrn": null,
+      "companyName": "Apple Computer",
+      "description": "Responsible for the design and launch of eWorld International, Classifieds, Global Access Assistant, and other strategic projects.",
+      "title": "Senior User Experience Architect",
+      "companyUrn": "urn:li:fsd_company:162479",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Position",
+      "regionUrn": null,
+      "employmentTypeUrn": "urn:li:fsd_employmentType:12",
+      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,10243)",
+      "geoLocationName": null,
+      "multiLocaleGeoLocationName": null,
+      "hasSkillAssociations": false,
+      "multiLocaleDescription": {
+        "en_US": "Responsible for the design and launch of eWorld International, Classifieds, Global Access Assistant, and other strategic projects."
+      },
+      "multiLocaleLocationName": null,
+      "sourceOfHireType": null
+    },
+    {
+      "shouldShowSourceOfHireBadge": false,
+      "locationName": "Seattle, Washington, United States",
+      "multiLocaleTitle": {
+        "en_US": "Board Member"
+      },
+      "dateRange": {
+        "start": {
+          "month": 3,
+          "year": 2017,
+          "$type": "com.linkedin.common.Date"
+        },
+        "$type": "com.linkedin.common.DateRange"
+      },
+      "multiLocaleCompanyName": {
+        "en_US": "Microsoft"
+      },
+      "geoUrn": "urn:li:fsd_geo:104116203",
+      "companyName": "Microsoft",
+      "description": "Microsoft's mission is to empower every person and every organization on the planet to achieve more.\n\nI believe in technology's power to empower people and transform industries. Microsoft exemplifies this mission at a global scale. Joining the board allowed me to contribute to a company that is using AI and cloud computing to amplify human potential and enhance productivity and creativity for billions.",
+      "title": "Board Member",
+      "companyUrn": "urn:li:fsd_company:1035",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Position",
+      "regionUrn": null,
+      "employmentTypeUrn": "urn:li:fsd_employmentType:11",
+      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,950442023)",
+      "geoLocationName": "Seattle, Washington, United States",
+      "multiLocaleGeoLocationName": {
+        "en_US": "Seattle, Washington, United States"
+      },
+      "hasSkillAssociations": false,
+      "multiLocaleDescription": {
+        "en_US": "Microsoft's mission is to empower every person and every organization on the planet to achieve more.\n\nI believe in technology's power to empower people and transform industries. Microsoft exemplifies this mission at a global scale. Joining the board allowed me to contribute to a company that is using AI and cloud computing to amplify human potential and enhance productivity and creativity for billions."
+      },
+      "multiLocaleLocationName": {
+        "en_US": "Seattle, Washington, United States"
+      },
+      "sourceOfHireType": null
+    },
+    {
+      "shouldShowSourceOfHireBadge": false,
+      "locationName": "San Francisco Bay Area",
+      "multiLocaleTitle": {
+        "en_US": "Board Observer"
+      },
+      "dateRange": {
+        "start": {
+          "month": 11,
+          "year": 2010,
+          "$type": "com.linkedin.common.Date"
+        },
+        "end": {
+          "month": 12,
+          "year": 2020,
+          "$type": "com.linkedin.common.Date"
+        },
+        "$type": "com.linkedin.common.DateRange"
+      },
+      "multiLocaleCompanyName": {
+        "en_US": "Airbnb"
+      },
+      "geoUrn": "urn:li:fsd_geo:90000084",
+      "companyName": "Airbnb",
+      "description": "Airbnb is a trusted community marketplace for people to list, discover, and book unique accommodations around the world — online or from a mobile phone. Airbnb has revolutionized the market to become the world's largest community-driven hospitality company. \n\nLeading Airbnb’s Series A was my first investment at Greylock Partners, and working with the executive team to scale the business from a couple hundred users to over 150 million worldwide has been one of the most favorable experiences of my professional career.",
+      "title": "Board Observer",
+      "companyUrn": "urn:li:fsd_company:309694",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Position",
+      "regionUrn": null,
+      "employmentTypeUrn": "urn:li:fsd_employmentType:11",
+      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,408693230)",
+      "geoLocationName": "San Francisco Bay Area",
+      "multiLocaleGeoLocationName": {
+        "en_US": "San Francisco Bay Area"
+      },
+      "hasSkillAssociations": false,
+      "multiLocaleDescription": {
+        "en_US": "Airbnb is a trusted community marketplace for people to list, discover, and book unique accommodations around the world — online or from a mobile phone. Airbnb has revolutionized the market to become the world's largest community-driven hospitality company. \n\nLeading Airbnb’s Series A was my first investment at Greylock Partners, and working with the executive team to scale the business from a couple hundred users to over 150 million worldwide has been one of the most favorable experiences of my professional career."
+      },
+      "multiLocaleLocationName": {
+        "en_US": "San Francisco Bay Area"
+      },
+      "sourceOfHireType": null
+    },
+    {
+      "shouldShowSourceOfHireBadge": false,
+      "locationName": null,
+      "multiLocaleTitle": {
+        "en_US": "Member, Board of Directors"
+      },
+      "dateRange": {
+        "start": {
+          "month": 12,
+          "year": 1998,
+          "$type": "com.linkedin.common.Date"
+        },
+        "end": {
+          "month": 1,
+          "year": 2000,
+          "$type": "com.linkedin.common.Date"
+        },
+        "$type": "com.linkedin.common.DateRange"
+      },
+      "multiLocaleCompanyName": {
+        "en_US": "PayPal"
+      },
+      "geoUrn": null,
+      "companyName": "PayPal",
+      "description": "On the board of directors at the founding of the company.",
+      "title": "Member, Board of Directors",
+      "companyUrn": "urn:li:fsd_company:1482",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Position",
+      "regionUrn": null,
+      "employmentTypeUrn": "urn:li:fsd_employmentType:11",
+      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,10250)",
+      "geoLocationName": null,
+      "multiLocaleGeoLocationName": null,
+      "hasSkillAssociations": false,
+      "multiLocaleDescription": {
+        "en_US": "On the board of directors at the founding of the company."
+      },
+      "multiLocaleLocationName": null,
+      "sourceOfHireType": null
+    },
+    {
+      "shouldShowSourceOfHireBadge": false,
+      "locationName": "Mountain View, California, United States",
+      "multiLocaleTitle": {
+        "en_US": "Board Member"
+      },
+      "dateRange": {
+        "start": {
+          "month": 1,
+          "year": 2019,
+          "$type": "com.linkedin.common.Date"
+        },
+        "end": {
+          "month": 5,
+          "year": 2023,
+          "$type": "com.linkedin.common.Date"
+        },
+        "$type": "com.linkedin.common.DateRange"
+      },
+      "multiLocaleCompanyName": {
+        "en_US": "Neeva"
+      },
+      "geoUrn": "urn:li:fsd_geo:102250832",
+      "companyName": "Neeva",
+      "description": "Neeva is search re-imagined. Always ad-free, private, and personal. Co-founded by Sridhar Ramaswamy (ex-SVP of Ads at Google) and Vivek Raghunathan (ex-VP of Monetization at YouTube).\n\nI served on Neeva’s board until their acquisition by Snowflake in 2023",
+      "title": "Board Member",
+      "companyUrn": "urn:li:fsd_company:37539307",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Position",
+      "regionUrn": null,
+      "employmentTypeUrn": "urn:li:fsd_employmentType:11",
+      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,1715955880)",
+      "geoLocationName": "Mountain View, California, United States",
+      "multiLocaleGeoLocationName": {
+        "en_US": "Mountain View, California, United States"
+      },
+      "hasSkillAssociations": false,
+      "multiLocaleDescription": {
+        "en_US": "Neeva is search re-imagined. Always ad-free, private, and personal. Co-founded by Sridhar Ramaswamy (ex-SVP of Ads at Google) and Vivek Raghunathan (ex-VP of Monetization at YouTube).\n\nI served on Neeva’s board until their acquisition by Snowflake in 2023"
+      },
+      "multiLocaleLocationName": {
+        "en_US": "Mountain View, California, United States"
+      },
+      "sourceOfHireType": "REFERRAL"
+    },
+    {
+      "shouldShowSourceOfHireBadge": false,
+      "locationName": null,
+      "multiLocaleTitle": {
+        "en_US": "Executive Vice-President"
+      },
+      "dateRange": {
+        "start": {
+          "month": 1,
+          "year": 2000,
+          "$type": "com.linkedin.common.Date"
+        },
+        "end": {
+          "month": 10,
+          "year": 2002,
+          "$type": "com.linkedin.common.Date"
+        },
+        "$type": "com.linkedin.common.DateRange"
+      },
+      "multiLocaleCompanyName": {
+        "en_US": "PayPal"
+      },
+      "geoUrn": null,
+      "companyName": "PayPal",
+      "description": "Responsible for all external relationships for PayPal, including Payments Infrastructure (VISA, MasterCard, ACH, WellsFargo), Business Development (eBay, Intuit, others), Goverment (Regulatory, Judicial), and Legal.  At various times, also responsible for PR, Strategy, Payments Innovations, and Customer Service.",
+      "title": "Executive Vice-President",
+      "companyUrn": "urn:li:fsd_company:1482",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Position",
+      "regionUrn": null,
+      "employmentTypeUrn": "urn:li:fsd_employmentType:12",
+      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,10230)",
+      "geoLocationName": null,
+      "multiLocaleGeoLocationName": null,
+      "hasSkillAssociations": false,
+      "multiLocaleDescription": {
+        "en_US": "Responsible for all external relationships for PayPal, including Payments Infrastructure (VISA, MasterCard, ACH, WellsFargo), Business Development (eBay, Intuit, others), Goverment (Regulatory, Judicial), and Legal.  At various times, also responsible for PR, Strategy, Payments Innovations, and Customer Service."
+      },
+      "multiLocaleLocationName": null,
+      "sourceOfHireType": null
+    },
+    {
+      "shouldShowSourceOfHireBadge": false,
+      "locationName": "Cambridge, England, United Kingdom",
+      "multiLocaleTitle": {
+        "en_US": "Dean's Senior Fellow"
+      },
+      "dateRange": {
+        "start": {
+          "month": 6,
+          "year": 2025,
+          "$type": "com.linkedin.common.Date"
+        },
+        "$type": "com.linkedin.common.DateRange"
+      },
+      "multiLocaleCompanyName": {
+        "en_US": "Cambridge Judge Business School"
+      },
+      "geoUrn": "urn:li:fsd_geo:104006709",
+      "companyName": "Cambridge Judge Business School",
+      "description": null,
+      "title": "Dean's Senior Fellow",
+      "companyUrn": "urn:li:fsd_company:4521",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Position",
+      "regionUrn": null,
+      "employmentTypeUrn": "urn:li:fsd_employmentType:11",
+      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,2673314571)",
+      "geoLocationName": "Cambridge, England, United Kingdom",
+      "multiLocaleGeoLocationName": {
+        "en_US": "Cambridge, England, United Kingdom"
       },
       "hasSkillAssociations": false,
       "multiLocaleLocationName": {
-        "en_US": "Chennai Area, India"
+        "en_US": "Cambridge, England, United Kingdom"
       },
       "multiLocaleDescription": null,
+      "sourceOfHireType": null
+    },
+    {
+      "shouldShowSourceOfHireBadge": false,
+      "locationName": "London Area, United Kingdom",
+      "multiLocaleTitle": {
+        "en_US": "Visiting Senior Fellow"
+      },
+      "dateRange": {
+        "start": {
+          "month": 2,
+          "year": 2025,
+          "$type": "com.linkedin.common.Date"
+        },
+        "$type": "com.linkedin.common.DateRange"
+      },
+      "multiLocaleCompanyName": {
+        "en_US": "The London School of Economics and Political Science (LSE)"
+      },
+      "geoUrn": "urn:li:fsd_geo:90009496",
+      "companyName": "The London School of Economics and Political Science (LSE)",
+      "description": "Appointed as a Visiting Senior Fellow at LSE’s Data Science Institute (DSI).\n\nI will interact with LSE students and faculty and participate in events including discussions and workshops during my visits to London. In the role, I will draw on my experience in technological entrepreneurship and the impacts of new technologies on society, the function of education and the university, and geopolitics of technology.",
+      "title": "Visiting Senior Fellow",
+      "companyUrn": "urn:li:fsd_company:6544",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Position",
+      "regionUrn": null,
+      "employmentTypeUrn": "urn:li:fsd_employmentType:11",
+      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,2594501529)",
+      "geoLocationName": "London Area, United Kingdom",
+      "multiLocaleGeoLocationName": {
+        "en_US": "London Area, United Kingdom"
+      },
+      "hasSkillAssociations": false,
+      "multiLocaleDescription": {
+        "en_US": "Appointed as a Visiting Senior Fellow at LSE’s Data Science Institute (DSI).\n\nI will interact with LSE students and faculty and participate in events including discussions and workshops during my visits to London. In the role, I will draw on my experience in technological entrepreneurship and the impacts of new technologies on society, the function of education and the university, and geopolitics of technology."
+      },
+      "multiLocaleLocationName": {
+        "en_US": "London Area, United Kingdom"
+      },
+      "sourceOfHireType": null
+    },
+    {
+      "shouldShowSourceOfHireBadge": false,
+      "locationName": "Greater Seattle Area",
+      "multiLocaleTitle": {
+        "en_US": "Board Member"
+      },
+      "dateRange": {
+        "start": {
+          "month": 1,
+          "year": 2016,
+          "$type": "com.linkedin.common.Date"
+        },
+        "end": {
+          "month": 10,
+          "year": 2023,
+          "$type": "com.linkedin.common.Date"
+        },
+        "$type": "com.linkedin.common.DateRange"
+      },
+      "multiLocaleCompanyName": {
+        "en_US": "Convoy Inc"
+      },
+      "geoUrn": "urn:li:fsd_geo:90000091",
+      "companyName": "Convoy Inc",
+      "description": "Convoy is a digital freight network that uses technology to optimize trucking logistics, reducing costs and environmental impact. It connects shippers with carriers through a seamless platform.\n\nI served on Convoy’s board until 2023, when the company transitioned to become a part of Flexport.",
+      "title": "Board Member",
+      "companyUrn": "urn:li:fsd_company:10254315",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Position",
+      "regionUrn": null,
+      "employmentTypeUrn": "urn:li:fsd_employmentType:11",
+      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,985000994)",
+      "geoLocationName": "Greater Seattle Area",
+      "multiLocaleGeoLocationName": {
+        "en_US": "Greater Seattle Area"
+      },
+      "hasSkillAssociations": false,
+      "multiLocaleDescription": {
+        "en_US": "Convoy is a digital freight network that uses technology to optimize trucking logistics, reducing costs and environmental impact. It connects shippers with carriers through a seamless platform.\n\nI served on Convoy’s board until 2023, when the company transitioned to become a part of Flexport."
+      },
+      "multiLocaleLocationName": {
+        "en_US": "Greater Seattle Area"
+      },
+      "sourceOfHireType": null
+    },
+    {
+      "shouldShowSourceOfHireBadge": false,
+      "locationName": "New York, United States",
+      "multiLocaleTitle": {
+        "en_US": "Distinguished Fellow"
+      },
+      "dateRange": {
+        "start": {
+          "month": 10,
+          "year": 2024,
+          "$type": "com.linkedin.common.Date"
+        },
+        "end": {
+          "month": 9,
+          "year": 2025,
+          "$type": "com.linkedin.common.Date"
+        },
+        "$type": "com.linkedin.common.DateRange"
+      },
+      "multiLocaleCompanyName": {
+        "en_US": "Columbia University"
+      },
+      "geoUrn": "urn:li:fsd_geo:105080838",
+      "companyName": "Columbia University",
+      "description": "Institute of Global Politics",
+      "title": "Distinguished Fellow",
+      "companyUrn": "urn:li:fsd_company:2624",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Position",
+      "regionUrn": null,
+      "employmentTypeUrn": "urn:li:fsd_employmentType:11",
+      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,2594506169)",
+      "geoLocationName": "New York, United States",
+      "multiLocaleGeoLocationName": {
+        "en_US": "New York, United States"
+      },
+      "hasSkillAssociations": false,
+      "multiLocaleDescription": {
+        "en_US": "Institute of Global Politics"
+      },
+      "multiLocaleLocationName": {
+        "en_US": "New York, United States"
+      },
+      "sourceOfHireType": null
+    },
+    {
+      "shouldShowSourceOfHireBadge": false,
+      "locationName": "London Area, United Kingdom",
+      "multiLocaleTitle": {
+        "en_US": "Board Member"
+      },
+      "dateRange": {
+        "start": {
+          "month": 11,
+          "year": 2014,
+          "$type": "com.linkedin.common.Date"
+        },
+        "end": {
+          "month": 9,
+          "year": 2024,
+          "$type": "com.linkedin.common.Date"
+        },
+        "$type": "com.linkedin.common.DateRange"
+      },
+      "multiLocaleCompanyName": {
+        "en_US": "Blockstream"
+      },
+      "geoUrn": "urn:li:fsd_geo:90009496",
+      "companyName": "Blockstream",
+      "description": "Blockstream is a leader in Bitcoin and blockchain technology, offering solutions for scaling, security, and decentralized financial systems. Its products include the Liquid Network and Bitcoin mining services.\n\n\nSince 2015, I have been writing about the power of Blockchain technology to redefine finance and ownership online. Serving on Blockstream’s board allowed me to support that vision and a dedicated team of builders.",
+      "title": "Board Member",
+      "companyUrn": "urn:li:fsd_company:3998145",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Position",
+      "regionUrn": null,
+      "employmentTypeUrn": "urn:li:fsd_employmentType:11",
+      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,985000990)",
+      "geoLocationName": "London Area, United Kingdom",
+      "multiLocaleGeoLocationName": {
+        "en_US": "London Area, United Kingdom"
+      },
+      "hasSkillAssociations": false,
+      "multiLocaleDescription": {
+        "en_US": "Blockstream is a leader in Bitcoin and blockchain technology, offering solutions for scaling, security, and decentralized financial systems. Its products include the Liquid Network and Bitcoin mining services.\n\n\nSince 2015, I have been writing about the power of Blockchain technology to redefine finance and ownership online. Serving on Blockstream’s board allowed me to support that vision and a dedicated team of builders."
+      },
+      "multiLocaleLocationName": {
+        "en_US": "London Area, United Kingdom"
+      },
+      "sourceOfHireType": null
+    },
+    {
+      "shouldShowSourceOfHireBadge": false,
+      "locationName": "Palo Alto, California, United States",
+      "multiLocaleTitle": {
+        "en_US": "Co-Founder, Board Member"
+      },
+      "dateRange": {
+        "start": {
+          "month": 3,
+          "year": 2022,
+          "$type": "com.linkedin.common.Date"
+        },
+        "$type": "com.linkedin.common.DateRange"
+      },
+      "multiLocaleCompanyName": {
+        "en_US": "Inflection AI"
+      },
+      "geoUrn": "urn:li:fsd_geo:101876708",
+      "companyName": "Inflection AI",
+      "description": "Inflection AI is a public benefit corporation leveraging our world-class large language model to build the first AI platform focused on the needs of the enterprise. \n\nI helped start Inflection AI to further a vision where artificial intelligence empowers individuals and amplifies human capabilities. In March 2024, an expanded team of kind, innovative, and collaborative individuals grew Inflection’s scope to focus on building enterprise AI solutions.",
+      "title": "Co-Founder, Board Member",
+      "companyUrn": "urn:li:fsd_company:79994924",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Position",
+      "regionUrn": null,
+      "employmentTypeUrn": "urn:li:fsd_employmentType:11",
+      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,1932435486)",
+      "geoLocationName": "Palo Alto, California, United States",
+      "multiLocaleGeoLocationName": {
+        "en_US": "Palo Alto, California, United States"
+      },
+      "hasSkillAssociations": false,
+      "multiLocaleDescription": {
+        "en_US": "Inflection AI is a public benefit corporation leveraging our world-class large language model to build the first AI platform focused on the needs of the enterprise. \n\nI helped start Inflection AI to further a vision where artificial intelligence empowers individuals and amplifies human capabilities. In March 2024, an expanded team of kind, innovative, and collaborative individuals grew Inflection’s scope to focus on building enterprise AI solutions."
+      },
+      "multiLocaleLocationName": {
+        "en_US": "Palo Alto, California, United States"
+      },
+      "sourceOfHireType": null
+    },
+    {
+      "shouldShowSourceOfHireBadge": false,
+      "locationName": "Silicon Valley",
+      "multiLocaleTitle": {
+        "en_US": "Board Member"
+      },
+      "dateRange": {
+        "start": {
+          "month": 12,
+          "year": 2011,
+          "$type": "com.linkedin.common.Date"
+        },
+        "end": {
+          "month": 4,
+          "year": 2018,
+          "$type": "com.linkedin.common.Date"
+        },
+        "$type": "com.linkedin.common.DateRange"
+      },
+      "multiLocaleCompanyName": {
+        "en_US": "Edmodo"
+      },
+      "geoUrn": null,
+      "companyName": "Edmodo",
+      "description": "Founded in 2008 and used by 91 of the top 100 U.S. school districts, Edmodo was designed to connect learners with the people and resources they need to reach their full potential. \n\nOn Edmodo, teachers were at the center of a dynamic and engaging network that connects them to students, administrators and parents, and surfaces the world’s best resources and formative assessment tools that contribute to better learning outcomes.",
+      "title": "Board Member",
+      "companyUrn": "urn:li:fsd_company:764505",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Position",
+      "regionUrn": null,
+      "employmentTypeUrn": "urn:li:fsd_employmentType:11",
+      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,357226376)",
+      "geoLocationName": "Silicon Valley",
+      "multiLocaleGeoLocationName": {
+        "en_US": "Silicon Valley"
+      },
+      "hasSkillAssociations": false,
+      "multiLocaleDescription": {
+        "en_US": "Founded in 2008 and used by 91 of the top 100 U.S. school districts, Edmodo was designed to connect learners with the people and resources they need to reach their full potential. \n\nOn Edmodo, teachers were at the center of a dynamic and engaging network that connects them to students, administrators and parents, and surfaces the world’s best resources and formative assessment tools that contribute to better learning outcomes."
+      },
+      "multiLocaleLocationName": {
+        "en_US": "Silicon Valley"
+      },
+      "sourceOfHireType": null
+    },
+    {
+      "shouldShowSourceOfHireBadge": false,
+      "locationName": "Greater Oxford Area",
+      "multiLocaleTitle": {
+        "en_US": "Honorary Fellow"
+      },
+      "dateRange": {
+        "start": {
+          "month": 10,
+          "year": 2016,
+          "$type": "com.linkedin.common.Date"
+        },
+        "$type": "com.linkedin.common.DateRange"
+      },
+      "multiLocaleCompanyName": {
+        "en_US": "Wolfson College, Oxford"
+      },
+      "geoUrn": "urn:li:fsd_geo:90009503",
+      "companyName": "Wolfson College, Oxford",
+      "description": "I first attended Wolfson College at the University of Oxford as a Marshall Scholar, earning an MSt in Philosophy in 1993. It was a privilege to be awarded an Honorary Fellowship by my alma mater in 2016.",
+      "title": "Honorary Fellow",
+      "companyUrn": "urn:li:fsd_company:5762424",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Position",
+      "regionUrn": null,
+      "employmentTypeUrn": "urn:li:fsd_employmentType:11",
+      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,954118225)",
+      "geoLocationName": "Greater Oxford Area",
+      "multiLocaleGeoLocationName": {
+        "en_US": "Greater Oxford Area"
+      },
+      "hasSkillAssociations": false,
+      "multiLocaleDescription": {
+        "en_US": "I first attended Wolfson College at the University of Oxford as a Marshall Scholar, earning an MSt in Philosophy in 1993. It was a privilege to be awarded an Honorary Fellowship by my alma mater in 2016."
+      },
+      "multiLocaleLocationName": {
+        "en_US": "Greater Oxford Area"
+      },
+      "sourceOfHireType": null
+    },
+    {
+      "shouldShowSourceOfHireBadge": false,
+      "locationName": null,
+      "multiLocaleTitle": {
+        "en_US": "Angel Investor"
+      },
+      "dateRange": {
+        "start": {
+          "month": 9,
+          "year": 2000,
+          "$type": "com.linkedin.common.Date"
+        },
+        "end": {
+          "month": 11,
+          "year": 2009,
+          "$type": "com.linkedin.common.Date"
+        },
+        "$type": "com.linkedin.common.DateRange"
+      },
+      "multiLocaleCompanyName": {
+        "en_US": "Aufklarung LLC"
+      },
+      "geoUrn": null,
+      "companyName": "Aufklarung LLC",
+      "description": "Angel investor (seed, series A) in over 70 companies.  Some notable companies include: www.facebook.com, www.zynga.com, www.linkedin.com, www.digg.com, www.last.fm, www.flickr.com, www.fandom.com, www.ironport.com, and www.shopkick.com.",
+      "title": "Angel Investor",
+      "companyUrn": null,
+      "$type": "com.linkedin.voyager.dash.identity.profile.Position",
+      "regionUrn": null,
+      "employmentTypeUrn": "urn:li:fsd_employmentType:11",
+      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,2052028)",
+      "geoLocationName": null,
+      "multiLocaleGeoLocationName": null,
+      "hasSkillAssociations": false,
+      "multiLocaleDescription": {
+        "en_US": "Angel investor (seed, series A) in over 70 companies.  Some notable companies include: www.facebook.com, www.zynga.com, www.linkedin.com, www.digg.com, www.last.fm, www.flickr.com, www.fandom.com, www.ironport.com, and www.shopkick.com."
+      },
+      "multiLocaleLocationName": null,
+      "sourceOfHireType": null
+    },
+    {
+      "shouldShowSourceOfHireBadge": false,
+      "locationName": null,
+      "multiLocaleTitle": {
+        "en_US": "Co-Founder, Board Member & Vice-President, Product"
+      },
+      "dateRange": {
+        "start": {
+          "month": 8,
+          "year": 1997,
+          "$type": "com.linkedin.common.Date"
+        },
+        "end": {
+          "month": 1,
+          "year": 2000,
+          "$type": "com.linkedin.common.Date"
+        },
+        "$type": "com.linkedin.common.DateRange"
+      },
+      "multiLocaleCompanyName": {
+        "en_US": "Socialnet.com"
+      },
+      "geoUrn": null,
+      "companyName": "Socialnet.com",
+      "description": "SocialNet was designed as a platform to connect people for various purposes, including dating, professional connections, and roommate matching. It had one of the best matching engines, and was very positively reviewed.\n\nSocialNet struggled because it focused too heavily on user profiles and not enough on fostering genuine engagement among users. Lessons I learned here are still useful in my career and everyday life.",
+      "title": "Co-Founder, Board Member & Vice-President, Product",
+      "companyUrn": null,
+      "$type": "com.linkedin.voyager.dash.identity.profile.Position",
+      "regionUrn": null,
+      "employmentTypeUrn": "urn:li:fsd_employmentType:12",
+      "entityUrn": "urn:li:fsd_profilePosition:(ACoAAAAABL0B3SGhqeNX998wiOuk_8hYA6ojLwg,10228)",
+      "geoLocationName": null,
+      "multiLocaleGeoLocationName": null,
+      "hasSkillAssociations": false,
+      "multiLocaleDescription": {
+        "en_US": "SocialNet was designed as a platform to connect people for various purposes, including dating, professional connections, and roommate matching. It had one of the best matching engines, and was very positively reviewed.\n\nSocialNet struggled because it focused too heavily on user profiles and not enough on fostering genuine engagement among users. Lessons I learned here are still useful in my career and everyday life."
+      },
+      "multiLocaleLocationName": null,
       "sourceOfHireType": null
     }
   ]

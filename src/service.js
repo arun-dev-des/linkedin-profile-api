@@ -186,23 +186,71 @@ export async function getProfileRaw(publicId, { full = false } = {}) {
  * The reference payload, normalized through exactly the same code path as a
  * live lookup. Always available — LinkedIn is never contacted — so the API can
  * still demonstrate its output shape when a request is bot-blocked upstream.
+ *
+ * `?full=1` is also available here, same as a live lookup — but never makes a
+ * request either: fixtures/raw-positions.json and raw-skills.json are the
+ * *complete* completion-call responses for the same fixture subject, captured
+ * and committed alongside the base profile, so completing a capped section is
+ * just merging two files already on disk.
  */
 let sampleRaw = null;
+let samplePositions = null;
+let sampleSkills = null;
 let sample = null;
+let sampleFull = null;
+
+const readFixture = (name) =>
+  JSON.parse(readFileSync(new URL(`../fixtures/${name}.json`, import.meta.url)));
 
 function readSampleRaw() {
-  if (!sampleRaw) {
-    sampleRaw = JSON.parse(readFileSync(new URL('../fixtures/raw-profile.json', import.meta.url)));
-  }
+  if (!sampleRaw) sampleRaw = readFixture('raw-profile');
   return sampleRaw;
 }
 
-export function getSampleProfile() {
+function readSamplePositions() {
+  if (!samplePositions) samplePositions = readFixture('raw-positions');
+  return samplePositions;
+}
+
+function readSampleSkills() {
+  if (!sampleSkills) sampleSkills = readFixture('raw-skills');
+  return sampleSkills;
+}
+
+export function getSampleProfile({ full = false } = {}) {
   if (!sample) sample = normalizeProfile(readSampleRaw());
-  return envelope(sample.profile, { partial: sample.partial, source: 'cached-fixture' });
+
+  if (!full) return envelope(sample.profile, { partial: sample.partial, source: 'cached-fixture' });
+
+  if (!sampleFull) {
+    const { profile, partial, experienceEnrichment } = normalizeProfile(readSampleRaw());
+    if (partial.skills) {
+      const names = extractSkillNames(readSampleSkills());
+      if (names.length >= profile.skills.length) {
+        profile.skills = names;
+        delete partial.skills;
+      }
+    }
+    if (partial.experience) {
+      const complete = extractFullExperience(readSamplePositions(), experienceEnrichment);
+      if (complete.length >= profile.experience.length) {
+        profile.experience = complete;
+        delete partial.experience;
+      }
+    }
+    sampleFull = { profile, partial };
+  }
+  return envelope(sampleFull.profile, { partial: sampleFull.partial, source: 'cached-fixture' });
 }
 
 /** The unprocessed payload behind /profile/sample, sanitized the same way as getProfileRaw(). */
-export function getSampleRaw() {
-  return sanitizeRawPayload(readSampleRaw());
+export function getSampleRaw({ full = false } = {}) {
+  const raw = readSampleRaw();
+  if (!full) return sanitizeRawPayload(raw);
+
+  const merged = mergePositionsCompletion(
+    mergeSkillsCompletion(raw, readSampleSkills()),
+    readSamplePositions(),
+  );
+  return sanitizeRawPayload(merged);
 }

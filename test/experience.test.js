@@ -13,7 +13,7 @@ const profilePayload = JSON.parse(
 
 test('extractFullExperience parses a real profilePositions response', () => {
   const roles = extractFullExperience(positionsPayload);
-  assert.equal(roles.length, 10);
+  assert.equal(roles.length, 33);
   assert.equal(roles.length, positionsPayload.data.paging.total);
   for (const role of roles) {
     assert.ok(role.title, 'every role should have a title');
@@ -21,24 +21,24 @@ test('extractFullExperience parses a real profilePositions response', () => {
   }
 });
 
-test('extractFullExperience agrees with the main call on title/company/role', () => {
-  // This fixture profile isn't capped (10 of 10 groups), so the two finders
-  // should describe the same roles — a parity check on the fields both share.
+test('extractFullExperience is a superset of the capped list from the main call', () => {
+  // The committed fixture IS capped (10 of 32 groups) — unlike an exact
+  // parity check, this holds regardless of whether a given profile happens
+  // to be capped, so it isn't fragile to a subject's group count changing
+  // between recaptures. Mirrors extractSkillNames's superset test.
   //
   // startDate is compared at year precision only: profilePositions can
-  // return a *more* precise date than profilePositionGroups does. For this
-  // fixture's Applix role, the main call has {year: 2024} while
-  // profilePositions has {year: 2024, month: 8} for the identical position —
-  // real LinkedIn data drift between its own two endpoints, not a parsing
-  // bug. A completed experience list can end up slightly more precise than
-  // the capped one, never less.
+  // return a *more* precise date than profilePositionGroups does — real
+  // LinkedIn data drift between its own two endpoints, not a parsing bug.
   const { profile } = normalizeProfile(profilePayload);
   const full = extractFullExperience(positionsPayload);
 
-  assert.equal(full.length, profile.experience.length);
-  const byTitleAndCompanyAndYear = (list) =>
-    new Set(list.map((r) => `${r.title}@@${r.company}@@${r.startDate?.slice(0, 4)}`));
-  assert.deepEqual(byTitleAndCompanyAndYear(full), byTitleAndCompanyAndYear(profile.experience));
+  assert.ok(full.length > profile.experience.length);
+  const key = (r) => `${r.title}@@${r.company}@@${r.startDate?.slice(0, 4)}`;
+  const fullKeys = new Set(full.map(key));
+  for (const role of profile.experience) {
+    assert.ok(fullKeys.has(key(role)), `"${role.title}" @ "${role.company}" missing from the complete list`);
+  }
 });
 
 test('extractFullExperience fills in company enrichment where a urn matches, nulls it otherwise', () => {
