@@ -19,19 +19,21 @@ automation, no HTML scraping.
 ```json
 {
   "profile": {
-    "name": "Arunkumar Alagarsamy",
-    "headline": "Product Designer · Design Engineer · AI Builder",
-    "location": "Bengaluru, Karnataka, India",
+    "name": "Reid Hoffman",
+    "headline": "Co-Founder, LinkedIn, Manas AI & Inflection AI...",
+    "location": "United States",
     "about": "…",
     "experience": [
-      { "title": "Product Designer", "company": "Applix",
-        "startDate": "2024-08", "endDate": "2025-08", "current": false, "description": "…" }
+      { "title": "Partner", "company": "Greylock",
+        "startDate": "2009-11", "endDate": null, "current": true, "description": "…" }
     ],
-    "education": [ ],
-    "skills": [ "Design Systems", "Figma (Software)" ],
+    "education": [
+      { "school": "Stanford University", "degree": "B.S.", "fieldOfStudy": "Symbolic Systems" }
+    ],
+    "skills": [ "Entrepreneurship", "Venture Capital", "Strategy" ],
     "certifications": [ ],
     "languages": [ ],
-    "featured": [ ],
+    "featured": [ { "title": "Blitzscaling: Book Trailer", "provider": "SlideShare" } ],
     "images": { "profilePicture": "https://media.licdn.com/…", "backgroundImage": "…" }
   },
   "meta": { "fetchedAt": "…", "cached": false, "source": "linkedin-voyager" }
