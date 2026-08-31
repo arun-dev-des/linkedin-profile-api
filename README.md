@@ -85,6 +85,13 @@ http://localhost:3000                                         # local dev
 https://linkedin-profile-api-production-3c84.up.railway.app    # live deployment
 ```
 
+Every endpoint below calls a real, verified LinkedIn resource — none of it is
+guessed. **How each one was found:** a web capture plus an APK string search,
+cross-checked against each other — see
+[Approach](#approach--how-the-endpoint-was-reverse-engineered) for the
+discovery process and [Provenance → code](#provenance--code) for exactly
+which APK constant backs which value in the request.
+
 ### `GET /profile`
 
 Fetch and normalize a LinkedIn profile.
@@ -110,6 +117,23 @@ curl 'https://linkedin-profile-api-production-3c84.up.railway.app/profile?url=ht
 Successful responses are cached in-memory for ~1 hour (`meta.cached` tells you
 which you got). `full=1` and the default are cached separately.
 
+Example response (abridged — full shape in
+[Response schema](#response-schema) below):
+
+```json
+{
+  "profile": {
+    "name": "Reid Hoffman",
+    "headline": "Co-Founder, LinkedIn, Manas AI & Inflection AI...",
+    "location": "United States",
+    "experience": [{ "title": "Partner", "company": "Greylock", "current": true }],
+    "skills": ["Entrepreneurship", "Venture Capital", "..."],
+    "careerBreaks": []
+  },
+  "meta": { "fetchedAt": "2026-08-31T12:00:00.000Z", "cached": false, "source": "linkedin-voyager" }
+}
+```
+
 > **Capped sections.** LinkedIn's own projection caps **skills** at 20,
 > **experience** at 10 position *groups* (a group is the "Company — 3 roles"
 > block, so a group with several roles can still push the flattened list past
@@ -134,6 +158,96 @@ which you got). `full=1` and the default are cached separately.
 > Full request-by-request breakdown in
 > [`docs/endpoint-map.md`](docs/endpoint-map.md).
 
+**What those two completion calls actually return** — both are LinkedIn's
+own upstream endpoints, called server-side; a caller of this API never sees
+them directly, but this is the real shape `mergeSkillsCompletion()` /
+`extractSkillNames()` and `mergePositionsCompletion()` /
+`extractFullExperience()` parse (trimmed to two entries each).
+
+`GET voyager/api/identity/dash/profileSkills?q=viewee&profileUrn=<urn>&count=100`:
+
+```json
+{
+  "data": {
+    "paging": { "count": 100, "start": 0, "total": 47 },
+    "*elements": ["urn:li:fsd_skill:(...,1)", "urn:li:fsd_skill:(...,2)"]
+  },
+  "included": [
+    { "entityUrn": "urn:li:fsd_skill:(...,107)", "name": "Career Development" },
+    { "entityUrn": "urn:li:fsd_skill:(...,115)", "name": "Venture Philanthropy" }
+  ]
+}
+```
+
+`GET voyager/api/identity/dash/profilePositions?q=viewee&profileUrn=<urn>&count=100`:
+
+```json
+{
+  "data": {
+    "paging": { "count": 100, "start": 0, "total": 33 },
+    "*elements": ["urn:li:fsd_profilePosition:(...,2564122178)", "..."]
+  },
+  "included": [
+    {
+      "entityUrn": "urn:li:fsd_profilePosition:(...,2564122178)",
+      "title": "Co-Founder, Executive Board Chair",
+      "companyName": "Manas AI",
+      "companyUrn": "urn:li:fsd_company:106067845",
+      "dateRange": { "start": { "month": 1, "year": 2025 } }
+    }
+  ]
+}
+```
+
+Note what's *missing* from the position entry: no resolved `Company` entity,
+just a bare `companyUrn`. That's the whole reason
+`companyLogo`/`companyUrl`/`employmentType` come back `null` for roles
+recovered only by this call — see the callout above.
+
+> **How career breaks are fetched.** Not from either call above, or any
+> Rest.li resource — LinkedIn's entity graph doesn't carry them at all.
+> Every lookup makes a third, always-on request to the server-driven-UI
+> GraphQL endpoint that renders the Experience section:
+>
+> ```
+> GET voyager/api/graphql
+>     ?queryId=<CAREER_BREAK_QUERY_ID>
+>     &variables=(profileUrn:<urn>,sectionType:experience)
+> Accept: application/json
+> ```
+>
+> `Accept: application/json` is the whole trick — every other call in this
+> project asks for `application/vnd.linkedin.normalized+json+2.1`, but
+> LinkedIn's own normalized serializer throws a `500` on this particular
+> query's response. This is the one call that doesn't use it (see
+> `voyagerGet(url, { accept })` in
+> [`src/linkedin/client.js`](src/linkedin/client.js)).
+>
+> The response is a **component tree of rendered text**, not an entity graph
+> — a career break looks like this (real, anonymized capture):
+>
+> ```json
+> {
+>   "entityComponent": {
+>     "titleV2": { "text": { "text": "Personal goal pursuit" } },
+>     "subtitle": { "text": "Career Break" },
+>     "caption": { "text": "Feb 2025 - Jun 2025 · 5 mos" },
+>     "subComponents": { "components": [{ "components": { "textComponent":
+>       { "text": { "text": "Took time out to travel and train..." } } } }] }
+>   }
+> }
+> ```
+>
+> [`extractCareerBreaks()`](src/linkedin/normalize.js) walks the tree for
+> `entityComponent` nodes whose `subtitle.text` is exactly `"Career Break"`
+> — ordinary roles in the same list carry a company name there instead, so
+> the two never collide. Best-effort and deliberately so: the persisted query
+> id is versioned like `decorationId` and will be retired eventually; if the
+> call fails for any reason, `careerBreaks` comes back `[]` and nothing else
+> about the lookup is affected. Full write-up, including why this was nearly
+> missed entirely, in
+> [`docs/endpoint-map.md`](docs/endpoint-map.md#career-breaks-the-sdui-exception).
+
 ### `GET /profile/raw`
 
 Same `url` parameter. Returns the **unprocessed Voyager payload** — `data` plus
@@ -154,6 +268,28 @@ reconstructing that nesting here would mean inventing group data LinkedIn
 never actually sent for this call. See `mergeSkillsCompletion()` /
 `mergePositionsCompletion()` in
 [`src/linkedin/normalize.js`](src/linkedin/normalize.js).
+
+Example response (abridged — a real payload runs to ~100 entities):
+
+```json
+{
+  "data": { "*elements": ["urn:li:fsd_profile:ACoAAAAABL0B..."] },
+  "included": [
+    {
+      "entityUrn": "urn:li:fsd_profile:ACoAAAAABL0B...",
+      "firstName": "Reid",
+      "lastName": "Hoffman",
+      "*profileSkills": "urn:li:collectionResponse:...",
+      "$type": "com.linkedin.voyager.dash.identity.profile.Profile"
+    },
+    {
+      "entityUrn": "urn:li:fsd_company:1009",
+      "name": "Greylock",
+      "$type": "com.linkedin.voyager.dash.organization.Company"
+    }
+  ]
+}
+```
 
 LinkedIn's own response embeds a little of the *credentialed account's*
 identity in this payload (its connection-degree relationship to people
@@ -191,6 +327,12 @@ skills/experience lists are pre-captured fixtures
 live `?full=1` lookup merges its upstream completion calls — see
 [`GET /profile`](#get-profile) above.
 
+Same shape as `GET /profile`'s response — the one difference is `meta.source`:
+
+```json
+{ "meta": { "cached": false, "source": "cached-fixture" } }
+```
+
 ### `GET /health`
 
 Liveness check. Does not call LinkedIn.
@@ -207,6 +349,19 @@ raw JSON. Deep-linkable: `/?url=<linkedin profile url>`.
 ### `GET /api`
 
 Service metadata and the endpoint list, as JSON.
+
+```json
+{
+  "service": "linkedin-profile-api",
+  "description": "Returns a LinkedIn profile as structured JSON.",
+  "endpoints": {
+    "GET /profile?url=<linkedin profile url>": "Fetch and normalize a profile.",
+    "GET /profile?url=<…>&full=1": "Also fetch the complete skills/experience lists.",
+    "...": "..."
+  },
+  "documentation": "https://github.com/arun-dev-des/linkedin-profile-api"
+}
+```
 
 ### Errors
 
