@@ -41,12 +41,12 @@ export function fetchProfileRaw(linkedinUrl: string, full: boolean): Promise<Raw
   return get<RawPayload>(`/profile/raw?${q}`);
 }
 
-export function fetchSample(): Promise<ProfileEnvelope> {
-  return get<ProfileEnvelope>('/profile/sample');
+export function fetchSample(full: boolean): Promise<ProfileEnvelope> {
+  return get<ProfileEnvelope>(full ? '/profile/sample?full=1' : '/profile/sample');
 }
 
-export function fetchSampleRaw(): Promise<RawPayload> {
-  return get<RawPayload>('/profile/sample/raw');
+export function fetchSampleRaw(full: boolean): Promise<RawPayload> {
+  return get<RawPayload>(full ? '/profile/sample/raw?full=1' : '/profile/sample/raw');
 }
 
 export { ApiRequestError };

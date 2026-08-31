@@ -120,7 +120,7 @@ function Tab({ value, children }: { value: string; children: React.ReactNode }) 
   return (
     <TabsTrigger
       value={value}
-      className="text-muted-foreground data-[state=active]:text-foreground data-[state=active]:border-primary h-10 rounded-none border-0 border-b-2 border-transparent bg-transparent px-3.5 text-[12.5px] font-medium shadow-none data-[state=active]:shadow-none"
+      className="text-muted-foreground data-active:text-primary data-active:border-primary h-10 rounded-none border-0 border-b-2 border-transparent bg-transparent px-3.5 text-[12.5px] font-medium shadow-none data-active:bg-transparent data-active:shadow-none"
     >
       {children}
     </TabsTrigger>

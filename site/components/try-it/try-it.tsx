@@ -23,9 +23,10 @@ export function TryIt() {
   const [full, setFull] = useState(false);
   const [activeUrl, setActiveUrl] = useState<string | null>(null);
   // The sample preset loads from /profile/sample (the committed fixture, zero
-  // LinkedIn calls) instead of a live /profile?url=… lookup — this tracks
-  // which mode produced the data currently on screen, since it changes both
-  // which fetch loadRaw() makes and whether ?full=1 has any effect.
+  // LinkedIn calls) instead of a live /profile?url=… lookup — ?full=1 works
+  // there too, merging in the pre-captured completion fixtures rather than
+  // making a request. This tracks which mode produced the data on screen, so
+  // toggling full and loading the raw payload both go through the right path.
   const [isSample, setIsSample] = useState(false);
 
   const [data, setData] = useState<ProfileEnvelope | null>(null);
@@ -66,7 +67,7 @@ export function TryIt() {
     }
   }, []);
 
-  const runSample = useCallback(async () => {
+  const runSample = useCallback(async (wantFull: boolean) => {
     const id = ++reqId.current;
     setLoading(true);
     setError(null);
@@ -75,13 +76,17 @@ export function TryIt() {
     setRawError(null);
     setActiveUrl(SAMPLE_PRESET.url);
     setIsSample(true);
+    setFull(wantFull);
 
     if (window.location.pathname === '/') {
-      window.history.replaceState(window.history.state, '', '/');
+      const params = new URLSearchParams();
+      if (wantFull) params.set('full', '1');
+      const qs = params.toString();
+      window.history.replaceState(window.history.state, '', qs ? `/?${qs}` : '/');
     }
 
     try {
-      const res = await fetchSample();
+      const res = await fetchSample(wantFull);
       if (id === reqId.current) setData(res);
     } catch (e) {
       if (id === reqId.current) setError(e instanceof Error ? e.message : 'Something went wrong.');
@@ -95,7 +100,7 @@ export function TryIt() {
     setRawLoading(true);
     setRawError(null);
     try {
-      setRaw(isSample ? await fetchSampleRaw() : await fetchProfileRaw(activeUrl, full));
+      setRaw(isSample ? await fetchSampleRaw(full) : await fetchProfileRaw(activeUrl, full));
     } catch (e) {
       setRawError(e instanceof Error ? e.message : 'Could not fetch the raw payload.');
     } finally {
@@ -117,7 +122,7 @@ export function TryIt() {
       run(queryUrl, presetFull);
     } else {
       setUrl(SAMPLE_PRESET.url);
-      runSample();
+      runSample(presetFull);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -128,8 +133,11 @@ export function TryIt() {
   };
 
   const toggleFull = (v: boolean) => {
-    setFull(v);
-    if (activeUrl && !isSample) run(activeUrl, v);
+    if (isSample) runSample(v);
+    else if (activeUrl) {
+      setFull(v);
+      run(activeUrl, v);
+    }
   };
 
   return (
@@ -175,7 +183,7 @@ export function TryIt() {
                 variant={active ? 'default' : 'outline'}
                 onClick={() => {
                   setUrl(preset.url);
-                  if (preset.sample) runSample();
+                  if (preset.sample) runSample(full);
                   else run(preset.url, full);
                 }}
                 className="h-7 rounded-full px-3 text-xs font-normal"
@@ -186,21 +194,13 @@ export function TryIt() {
             );
           })}
           <div className="ml-1 flex items-center gap-2">
-            <Switch
-              id="full"
-              checked={full}
-              onCheckedChange={toggleFull}
-              disabled={isSample}
-            />
-            <Label
-              htmlFor="full"
-              className="text-muted-foreground text-xs font-normal data-disabled:opacity-50"
-              data-disabled={isSample || undefined}
-            >
+            <Switch id="full" checked={full} onCheckedChange={toggleFull} />
+            <Label htmlFor="full" className="text-muted-foreground text-xs font-normal">
               Complete skills &amp; experience{' '}
-              <span className="font-mono">
-                {isSample ? '(not available for the cached sample)' : '?full=1'}
-              </span>
+              <span className="font-mono">?full=1</span>
+              {isSample && (
+                <span className="text-muted-foreground/70"> · still zero LinkedIn calls</span>
+              )}
             </Label>
           </div>
         </div>

@@ -65,7 +65,9 @@ app.get('/api', (req, res) => {
       'GET /profile/raw?url=<…>': 'The unprocessed Voyager payload (data + included[]), before normalization.',
       'GET /profile/raw?url=<…>&full=1': 'Same, with skills/experience completion entities merged in when the main call capped them.',
       'GET /profile/sample': 'A cached real response. Never calls LinkedIn.',
+      'GET /profile/sample?full=1': 'Same, with the complete skills/experience lists — also never calls LinkedIn.',
       'GET /profile/sample/raw': 'The unprocessed payload behind /profile/sample.',
+      'GET /profile/sample/raw?full=1': 'Same, with skills/experience completion entities merged in.',
     },
     documentation: 'https://github.com/arun-dev-des/linkedin-profile-api',
   });
@@ -79,16 +81,16 @@ app.get('/health', (req, res) => {
   });
 });
 
+const truthy = (v) => v === '1' || v === 'true' || v === 'yes' || v === '';
+
 // Registered before /profile so the literal paths win over the query route.
 app.get('/profile/sample/raw', (req, res) => {
-  res.json(getSampleRaw());
+  res.json(getSampleRaw({ full: truthy(req.query.full) }));
 });
 
 app.get('/profile/sample', (req, res) => {
-  res.json(getSampleProfile());
+  res.json(getSampleProfile({ full: truthy(req.query.full) }));
 });
-
-const truthy = (v) => v === '1' || v === 'true' || v === 'yes' || v === '';
 
 app.get('/profile/raw', async (req, res) => {
   const publicId = parseProfileUrl(req.query.url);
