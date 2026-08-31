@@ -9,8 +9,9 @@ The data is retrieved by calling LinkedIn's own internal **Voyager** API directl
 with server-side session cookies. **No browser automation** (Selenium / Puppeteer
 / Playwright) and **no HTML scraping** — authenticated `GET` requests against
 LinkedIn's own JSON APIs, then a pure-function transform of the response. One
-request covers the whole profile; a second covers career breaks, which no
-Rest.li resource carries (see [Known limitations](#known-limitations)).
+request covers the whole profile; a second, best-effort request covers career
+breaks, which live only in LinkedIn's server-driven UI, not any Rest.li
+resource (details in [Known limitations](#known-limitations)).
 
 - **Showcase site:** https://linkedin-profile-api-phi.vercel.app — the live app on
   the home page, with these docs in the sidebar.
@@ -49,8 +50,7 @@ git clone https://github.com/arun-dev-des/linkedin-profile-api.git
 cd linkedin-profile-api
 npm install
 
-cp .env.example .env
-# edit .env — see "Getting the credentials" below
+cp .env.example .env   # then edit .env — see "Getting the credentials" below
 
 npm run dev          # http://localhost:3000
 npm test             # 57 tests, fully offline
@@ -67,15 +67,20 @@ session on **your own** LinkedIn account:
 4. Copy the **`JSESSIONID`** value into `.env` — **without** the surrounding
    quotes (it looks like `ajax:1234567890123456789`).
 
-Both must come from the same session. They expire (see
-[Known limitations](#known-limitations)); re-extract when `/profile` starts
-returning `502 upstream_auth_failed`.
+Both must come from the same session.
+
+> **Session lifetime.** `li_at` is long-lived but gets revoked on a password
+> change or certain security events. There's no refresh flow — re-extract
+> both cookies by hand when `/profile` starts returning
+> `502 upstream_auth_failed`.
 
 ---
 
 ## API documentation
 
-Base URL: the deployed origin, or `http://localhost:3000` in development.
+Base URL: `http://localhost:3000` in development, or the live deployment —
+`https://linkedin-profile-api-production-3c84.up.railway.app`. Every example
+below works against either; swap the host.
 
 ### `GET /profile`
 
@@ -84,15 +89,43 @@ Fetch and normalize a LinkedIn profile.
 | Query param | Required | Description |
 | --- | --- | --- |
 | `url` | yes | A LinkedIn profile URL. Accepts `https://www.linkedin.com/in/<id>/`, locale subdomains (`in.linkedin.com`), trailing paths, and query strings. |
-| `full` | no | `full=1` also fetches the **complete skills and experience lists**. The main call caps skills at 20 and experience at 10 position groups; with `full=1` the service spends one extra upstream request *per capped section* (only when that section's cap was actually hit, run in parallel) and the matching `meta.partial` key disappears. Off by default — see [Known limitations](#known-limitations) and [`docs/endpoint-map.md`](docs/endpoint-map.md). |
+| `full` | no | Also fetches the **complete skills and experience lists** — see the callout below. Off by default. |
+
+Against the local dev server:
 
 ```bash
 curl 'http://localhost:3000/profile?url=https://www.linkedin.com/in/williamhgates/'
 curl 'http://localhost:3000/profile?url=https://www.linkedin.com/in/williamhgates/&full=1'
 ```
 
+Against the live deployment — same responses, no local setup needed:
+
+```bash
+curl 'https://linkedin-profile-api-production-3c84.up.railway.app/profile?url=https://www.linkedin.com/in/williamhgates/'
+```
+
 Successful responses are cached in-memory for ~1 hour (`meta.cached` tells you
 which you got). `full=1` and the default are cached separately.
+
+> **Capped sections.** LinkedIn's own projection caps **skills** at 20,
+> **experience** at 10 position *groups* (a group is the "Company — 3 roles"
+> block, so a group with several roles can still push the flattened list past
+> 10 entries), and **featured** at 3 — regardless of how much the profile
+> actually has. Every cap is reported honestly via `meta.partial`, whenever
+> LinkedIn's own `paging.total` exceeds what was returned.
+>
+> `?full=1` spends one extra upstream request *per capped section* — in
+> parallel, only for sections actually capped — to complete **skills** and
+> **experience** (LinkedIn honors `count=100` on both finders: a rich profile
+> capped at 10 position groups returns all of them this way). Completed
+> experience entries carry `companyLogo`/`companyUrl`/`employmentType` only
+> for roles the main call had already resolved.
+>
+> **`featured` stays capped even with `?full=1`** — its endpoint caps at 3
+> regardless of `count`, verified live, so there's no bigger request that
+> would help. `meta.partial.featured` at least tells you when it's capped.
+> Full request-by-request breakdown in
+> [`docs/endpoint-map.md`](docs/endpoint-map.md).
 
 ### `GET /profile/raw`
 
@@ -327,11 +360,11 @@ Notes:
   not unknown.
 - **Dates** are `"YYYY"` or `"YYYY-MM"` strings (LinkedIn rarely provides a day).
   A currently-held role has `endDate: null` and `current: true`.
-- **`meta.partial`** appears only when LinkedIn returned a capped section, and
-  only the capped keys are present (a profile with 5 roles and 10 skills would
-  show `partial.skills` alone). Its presence is honest signalling that the
-  section is incomplete — see [Known limitations](#known-limitations).
-  `experience` reports `returnedGroups`/`totalGroups` rather than
+- **`meta.partial`** appears only when LinkedIn returned a capped section
+  (skills, experience, or featured — see the capped-sections callout under
+  [API documentation](#api-documentation)), and only the capped keys are
+  present (a profile with 5 roles and 10 skills would show `partial.skills`
+  alone). `experience` reports `returnedGroups`/`totalGroups` rather than
   `returned`/`total` because LinkedIn's cap is on position *groups* (the
   "Company — 3 roles" block), not the flattened role entries in the response.
 - **`volunteerExperience[].cause`** is LinkedIn's raw enum
@@ -488,8 +521,11 @@ Design choices:
 - **Two requests per lookup, up to two more with `?full=1`.** The
   `FullProfileWithEntities` decoration returns experience, education, skills,
   certifications, images and more in a single response. A second, parallel
-  request covers career breaks, which no Rest.li resource carries at all
-  (see [Known limitations](#known-limitations)). `?full=1` then adds one
+  request covers career breaks — best-effort, since they come from LinkedIn's
+  server-driven UI as rendered text, not any Rest.li resource, so a failure
+  there just returns `careerBreaks: []` without affecting anything else
+  (English-only parsing and the versioned query id are further caveats — full
+  detail in [Known limitations](#known-limitations)). `?full=1` then adds one
   request per *capped* section — the dedicated skills and/or positions finder
   — again in parallel, and only for whichever section(s) were actually capped.
   Every request past the first is best-effort: any of them can fail without
