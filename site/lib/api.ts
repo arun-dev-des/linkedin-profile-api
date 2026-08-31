@@ -35,8 +35,10 @@ export function fetchProfile(linkedinUrl: string, full: boolean): Promise<Profil
   return get<ProfileEnvelope>(`/profile?${q}`);
 }
 
-export function fetchProfileRaw(linkedinUrl: string): Promise<RawPayload> {
-  return get<RawPayload>(`/profile/raw?url=${encodeURIComponent(linkedinUrl)}`);
+export function fetchProfileRaw(linkedinUrl: string, full: boolean): Promise<RawPayload> {
+  const q = new URLSearchParams({ url: linkedinUrl });
+  if (full) q.set('full', '1');
+  return get<RawPayload>(`/profile/raw?${q}`);
 }
 
 export function fetchSample(): Promise<ProfileEnvelope> {

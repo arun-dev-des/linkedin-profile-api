@@ -63,13 +63,13 @@ export function TryIt() {
     setRawLoading(true);
     setRawError(null);
     try {
-      setRaw(await fetchProfileRaw(activeUrl));
+      setRaw(await fetchProfileRaw(activeUrl, full));
     } catch (e) {
       setRawError(e instanceof Error ? e.message : 'Could not fetch the raw payload.');
     } finally {
       setRawLoading(false);
     }
-  }, [activeUrl, raw, rawLoading]);
+  }, [activeUrl, raw, rawLoading, full]);
 
   // On mount: honour ?url= / ?full=1, else load the first preset.
   useEffect(() => {
