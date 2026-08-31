@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { JsonTree } from './json-tree';
+import { GraphDiagram, type GraphNode } from './graph-diagram';
 import type { RawPayload } from '@/lib/types';
 
 type Entity = { $type?: string; entityUrn?: string; [k: string]: unknown };
@@ -176,6 +177,29 @@ function RefChip({
   );
 }
 
+function ViewToggleButton({
+  active,
+  onClick,
+  children,
+}: {
+  active: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={cn(
+        'cursor-pointer rounded px-2 py-0.5 text-[10.5px] font-medium',
+        active ? 'bg-accent text-foreground' : 'text-muted-foreground hover:text-foreground',
+      )}
+    >
+      {children}
+    </button>
+  );
+}
+
 /**
  * The caller should pass a `key` derived from the loaded profile's identity
  * (see JsonPanel) — that remounts this component, and its search/selection/
@@ -194,6 +218,7 @@ export function EntityResolver({ raw }: { raw: RawPayload }) {
   // "Referenced by": that shows every entity pointing here, not just the one
   // that was actually clicked to arrive.
   const [history, setHistory] = useState<string[]>([]);
+  const [view, setView] = useState<'list' | 'diagram'>('list');
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -216,6 +241,23 @@ export function EntityResolver({ raw }: { raw: RawPayload }) {
   const referencedBy = selected ? (reverse.get(selected) ?? []) : [];
   const pointers = selectedEntry ? pointersOf(selectedEntry.entity) : [];
   const usedKeys = selectedEntry ? usedFieldsFor(selectedEntry.entity) : EMPTY_SET;
+
+  // Same two lists the List view renders as chips, normalized into the
+  // shape GraphDiagram wants — one lookup each, shared by both views.
+  const pointsToNodes: GraphNode[] = pointers.map(({ key, urn }) => {
+    const target = index.get(urn);
+    return { urn, key, label: target ? entityLabel(target.entity) : 'not in included[]', clickable: Boolean(target) };
+  });
+  const referencedByNodes: GraphNode[] = referencedBy.map((ref) => {
+    const isRoot = ref.fromUrn === ROOT;
+    const source = isRoot ? null : index.get(ref.fromUrn);
+    return {
+      urn: ref.fromUrn,
+      key: ref.key,
+      label: isRoot ? 'data (root)' : source ? entityLabel(source.entity) : ref.fromUrn,
+      clickable: !isRoot,
+    };
+  });
 
   const goTo = (urn: string) => {
     if (selected && selected !== urn) setHistory((h) => [...h, selected]);
@@ -331,48 +373,70 @@ export function EntityResolver({ raw }: { raw: RawPayload }) {
             </div>
           ) : null}
 
-          {pointers.length > 0 && (
+          {(pointers.length > 0 || referencedBy.length > 0) && (
             <div>
-              <div className="text-muted-foreground mb-1.5 text-[11px] font-medium tracking-wide uppercase">
-                Points to ({pointers.length})
+              <div className="mb-1.5 flex items-center justify-between gap-2">
+                <div className="text-muted-foreground text-[11px] font-medium tracking-wide uppercase">
+                  Connections ({pointers.length + referencedBy.length})
+                </div>
+                <div className="border-border flex items-center gap-0.5 rounded-md border p-0.5">
+                  <ViewToggleButton active={view === 'list'} onClick={() => setView('list')}>
+                    List
+                  </ViewToggleButton>
+                  <ViewToggleButton active={view === 'diagram'} onClick={() => setView('diagram')}>
+                    Diagram
+                  </ViewToggleButton>
+                </div>
               </div>
-              <div className="flex flex-wrap gap-1.5">
-                {pointers.map(({ key, urn }, i) => {
-                  const target = index.get(urn);
-                  return (
-                    <RefChip
-                      key={key + urn + i}
-                      label={target ? entityLabel(target.entity) : 'not in included[]'}
-                      sub={key}
-                      icon={ArrowRight}
-                      onClick={target ? () => goTo(urn) : undefined}
-                    />
-                  );
-                })}
-              </div>
-            </div>
-          )}
 
-          {referencedBy.length > 0 && (
-            <div>
-              <div className="text-muted-foreground mb-1.5 text-[11px] font-medium tracking-wide uppercase">
-                Referenced by ({referencedBy.length})
-              </div>
-              <div className="flex flex-wrap gap-1.5">
-                {referencedBy.map((ref, i) => {
-                  const isRoot = ref.fromUrn === ROOT;
-                  const source = isRoot ? null : index.get(ref.fromUrn);
-                  return (
-                    <RefChip
-                      key={ref.fromUrn + ref.key + i}
-                      label={isRoot ? 'data (root)' : source ? entityLabel(source.entity) : ref.fromUrn}
-                      sub={ref.key}
-                      icon={ArrowUpRight}
-                      onClick={isRoot ? undefined : () => goTo(ref.fromUrn)}
-                    />
-                  );
-                })}
-              </div>
+              {view === 'list' ? (
+                <div className="space-y-3">
+                  {pointers.length > 0 && (
+                    <div>
+                      <div className="text-muted-foreground mb-1.5 text-[10.5px] font-medium tracking-wide uppercase">
+                        Points to ({pointers.length})
+                      </div>
+                      <div className="flex flex-wrap gap-1.5">
+                        {pointsToNodes.map((n, i) => (
+                          <RefChip
+                            key={n.key + n.urn + i}
+                            label={n.label}
+                            sub={n.key}
+                            icon={ArrowRight}
+                            onClick={n.clickable ? () => goTo(n.urn) : undefined}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  {referencedBy.length > 0 && (
+                    <div>
+                      <div className="text-muted-foreground mb-1.5 text-[10.5px] font-medium tracking-wide uppercase">
+                        Referenced by ({referencedBy.length})
+                      </div>
+                      <div className="flex flex-wrap gap-1.5">
+                        {referencedByNodes.map((n, i) => (
+                          <RefChip
+                            key={n.key + n.urn + i}
+                            label={n.label}
+                            sub={n.key}
+                            icon={ArrowUpRight}
+                            onClick={n.clickable ? () => goTo(n.urn) : undefined}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <GraphDiagram
+                  key={selected}
+                  centerLabel={entityLabel(selectedEntry.entity)}
+                  pointsTo={pointsToNodes}
+                  referencedBy={referencedByNodes}
+                  onSelect={goTo}
+                />
+              )}
             </div>
           )}
 
