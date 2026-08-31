@@ -343,8 +343,12 @@ Liveness check. Does not call LinkedIn.
 
 ### `GET /`
 
-A minimal browser UI — paste a profile URL, see the rendered result, toggle
-raw JSON. Deep-linkable: `/?url=<linkedin profile url>`.
+Redirects (`302`) to the showcase site — the "Try it" app plus these docs.
+Configurable via `SHOWCASE_URL`; set it empty to disable the redirect.
+
+The legacy self-contained browser UI still ships with the server at
+**`/index.html`** — paste a profile URL, see the rendered result, toggle raw
+JSON. Deep-linkable: `/index.html?url=<linkedin profile url>`.
 
 ### `GET /api`
 

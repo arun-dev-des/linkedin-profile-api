@@ -49,16 +49,27 @@ app.use((req, res, next) => {
 
 app.use(rateLimiter(config.rateLimit));
 
-// The browser UI. Static files are served before the API routes; only paths
-// that match a file in public/ are handled here, everything else falls through.
-app.use(express.static(fileURLToPath(new URL('../public', import.meta.url))));
+// The polished showcase site lives on its own deployment; when SHOWCASE_URL is
+// set (it is by default), the API host bounces "/" there. Registered before the
+// static middleware so it wins over public/index.html.
+if (config.showcaseUrl) {
+  app.get('/', (req, res) => res.redirect(302, config.showcaseUrl));
+}
+
+// The legacy single-file browser UI. Static files are served before the API
+// routes; only paths that match a file in public/ are handled here, everything
+// else falls through. index:false leaves "/" to the redirect above (the page is
+// still reachable at /index.html).
+app.use(
+  express.static(fileURLToPath(new URL('../public', import.meta.url)), { index: false }),
+);
 
 app.get('/api', (req, res) => {
   res.json({
     service: 'linkedin-profile-api',
     description: 'Returns a LinkedIn profile as structured JSON.',
     endpoints: {
-      'GET /': 'Browser UI.',
+      'GET /': 'Redirects to the showcase site; legacy single-file UI at /index.html.',
       'GET /health': 'Liveness check.',
       'GET /profile?url=<linkedin profile url>': 'Fetch and normalize a profile.',
       'GET /profile?url=<…>&full=1': 'Also fetch the complete skills list (one extra upstream request).',
