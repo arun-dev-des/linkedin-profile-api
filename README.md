@@ -24,8 +24,38 @@ Rest.li resource carries (see [Known limitations](#known-limitations)).
 
 ---
 
+## What's new
+
+The showcase site's JSON panel gained a **Resolver** tab — search the raw
+`included[]` entity graph by URN, name, or array index, then explore it the
+way `src/linkedin/normalize.js` itself does.
+
+**List and Diagram views**, with a real breadcrumb + Back (a history stack,
+not a "referenced by" shortcut that breaks once an entity has more than one
+referrer):
+
+<img src="docs/images/resolver-list.png" alt="Resolver tab: List view showing Points to / Referenced by for a Profile entity" width="820">
+
+<img src="docs/images/resolver-diagram.png" alt="Resolver tab: Diagram view with the selected entity centered and its connections fanned out" width="820">
+
+**Field highlighting** — every key on an entity is color-coded against what
+`normalizeProfile()` actually reads, so "is this field used or just along for
+the ride?" is answered at a glance instead of a source-diving detour:
+
+<img src="docs/images/field-highlighting.png" alt="Fields panel with extracted fields highlighted green and ignored fields dimmed" width="820">
+
+Also in this pass: `/profile/raw?full=1` and `/profile/sample?full=1` now
+actually return the complete skills/experience lists (previously `full`
+was silently ignored on both), and `/profile/sample` serves a real
+third-party profile instead of the submitter's own — see
+[Known limitations](#known-limitations) and the `full` param under
+[API documentation](#api-documentation).
+
+---
+
 ## Table of contents
 
+- [What's new](#whats-new)
 - [Quick start](#quick-start)
 - [API documentation](#api-documentation)
 - [Response schema](#response-schema)
@@ -125,6 +155,12 @@ endpoints strip it via `sanitizeRawPayload()` before responding; see
 Returns a real, pre-captured profile normalized through the exact same code path.
 **Never contacts LinkedIn** — always available, even when a live lookup would be
 rate-limited or bot-blocked. Useful for verifying the response shape.
+
+`?full=1` works here too, and still never contacts LinkedIn: the complete
+skills/experience lists are pre-captured fixtures
+(`fixtures/raw-positions.json`, `raw-skills.json`), merged in the same way a
+live `?full=1` lookup merges its upstream completion calls — see
+[`GET /profile`](#get-profile) above.
 
 ### `GET /health`
 
