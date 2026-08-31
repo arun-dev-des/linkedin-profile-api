@@ -25,20 +25,48 @@ function Key({ name }: { name?: string | number }) {
   );
 }
 
+/**
+ * Only meaningful at depth 1 (the direct fields of whatever root object was
+ * passed to JsonTree) — that's the level the Resolver's per-$type field maps
+ * describe. Nested objects have their own, unrelated keys.
+ */
+function fieldHighlight(usedKeys: Set<string> | undefined, depth: number, name?: string | number) {
+  if (!usedKeys || depth !== 1 || name === undefined) return null;
+  return usedKeys.has(String(name)) ? 'used' : 'unused';
+}
+
+const HIGHLIGHT_CLASS: Record<'used' | 'unused', string> = {
+  used: 'border-l-2 border-emerald-500/70 bg-emerald-500/10 -ml-1 rounded-r-sm',
+  unused: 'opacity-50',
+};
+const HIGHLIGHT_TITLE: Record<'used' | 'unused', string> = {
+  used: 'Extracted by normalize.js',
+  unused: 'Not extracted by normalize.js',
+};
+
 function Node({
   name,
   value,
   depth,
+  usedKeys,
 }: {
   name?: string | number;
   value: Json;
   depth: number;
+  usedKeys?: Set<string>;
 }) {
   const [open, setOpen] = useState(depth < 2);
+  const highlight = fieldHighlight(usedKeys, depth, name);
 
   if (value === null || typeof value !== 'object') {
     return (
-      <div className="pl-[1.1rem] whitespace-pre-wrap">
+      <div
+        className={cn(
+          'pl-[1.1rem] whitespace-pre-wrap',
+          highlight && HIGHLIGHT_CLASS[highlight],
+        )}
+        title={highlight ? HIGHLIGHT_TITLE[highlight] : undefined}
+      >
         <Key name={name} />
         {leaf(value)}
       </div>
@@ -52,11 +80,15 @@ function Node({
   const bracket = isArray ? ['[', ']'] : ['{', '}'];
 
   return (
-    <div>
+    <div className={highlight === 'unused' ? 'opacity-50' : undefined}>
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
-        className="hover:bg-accent/50 -ml-1 flex w-full items-baseline rounded px-1 text-left"
+        className={cn(
+          'hover:bg-accent/50 -ml-1 flex w-full items-baseline rounded px-1 text-left',
+          highlight === 'used' && HIGHLIGHT_CLASS.used,
+        )}
+        title={highlight ? HIGHLIGHT_TITLE[highlight] : undefined}
       >
         <ChevronRight
           className={cn(
@@ -77,7 +109,7 @@ function Node({
       {open && (
         <div className="pl-[1.1rem]">
           {entries.map(([k, v]) => (
-            <Node key={k} name={k} value={v} depth={depth + 1} />
+            <Node key={k} name={k} value={v} depth={depth + 1} usedKeys={usedKeys} />
           ))}
           <div className="text-muted-foreground pl-1">{bracket[1]}</div>
         </div>
@@ -86,10 +118,10 @@ function Node({
   );
 }
 
-export function JsonTree({ data }: { data: Json }) {
+export function JsonTree({ data, usedKeys }: { data: Json; usedKeys?: Set<string> }) {
   return (
     <div className="font-mono text-[12px] leading-[1.7]">
-      <Node value={data} depth={0} />
+      <Node value={data} depth={0} usedKeys={usedKeys} />
     </div>
   );
 }

@@ -6,6 +6,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Button } from '@/components/ui/button';
 import { JsonTree } from './json-tree';
+import { EntityResolver } from './entity-resolver';
 import type { ProfileEnvelope, RawPayload } from '@/lib/types';
 
 export function JsonPanel({
@@ -25,7 +26,7 @@ export function JsonPanel({
   const [copied, setCopied] = useState(false);
 
   const copy = async () => {
-    const payload = tab === 'full' ? raw : data;
+    const payload = tab === 'full' || tab === 'resolver' ? raw : data;
     if (!payload) return;
     try {
       await navigator.clipboard.writeText(JSON.stringify(payload, null, 2));
@@ -41,7 +42,7 @@ export function JsonPanel({
       value={tab}
       onValueChange={(v) => {
         setTab(v);
-        if (v === 'full' && !raw && !rawLoading) onNeedRaw();
+        if ((v === 'full' || v === 'resolver') && !raw && !rawLoading) onNeedRaw();
       }}
       className="flex h-full flex-col gap-0"
     >
@@ -52,6 +53,7 @@ export function JsonPanel({
           <Tab value="full">
             Full JSON <span className="text-muted-foreground ml-1">· not normalised</span>
           </Tab>
+          <Tab value="resolver">Resolver</Tab>
         </TabsList>
         <Button
           variant="outline"
@@ -92,6 +94,20 @@ export function JsonPanel({
                 </p>
                 <JsonTree data={raw} />
               </>
+            )}
+          </TabsContent>
+          <TabsContent value="resolver" className="mt-0">
+            {rawLoading && (
+              <div className="text-muted-foreground flex items-center gap-2 py-6 text-sm">
+                <Loader2 className="size-4 animate-spin" /> fetching the raw payload…
+              </div>
+            )}
+            {rawError && <div className="text-destructive py-4 text-sm">{rawError}</div>}
+            {raw && (
+              <EntityResolver
+                key={data.profile.profileUrn ?? data.profile.publicId ?? undefined}
+                raw={raw}
+              />
             )}
           </TabsContent>
         </div>
