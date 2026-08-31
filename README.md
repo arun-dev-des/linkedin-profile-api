@@ -22,6 +22,8 @@ Rest.li resource carries (see [Known limitations](#known-limitations)).
   [`/profile?url=…williamhgates`](https://linkedin-profile-api-production-3c84.up.railway.app/profile?url=https://www.linkedin.com/in/williamhgates/)
   (live)
 
+<img src="docs/images/tree-view.png" alt="Showcase site: normalized profile card next to the Tree JSON view" width="820">
+
 ---
 
 ## Table of contents
