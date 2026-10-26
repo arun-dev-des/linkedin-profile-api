@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import { Inter, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/components/theme-provider';
@@ -23,6 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${mono.variable}`}>
       <body className="min-h-dvh antialiased">
+        <Script src="https://stats.convertkitty.com/js/script.js" data-website-id="4z1l6a214h6c654y" strategy="afterInteractive" />
         <ThemeProvider>
           {/* Tooltips are used across the app (the profile card annotates every
               value with the JSON field it came from), so the provider lives at
